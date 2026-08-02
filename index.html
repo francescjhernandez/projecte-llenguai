@@ -48,7 +48,10 @@
 
         <!-- Secció: Situació Sociolingüística -->
         <section class="card-section">
-            <h2 data-i18n="socio_title">Situació sociolingüística</h2>
+            <h2>
+                <span class="section-color-indicator badge-socioling">SL</span>
+                <span data-i18n="socio_title">Situació sociolingüística</span>
+            </h2>
             <div class="form-group">
                 <label>
                     <input type="radio" name="socio-opt" value="coneixements" checked> 
@@ -78,7 +81,10 @@
 
         <!-- Secció: Prompts Didàctics -->
         <section class="card-section">
-            <h2 data-i18n="didactic_title">Prompts didàctics</h2>
+            <h2>
+                <span class="section-color-indicator badge-didactic">DID</span>
+                <span data-i18n="didactic_title">Prompts didàctics</span>
+            </h2>
             <div class="form-group">
                 <label data-i18n="lbl_materia_didactic">Indiqueu matèria del prompt didàctic:</label>
                 <select id="didactic-materia">
@@ -90,7 +96,10 @@
 
         <!-- Secció: Prompts de NL -->
         <section class="card-section">
-            <h2 data-i18n="nl_title">Prompts de NL (Nivell Lingüístic)</h2>
+            <h2>
+                <span class="section-color-indicator badge-nl">NL</span>
+                <span data-i18n="nl_title">Prompts de NL (Nivell Lingüístic)</span>
+            </h2>
             <div class="form-group">
                 <label data-i18n="lbl_materia_nl">Indiqueu matèria del prompt de NL:</label>
                 <select id="nl-materia">
@@ -142,6 +151,7 @@
                         <option value="socioling" data-i18n="opt_type_socio">Situació Sociolingüística</option>
                         <option value="didactic" data-i18n="opt_type_didactic">Didàctic</option>
                         <option value="nl" data-i18n="opt_type_nl">Nivell Lingüístic (NL)</option>
+                        <option value="dl" data-i18n="opt_type_dl">Desenvolupament / Tècnic (DL)</option>
                     </select>
                 </div>
                 <div class="form-group">
