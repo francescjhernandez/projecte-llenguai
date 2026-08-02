@@ -23,7 +23,7 @@
 </head>
 <body>
 
-    <!-- CAPÇALERA CLARA -->
+    <!-- CAPÇALERA -->
     <header class="main-header">
         <div class="header-container">
             <!-- Brand / Logo amb imatge -->
@@ -34,12 +34,12 @@
             
             <!-- Selector d'idiomes estil pastilla -->
             <div class="lang-selector">
-                <button id="btn-ca" class="lang-btn active">Català / Valencià</button>
-                <button id="btn-an" class="lang-btn">Aranés</button>
-                <button id="btn-es" class="lang-btn">Castellano</button>
-                <button id="btn-en" class="lang-btn">English</button>
-                <button id="btn-fr" class="lang-btn">Francés</button>
-                <button id="btn-pt" class="lang-btn">Português</button>
+                <button id="btn-ca" class="lang-btn active" data-lang="ca">Català / Valencià</button>
+                <button id="btn-an" class="lang-btn" data-lang="an">Aranés</button>
+                <button id="btn-es" class="lang-btn" data-lang="es">Castellano</button>
+                <button id="btn-en" class="lang-btn" data-lang="en">English</button>
+                <button id="btn-fr" class="lang-btn" data-lang="fr">Français</button>
+                <button id="btn-pt" class="lang-btn" data-lang="pt">Português</button>
             </div>
 
             <!-- Botó Administració / Pujar Prompts -->
@@ -50,7 +50,7 @@
     <!-- CONTINGUT PRINCIPAL -->
     <main class="main-content">
 
-        <!-- Imtage principal central -->
+        <!-- Imatge principal central -->
         <section class="hero-image-container">
             <img src="https://www.uv.es/senex/imatgeLlenguaAI.png" alt="Projecte LlenguAI" class="hero-image">
         </section>
@@ -61,7 +61,7 @@
                 <span class="section-color-indicator badge-socioling">SL</span>
                 <span data-i18n="socio_title">Situació sociolingüística</span>
             </h2>
-            <div class="form-group">
+            <div class="form-group flex-row">
                 <label>
                     <input type="radio" name="socio-opt" value="coneixements" checked> 
                     <span data-i18n="opt_know">Coneixements</span>
@@ -98,28 +98,38 @@
                 <label data-i18n="lbl_materia_didactic">Indiqueu matèria del prompt didàctic:</label>
                 <select id="didactic-materia">
                     <option value="" disabled selected data-i18n="opt_select_materia">Seleccioneu la matèria...</option>
+                    <option value="valencia">Valencià / Català</option>
+                    <option value="literatura">Literatura</option>
+                    <option value="angles">Llengües estrangeres</option>
+                    <option value="primaria">Educació Primària</option>
+                    <option value="secundaria">Educació Secundària</option>
                 </select>
             </div>
             <button class="btn-secondary" data-i18n="btn_download_form">📥 Descarregueu el formulari</button>
         </section>
 
-        <!-- Secció: Prompts de NL -->
+        <!-- Secció: Prompts de Normalització Lingüística -->
         <section class="card-section">
             <h2>
                 <span class="section-color-indicator badge-nl">NL</span>
-                <span data-i18n="nl_title">Prompts de NL (Nivell Lingüístic)</span>
+                <span data-i18n="nl_title">Prompts de normalització lingüística</span>
             </h2>
             <div class="form-group">
-                <label data-i18n="lbl_materia_nl">Indiqueu matèria del prompt de NL:</label>
+                <label data-i18n="lbl_materia_nl">Indiqueu matèria del prompt de normalització lingüística:</label>
                 <select id="nl-materia">
                     <option value="" disabled selected data-i18n="opt_select_materia">Seleccioneu la matèria...</option>
+                    <option value="administracio">Administració local</option>
+                    <option value="comerç">Comerç i empresa</option>
+                    <option value="mitjans">Mitjans de comunicació</option>
+                    <option value="dinamitzacio">Dinamització cultural</option>
                 </select>
             </div>
+            <button class="btn-secondary" data-i18n="btn_download_form_nl">📥 Descarregueu el formulari</button>
         </section>
 
         <!-- Cercador de Prompts -->
         <section class="search-section">
-            <input type="text" id="search-input" data-i18n-placeholder="search_placeholder" placeholder="Cercar prompts per paraula clau, matèria, nivell...">
+            <input type="text" id="search-input" data-i18n-placeholder="search_placeholder" placeholder="Cercar prompts per paraula clau, matèria, autor...">
         </section>
 
         <!-- Llista de Prompts Carregats -->
@@ -133,12 +143,12 @@
         <!-- Secció: Sobre el projecte -->
         <section class="about-card">
             <div class="about-box">
-                <h3>Sobre el projecte</h3>
-                <p>[Espai reservat per a la descripció del projecte. Pròximament s'afegirà ací tota la informació i els detalls corresponents.]</p>
+                <h3 data-i18n="about_title">Sobre el projecte</h3>
+                <p data-i18n="about_text">La paraula LlenguAI es forma amb Llengua + AI (Intel·ligència Artificial). És l'expressió de la possibilitat de relacionar el desenvolupament de la nostra llengua (normalització, revitalització, aprenentatge, anàlisi sociològica) amb la IA Generativa.</p>
             </div>
 
             <div class="cta-container">
-                <a href="#prompts-container" class="btn-cta">Accedir al projecte ➔</a>
+                <a href="#prompts-container" class="btn-cta"><span data-i18n="btn_cta">Accedir als prompts</span> ➔</a>
             </div>
         </section>
 
@@ -146,7 +156,7 @@
 
     <!-- PEU DE PÀGINA -->
     <footer class="main-footer-light">
-        <p>Projecte LlenguAI © 2026 — Universitat de València</p>
+        <p>Projecte LlenguAI © 2026 — Universitat de València & IEC</p>
     </footer>
 
     <!-- MODAL: PUJAR PROMPTS (ADMIN) -->
@@ -165,20 +175,19 @@
                 <div class="form-group">
                     <label data-i18n="prompt_type_label">Tipus de Prompt</label>
                     <select id="new-prompt-type" required>
-                        <option value="socioling" data-i18n="opt_type_socio">Situació Sociolingüística</option>
-                        <option value="didactic" data-i18n="opt_type_didactic">Didàctic</option>
-                        <option value="nl" data-i18n="opt_type_nl">Nivell Lingüístic (NL)</option>
-                        <option value="dl" data-i18n="opt_type_dl">Desenvolupament / Tècnic (DL)</option>
+                        <option value="socioling" data-i18n="opt_type_socio">Situació Sociolingüística (SL)</option>
+                        <option value="didactic" data-i18n="opt_type_didactic">Prompt mestre de didàctica (DL)</option>
+                        <option value="nl" data-i18n="opt_type_nl">Prompt mestre de normalització (NL)</option>
                     </select>
                 </div>
                 <div class="form-group">
                     <label data-i18n="prompt_cat_label">Matèria / Àmbit</label>
-                    <select id="new-prompt-category" required></select>
+                    <input type="text" id="new-prompt-category" placeholder="Ex. Valencià, Secundària, Comerç..." required>
                 </div>
                 <div class="form-group">
                     <label data-i18n="prompt_body_label">Contingut del Prompt</label>
                     <textarea id="new-prompt-body" rows="6" required></textarea>
-                    <small data-i18n="prompt_body_help">Important: Copia i pega el prompt strictly en text pla (sense formats de Word o HTML).</small>
+                    <small data-i18n="prompt_body_help">Copieu i pegueu el prompt directament en text pla.</small>
                 </div>
                 <div class="modal-actions">
                     <button type="button" id="btn-close-modal" class="btn-secondary" data-i18n="btn_cancel">Cancel·lar</button>
