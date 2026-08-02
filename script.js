@@ -1,10 +1,137 @@
-// 1. CONFIGURACIÓ DE SUPABASE I CORREUS DE REVISIÓ
-const SUPABASE_URL = 'https://amswkfdhwashotagrhfo.supabase.co';
-const SUPABASE_KEY = 'sb_publishable_J-PhmX7Awpb8UwDYXhYwWg_iISrccBy';
+// --- CONFIGURACIÓ DE SUPABASE ---
+const SUPABASE_URL = "https://paxrolsjynqivoeltoyk.supabase.co";
+const SUPABASE_KEY = "AQUÍ_VA_EL_TEU_TOKEN_ANON_LLARG_eyJ..."; // Substitueix per la teua clau anon
+
 const supabaseClient = window.supabase ? window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY) : null;
 
-// --- DADES D'EXEMPLE I ESTAT LOCAL ---
+// --- DADES LOCALS I TRADUCCIONS (i18n) ---
 let allPrompts = [];
+
+const i18nTranslations = {
+    ca: {
+        page_title: "Projecte LlenguAI",
+        btn_admin: "Pujar Prompts",
+        socio_title: "Situació sociolingüística",
+        opt_know: "Coneixements",
+        opt_uses: "Usos",
+        opt_attitudes: "Actituds",
+        lbl_ambit: "Indiqueu l’àmbit:",
+        opt_select: "[municipi, comarca, classe social, sector laboral, etc.]",
+        ambit_municipi: "Municipi",
+        ambit_comarca: "Comarca",
+        ambit_social: "Classe social",
+        ambit_laboral: "Sector laboral",
+        ambit_altres: "Altres",
+        didactic_title: "Prompts didàctics",
+        lbl_materia_didactic: "Indiqueu matèria del prompt didàctic:",
+        opt_select_materia: "Seleccioneu la matèria...",
+        btn_download_form: "📥 Descarregueu el formulari",
+        nl_title: "Prompts de normalització lingüística",
+        lbl_materia_nl: "Indiqueu matèria del prompt de normalització lingüística:",
+        btn_download_form_nl: "📥 Descarregueu el formulari",
+        search_placeholder: "Cercar prompts per paraula clau, matèria, autor...",
+        list_prompts_title: "Relació de prompts",
+        about_title: "Sobre el projecte",
+        about_text: "La paraula LlenguAI es forma amb Llengua + AI (Intel·ligència Artificial). És l'expressió de la possibilitat de relacionar el desenvolupament de la nostra llengua amb la IA Generativa.",
+        btn_cta: "Accedir als prompts",
+        admin_panel_title: "Panell de Gestió de Prompts",
+        prompt_title_label: "Títol del Prompt",
+        prompt_author_label: "Nom de la persona que carrega el prompt",
+        prompt_type_label: "Tipus de Prompt",
+        opt_type_socio: "Situació Sociolingüística (SL)",
+        opt_type_didactic: "Prompt mestre de didàctica (DL)",
+        opt_type_nl: "Prompt mestre de normalització (NL)",
+        prompt_cat_label: "Matèria / Àmbit",
+        prompt_body_label: "Contingut del Prompt",
+        prompt_body_help: "Copieu i pegueu el prompt directament en text pla.",
+        btn_cancel: "Cancel·lar",
+        btn_save_prompt: "Guardar Prompt",
+        btn_copy: "Copiar Prompt",
+        btn_copied: "Copiat!"
+    },
+    es: {
+        page_title: "Proyecto LlenguAI",
+        btn_admin: "Subir Prompts",
+        socio_title: "Situación sociolingüística",
+        opt_know: "Conocimientos",
+        opt_uses: "Usos",
+        opt_attitudes: "Actitudes",
+        lbl_ambit: "Indique el ámbito:",
+        opt_select: "[municipio, comarca, clase social, sector laboral, etc.]",
+        ambit_municipi: "Municipio",
+        ambit_comarca: "Comarca",
+        ambit_social: "Clase social",
+        ambit_laboral: "Sector laboral",
+        ambit_altres: "Otros",
+        didactic_title: "Prompts didácticos",
+        lbl_materia_didactic: "Indique materia del prompt didáctico:",
+        opt_select_materia: "Seleccione la materia...",
+        btn_download_form: "📥 Descargar el formulario",
+        nl_title: "Prompts de normalización lingüística",
+        lbl_materia_nl: "Indique materia del prompt de normalización lingüística:",
+        btn_download_form_nl: "📥 Descargar el formulario",
+        search_placeholder: "Buscar prompts por palabra clave, materia, autor...",
+        list_prompts_title: "Relación de prompts",
+        about_title: "Sobre el proyecto",
+        about_text: "La palabra LlenguAI se forma con Llengua + AI (Inteligencia Artificial). Es la expresión de la posibilidad de relacionar el desarrollo de nuestra lengua con la IA Generativa.",
+        btn_cta: "Acceder a los prompts",
+        admin_panel_title: "Panel de Gestión de Prompts",
+        prompt_title_label: "Título del Prompt",
+        prompt_author_label: "Nombre de la persona que carga el prompt",
+        prompt_type_label: "Tipo de Prompt",
+        opt_type_socio: "Situación Sociolingüística (SL)",
+        opt_type_didactic: "Prompt maestro de didáctica (DL)",
+        opt_type_nl: "Prompt maestro de normalización (NL)",
+        prompt_cat_label: "Materia / Ámbito",
+        prompt_body_label: "Contenido del Prompt",
+        prompt_body_help: "Copie y pegue el prompt directamente en texto plano.",
+        btn_cancel: "Cancelar",
+        btn_save_prompt: "Guardar Prompt",
+        btn_copy: "Copiar Prompt",
+        btn_copied: "¡Copiado!"
+    },
+    en: {
+        page_title: "Project LlenguAI",
+        btn_admin: "Upload Prompts",
+        socio_title: "Sociolinguistic situation",
+        opt_know: "Knowledge",
+        opt_uses: "Uses",
+        opt_attitudes: "Attitudes",
+        lbl_ambit: "Select scope:",
+        opt_select: "[municipality, region, social class, work sector, etc.]",
+        ambit_municipi: "Municipality",
+        ambit_comarca: "Region",
+        ambit_social: "Social class",
+        ambit_laboral: "Work sector",
+        ambit_altres: "Others",
+        didactic_title: "Didactic prompts",
+        lbl_materia_didactic: "Select subject for didactic prompt:",
+        opt_select_materia: "Select subject...",
+        btn_download_form: "📥 Download form",
+        nl_title: "Language normalization prompts",
+        lbl_materia_nl: "Select subject for language normalization prompt:",
+        btn_download_form_nl: "📥 Download form",
+        search_placeholder: "Search prompts by keyword, subject, author...",
+        list_prompts_title: "List of prompts",
+        about_title: "About the project",
+        about_text: "The word LlenguAI combines Llengua (Language) + AI (Artificial Intelligence). It represents the possibility of combining language development with Generative AI.",
+        btn_cta: "Access prompts",
+        admin_panel_title: "Prompt Management Panel",
+        prompt_title_label: "Prompt Title",
+        prompt_author_label: "Author name",
+        prompt_type_label: "Prompt Type",
+        opt_type_socio: "Sociolinguistic Situation (SL)",
+        opt_type_didactic: "Master Didactic Prompt (DL)",
+        opt_type_nl: "Master Normalization Prompt (NL)",
+        prompt_cat_label: "Subject / Field",
+        prompt_body_label: "Prompt Content",
+        prompt_body_help: "Copy and paste prompt directly in plain text.",
+        btn_cancel: "Cancel",
+        btn_save_prompt: "Save Prompt",
+        btn_copy: "Copy Prompt",
+        btn_copied: "Copied!"
+    }
+};
 
 // --- ELEMENTS DEL DOM ---
 const promptsContainer = document.getElementById('prompts-container');
@@ -21,7 +148,7 @@ document.addEventListener('DOMContentLoaded', () => {
     setupEventListeners();
 });
 
-// --- CARREGA DE PROMPTS ---
+// --- CARREGA DE PROMPTS DES DE SUPABASE ---
 async function fetchPrompts() {
     if (supabaseClient) {
         try {
@@ -31,41 +158,41 @@ async function fetchPrompts() {
                 .order('created_at', { ascending: false });
 
             if (error) throw error;
-            if (data) {
+            if (data && data.length > 0) {
                 allPrompts = data;
                 renderPrompts(allPrompts);
                 return;
             }
         } catch (err) {
-            console.warn('Error carregant de Supabase, usant dades de mostra:', err);
+            console.warn('Usant dades de mostra locals:', err);
         }
     }
 
-    // Dades de reserva si no hi ha connexió amb la base de dades
+    // Dades de mostra per defecte si no es connecta a la BD
     allPrompts = [
         {
             id: 1,
             title: "Anàlisi d'usos lingüístics municipals",
-            author: "Equip LlenguAI",
+            author: "Projecte LlenguAI",
             type: "socioling",
             category: "municipi",
             body: "Actua com un sociolingüista expert. Analitza la situació dels usos lingüístics en l'àmbit municipal indicat..."
         },
         {
             id: 2,
-            title: "Unitat didàctica sobre la variació dialectal",
-            author: "Equip LlenguAI",
-            type: "dl",
+            title: "Prompt mestre de didàctica de la llengua",
+            author: "Projecte LlenguAI",
+            type: "didactic",
             category: "secundaria",
-            body: "Crea una seqüència didàctica de 3 sessions per a alumnes de secundària centrada en reconéixer les variants dialectals..."
+            body: "Dissenya una unitat didàctica estructurada per al desenvolupament de la competència comunicativa..."
         },
         {
             id: 3,
-            title: "Avaluació de la competència escrita (Nivell C1)",
-            author: "Equip LlenguAI",
+            title: "Prompt mestre de normalització lingüística",
+            author: "Projecte LlenguAI",
             type: "nl",
-            category: "c1",
-            body: "Genera una rúbrica d'avaluació detallada per a corregir un text d'opinió corresponent al nivell C1..."
+            category: "dinamitzacio",
+            body: "Elabora una estratègia de foment i dinamització de l'ús del valencià en entorns institucionals o locals..."
         }
     ];
 
@@ -78,7 +205,7 @@ function renderPrompts(prompts) {
     promptsContainer.innerHTML = '';
 
     if (prompts.length === 0) {
-        promptsContainer.innerHTML = '<p style="color: #64748b; grid-column: 1/-1;">No s\'han trobat prompts que coincidisquen amb la cerca.</p>';
+        promptsContainer.innerHTML = '<p style="color: #64748b; grid-column: 1/-1; text-align: center;">No s\'han trobat prompts que coincidisquen amb la cerca.</p>';
         return;
     }
 
@@ -163,7 +290,7 @@ function setupEventListeners() {
                     if (error) throw error;
                     fetchPrompts();
                 } catch (err) {
-                    console.error('Error afegint prompt a Supabase:', err);
+                    console.error('Error guardant prompt:', err);
                     allPrompts.unshift({ ...newPrompt, id: Date.now() });
                     renderPrompts(allPrompts);
                 }
@@ -177,12 +304,33 @@ function setupEventListeners() {
         });
     }
 
-    // Selector d'idioma
+    // Gestió del canvi d'idioma
     langButtons.forEach(btn => {
         btn.addEventListener('click', () => {
             langButtons.forEach(b => b.classList.remove('active'));
             btn.classList.add('active');
+            const lang = btn.getAttribute('data-lang');
+            changeLanguage(lang);
         });
+    });
+}
+
+// --- CANVI D'IDIOMA (i18n) ---
+function changeLanguage(lang) {
+    const langData = i18nTranslations[lang] || i18nTranslations['ca'];
+
+    document.querySelectorAll('[data-i18n]').forEach(element => {
+        const key = element.getAttribute('data-i18n');
+        if (langData[key]) {
+            element.textContent = langData[key];
+        }
+    });
+
+    document.querySelectorAll('[data-i18n-placeholder]').forEach(element => {
+        const key = element.getAttribute('data-i18n-placeholder');
+        if (langData[key]) {
+            element.placeholder = langData[key];
+        }
     });
 }
 
@@ -198,7 +346,7 @@ function copyToClipboard(text, buttonElement) {
             buttonElement.style.backgroundColor = '';
         }, 2000);
     }).catch(err => {
-        console.error('Error en copiar al porta-retalls:', err);
+        console.error('Error en copiar:', err);
     });
 }
 
