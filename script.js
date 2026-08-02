@@ -43,7 +43,7 @@ const TRANSLATIONS = {
         opt_type_nl: "Nivell Lingüístic (NL)",
         prompt_cat_label: "Matèria / Àmbit",
         prompt_body_label: "Contingut del Prompt",
-        prompt_body_help: "Important: Copia i pega el prompt estrictament en text pla (sense formats de Word o HTML).",
+        prompt_body_help: "Important: Copia i pega el prompt strictly en text pla (sense formats de Word o HTML).",
         btn_cancel: "Cancel·lar",
         btn_save_prompt: "Guardar Prompt",
         ai_assistant_title: "Assistent de Consulta — Projecte LlenguAI",
@@ -390,7 +390,7 @@ function actualitzarCategoriesModal(tipus) {
     });
 }
 
-// 5. GESTIÓ D'IDIOMES (i18n)
+// 5. GESTIÓ D'IDIOMES (i18n) AMB SEGUIMENT EN GA4
 function configurarIdiomes() {
     const btns = document.querySelectorAll('.lang-btn');
     btns.forEach(btn => {
@@ -401,6 +401,13 @@ function configurarIdiomes() {
                 btns.forEach(b => b.classList.remove('active'));
                 e.target.classList.add('active');
                 canviarIdioma(lang);
+
+                // Esdeveniment Google Analytics 4
+                if (typeof gtag === 'function') {
+                    gtag('event', 'change_language', {
+                        'language': lang
+                    });
+                }
             }
         });
     });
@@ -492,6 +499,15 @@ function mostrarPrompts(llista) {
     document.querySelectorAll('.btn-copy').forEach(btn => {
         btn.addEventListener('click', (e) => {
             const text = decodeURIComponent(e.currentTarget.getAttribute('data-text'));
+            
+            // Esdeveniment Google Analytics 4
+            if (typeof gtag === 'function') {
+                gtag('event', 'copy_prompt', {
+                    'event_category': 'engagement',
+                    'prompt_preview': text.substring(0, 30)
+                });
+            }
+
             navigator.clipboard.writeText(text).then(() => {
                 const originalText = e.currentTarget.innerHTML;
                 e.currentTarget.innerHTML = '✅ Copiat!';
@@ -588,6 +604,13 @@ function configurarEsdeveniments() {
             const email = document.getElementById('contact-email').value.trim();
             const tipus = document.getElementById('contact-type').value;
             const missatge = document.getElementById('contact-message').value.trim();
+
+            // Esdeveniment Google Analytics 4
+            if (typeof gtag === 'function') {
+                gtag('event', 'send_inquiry', {
+                    'inquiry_type': tipus
+                });
+            }
 
             // Selecció de la variable de correu segons la tipologia
             let correuDesti = correu_SL;
