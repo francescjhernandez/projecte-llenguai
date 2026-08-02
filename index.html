@@ -23,19 +23,23 @@
 </head>
 <body>
 
-    <!-- CAPÇALERA -->
+    <!-- CAPÇALERA CLARA -->
     <header class="main-header">
         <div class="header-container">
-            <h1 data-i18n="header_title">Projecte LlenguAI</h1>
+            <!-- Brand / Logo amb imatge -->
+            <div class="brand">
+                <img src="https://www.uv.es/senex/imatgeLlenguaAI.png" alt="Logo Projecte LlenguAI" class="header-logo">
+                <span class="brand-title"><strong class="brand-red">Projecte</strong> <strong class="brand-yellow">LlenguAI</strong></span>
+            </div>
             
-            <!-- Selector d'idiomes -->
+            <!-- Selector d'idiomes estil pastilla -->
             <div class="lang-selector">
-                <button id="btn-ca" class="lang-btn active">VAL</button>
-                <button id="btn-an" class="lang-btn">OCI</button>
-                <button id="btn-es" class="lang-btn">CAS</button>
-                <button id="btn-en" class="lang-btn">ENG</button>
-                <button id="btn-fr" class="lang-btn">FRA</button>
-                <button id="btn-pt" class="lang-btn">POR</button>
+                <button id="btn-ca" class="lang-btn active">Català / Valencià</button>
+                <button id="btn-an" class="lang-btn">Aranés</button>
+                <button id="btn-es" class="lang-btn">Castellano</button>
+                <button id="btn-en" class="lang-btn">English</button>
+                <button id="btn-fr" class="lang-btn">Francés</button>
+                <button id="btn-pt" class="lang-btn">Português</button>
             </div>
 
             <!-- Botó Administració / Pujar Prompts -->
@@ -45,6 +49,11 @@
 
     <!-- CONTINGUT PRINCIPAL -->
     <main class="main-content">
+
+        <!-- Imtage principal central -->
+        <section class="hero-image-container">
+            <img src="https://www.uv.es/senex/imatgeLlenguaAI.png" alt="Projecte LlenguAI" class="hero-image">
+        </section>
 
         <!-- Secció: Situació Sociolingüística -->
         <section class="card-section">
@@ -82,7 +91,7 @@
         <!-- Secció: Prompts Didàctics -->
         <section class="card-section">
             <h2>
-                <span class="section-color-indicator badge-didactic">DID</span>
+                <span class="section-color-indicator badge-dl">DL</span>
                 <span data-i18n="didactic_title">Prompts didàctics</span>
             </h2>
             <div class="form-group">
@@ -121,15 +130,23 @@
             </div>
         </section>
 
+        <!-- Secció: Sobre el projecte -->
+        <section class="about-card">
+            <div class="about-box">
+                <h3>Sobre el projecte</h3>
+                <p>[Espai reservat per a la descripció del projecte. Pròximament s'afegirà ací tota la informació i els detalls corresponents.]</p>
+            </div>
+
+            <div class="cta-container">
+                <a href="#prompts-container" class="btn-cta">Accedir al projecte ➔</a>
+            </div>
+        </section>
+
     </main>
 
     <!-- PEU DE PÀGINA -->
-    <footer class="main-footer">
-        <p data-i18n="footer_text">PROJECTE LLENGUAI © 2026</p>
-        <p>
-            <span data-i18n="support_label">Consultes i suport:</span> 
-            <a href="#" id="open-contact-btn" data-i18n="link_ai_assistant">Finestra de consulta (Assistent IA)</a>
-        </p>
+    <footer class="main-footer-light">
+        <p>Projecte LlenguAI © 2026 — Universitat de València</p>
     </footer>
 
     <!-- MODAL: PUJAR PROMPTS (ADMIN) -->
@@ -161,44 +178,11 @@
                 <div class="form-group">
                     <label data-i18n="prompt_body_label">Contingut del Prompt</label>
                     <textarea id="new-prompt-body" rows="6" required></textarea>
-                    <small data-i18n="prompt_body_help">Important: Copia i pega el prompt estrictament en text pla (sense formats de Word o HTML).</small>
+                    <small data-i18n="prompt_body_help">Important: Copia i pega el prompt strictly en text pla (sense formats de Word o HTML).</small>
                 </div>
                 <div class="modal-actions">
                     <button type="button" id="btn-close-modal" class="btn-secondary" data-i18n="btn_cancel">Cancel·lar</button>
                     <button type="submit" class="btn-primary" data-i18n="btn_save_prompt">Guardar Prompt</button>
-                </div>
-            </form>
-        </div>
-    </div>
-
-    <!-- MODAL: CONSULTES / ASSISTENT IA -->
-    <div id="contact-modal" class="modal-overlay" style="display: none;">
-        <div class="modal-content">
-            <h2 data-i18n="ai_assistant_title">Assistent de Consulta — Projecte LlenguAI</h2>
-            <form id="contact-form">
-                <div class="form-group">
-                    <label data-i18n="contact_name_label">Nom i cognoms</label>
-                    <input type="text" id="contact-name" required>
-                </div>
-                <div class="form-group">
-                    <label data-i18n="contact_email_label">Correu electrònic de contacte</label>
-                    <input type="email" id="contact-email" required>
-                </div>
-                <div class="form-group">
-                    <label data-i18n="contact_type_label">Tipus de consulta</label>
-                    <select id="contact-type" required>
-                        <option value="sl" data-i18n="opt_support_sl">Consulta lingüística (SL)</option>
-                        <option value="nl" data-i18n="opt_support_nl">Consulta sobre nivell lingüístic / docent (NL)</option>
-                        <option value="dl" data-i18n="opt_support_dl">Incidència tècnica / desenvolupament (DL)</option>
-                    </select>
-                </div>
-                <div class="form-group">
-                    <label data-i18n="ai_query_label">Escriu la teua consulta</label>
-                    <textarea id="contact-message" rows="5" required></textarea>
-                </div>
-                <div class="modal-actions">
-                    <button type="button" id="btn-close-contact-modal" class="btn-secondary" data-i18n="btn_cancel">Cancel·lar</button>
-                    <button type="submit" class="btn-primary" data-i18n="btn_send_ai_query">Enviar consulta</button>
                 </div>
             </form>
         </div>
