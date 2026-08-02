@@ -56,6 +56,7 @@
             display: flex;
             gap: 0.5rem;
             align-items: center;
+            flex-wrap: wrap;
         }
 
         .lang-btn, .admin-btn {
@@ -362,6 +363,21 @@
             cursor: pointer;
         }
 
+        .btn-link {
+            background: none;
+            border: none;
+            color: var(--accent-color);
+            text-decoration: underline;
+            cursor: pointer;
+            padding: 0;
+            font-size: inherit;
+            font-family: inherit;
+        }
+
+        .btn-link:hover {
+            color: #1d4ed8;
+        }
+
         footer {
             text-align: center;
             padding: 1.5rem;
@@ -372,15 +388,6 @@
             display: flex;
             flex-direction: column;
             gap: 0.35rem;
-        }
-
-        footer a {
-            color: var(--accent-color);
-            text-decoration: none;
-        }
-
-        footer a:hover {
-            text-decoration: underline;
         }
     </style>
 </head>
@@ -396,6 +403,7 @@
         <div style="display: flex; gap: 1rem; align-items: center; flex-wrap: wrap;">
             <div class="lang-container">
                 <button class="lang-btn active" id="btn-ca">Català / Valencià</button>
+                <button class="lang-btn" id="btn-an">Aranés</button>
                 <button class="lang-btn" id="btn-es">Castellano</button>
                 <button class="lang-btn" id="btn-en">English</button>
                 <button class="lang-btn" id="btn-fr">Français</button>
@@ -443,7 +451,6 @@
                 <label for="didactic-materia" data-i18n="lbl_materia_didactic">Indiqueu matèria del prompt didàctic:</label>
                 <select id="didactic-materia">
                     <option value="" disabled selected data-i18n="opt_select_materia">Seleccioneu la matèria...</option>
-                    <!-- Les opcions es carregaran dinàmicament des de JS -->
                 </select>
             </div>
         </section>
@@ -460,7 +467,6 @@
                 <label for="nl-materia" data-i18n="lbl_materia_nl">Indiqueu matèria del prompt de NL:</label>
                 <select id="nl-materia">
                     <option value="" disabled selected data-i18n="opt_select_materia">Seleccioneu la matèria...</option>
-                    <!-- Les opcions es carregaran dinàmicament des de JS -->
                 </select>
             </div>
         </section>
@@ -506,14 +512,13 @@
                 <div class="form-group">
                     <label for="new-prompt-category" id="subject-label" data-i18n="prompt_cat_label">Matèria / Àmbit</label>
                     <select id="new-prompt-category" required>
-                        <!-- Les opcions es generen dinàmicament des de JS -->
                     </select>
                 </div>
 
                 <div class="form-group">
                     <label for="new-prompt-body" data-i18n="prompt_body_label">Contingut del Prompt</label>
                     <textarea id="new-prompt-body" required placeholder="Copia i pega ací el prompt en text pla..."></textarea>
-                    <small class="help-text" data-i18n="prompt_body_help">Important: Copia i pega el prompt estrictament en text pla (sense formats de Word o HTML).</small>
+                    <small class="help-text" data-i18n="prompt_body_help">Important: Copia i pega el prompt strictly en text pla (sense formats de Word o HTML).</small>
                 </div>
 
                 <div class="modal-actions">
@@ -524,10 +529,47 @@
         </div>
     </div>
 
+    <!-- Modal d'Assistent IA i Suport -->
+    <div id="contact-modal" class="modal">
+        <div class="modal-content">
+            <h2 data-i18n="ai_assistant_title">Assistent de Consulta — Projecte LlenguAI</h2>
+            <form id="contact-form">
+                <div class="form-group">
+                    <label for="contact-name" data-i18n="contact_name_label">Nom i cognoms</label>
+                    <input type="text" id="contact-name" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="contact-email" data-i18n="contact_email_label">Correu electrònic de contacte</label>
+                    <input type="email" id="contact-email" required placeholder="nom@exemple.com">
+                </div>
+
+                <div class="form-group">
+                    <label for="contact-type" data-i18n="contact_type_label">Tipus de consulta</label>
+                    <select id="contact-type" required>
+                        <option value="sl" data-i18n="opt_support_sl">Consulta lingüística (SL)</option>
+                        <option value="nl" data-i18n="opt_support_nl">Consulta sobre nivell lingüístic / docent (NL)</option>
+                        <option value="dl" data-i18n="opt_support_dl">Incidència tècnica / desenvolupament (DL)</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="contact-message" data-i18n="ai_query_label">Escriu la teua consulta</label>
+                    <textarea id="contact-message" required placeholder="Fes la teua pregunta ací. L'assistent IA intentarà resoldre-la i, si és necessari, la remetrà a un revisor humà..."></textarea>
+                </div>
+
+                <div class="modal-actions">
+                    <button type="button" class="btn-secondary" id="btn-close-contact-modal" data-i18n="btn_cancel">Cancel·lar</button>
+                    <button type="submit" class="btn-primary" data-i18n="btn_send_ai_query">Enviar consulta</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
     <!-- Peu de pàgina -->
     <footer>
         <p data-i18n="footer_text">PROJECTE LLENGUAI © 2026</p>
-        <p><span data-i18n="support_label">Suport i contacte:</span> <a href="mailto:suportllenguai@gmail.com">suportllenguai@gmail.com</a></p>
+        <p><span data-i18n="support_label">Consultes i suport:</span> <button id="open-contact-btn" class="btn-link" data-i18n="link_ai_assistant">Finestra de consulta (Assistent IA)</button></p>
     </footer>
 
     <!-- Script principal com a MÒDUL -->
