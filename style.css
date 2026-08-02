@@ -12,12 +12,11 @@ body {
     line-height: 1.5;
 }
 
-/* --- CAPÇALERA --- */
+/* --- CAPÇALERA BLANCA --- */
 .main-header {
-    background-color: #0f172a;
-    color: #ffffff;
-    padding: 1rem 2rem;
-    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+    background-color: #ffffff;
+    padding: 0.8rem 2rem;
+    border-bottom: 1px solid #e2e8f0;
 }
 
 .header-container {
@@ -30,56 +29,78 @@ body {
     gap: 1rem;
 }
 
-.main-header h1 {
-    font-size: 1.5rem;
+/* Brand i Logo */
+.brand {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+}
+
+.header-logo {
+    height: 36px;
+    width: auto;
+    object-fit: contain;
+}
+
+.brand-title {
+    font-size: 1.3rem;
     font-weight: 700;
 }
 
-/* Selector d'idiomes */
+.brand-red {
+    color: #cc0000;
+}
+
+.brand-yellow {
+    color: #d97706;
+}
+
+/* Selector d'idiomes estil pastilla clara */
 .lang-selector {
     display: flex;
-    gap: 0.25rem;
-    background-color: #1e293b;
-    padding: 0.25rem;
-    border-radius: 6px;
+    gap: 0.2rem;
+    background-color: #f1f5f9;
+    padding: 0.3rem;
+    border-radius: 30px;
 }
 
 .lang-btn {
     background: transparent;
     border: none;
-    color: #94a3b8;
-    padding: 0.4rem 0.6rem;
-    font-size: 0.8rem;
+    color: #64748b;
+    padding: 0.4rem 0.9rem;
+    font-size: 0.85rem;
     font-weight: 600;
-    border-radius: 4px;
+    border-radius: 20px;
     cursor: pointer;
     transition: all 0.2s ease;
 }
 
 .lang-btn:hover {
-    color: #ffffff;
+    color: #0f172a;
 }
 
 .lang-btn.active {
-    background-color: #2563eb;
+    background-color: #dc2626;
     color: #ffffff;
+    box-shadow: 0 2px 4px rgba(220, 38, 38, 0.25);
 }
 
 /* --- BOTÓ PRIMARI I SECUNDARI --- */
 .btn-primary {
-    background-color: #2563eb;
+    background-color: #dc2626;
     color: #ffffff;
     border: none;
-    padding: 0.5rem 1rem;
+    padding: 0.5rem 1.2rem;
     font-size: 0.9rem;
     font-weight: 600;
-    border-radius: 6px;
+    border-radius: 20px;
     cursor: pointer;
     transition: background-color 0.2s ease;
 }
 
 .btn-primary:hover {
-    background-color: #1d4ed8;
+    background-color: #b91c1c;
 }
 
 .btn-secondary {
@@ -108,6 +129,20 @@ body {
     gap: 2rem;
 }
 
+.hero-image-container {
+    text-align: center;
+    margin-bottom: 1rem;
+}
+
+.hero-image {
+    max-width: 100%;
+    max-height: 350px;
+    width: auto;
+    height: auto;
+    border-radius: 12px;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.05);
+}
+
 .card-section {
     background-color: #ffffff;
     border: 1px solid #e2e8f0;
@@ -116,7 +151,6 @@ body {
     box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
 }
 
-/* Títols de les seccions amb alineació per a l'indicador */
 .card-section h2 {
     font-size: 1.25rem;
     margin-bottom: 1rem;
@@ -157,8 +191,8 @@ body {
 .form-group input:focus,
 .form-group textarea:focus {
     outline: none;
-    border-color: #2563eb;
-    box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+    border-color: #dc2626;
+    box-shadow: 0 0 0 3px rgba(220, 38, 38, 0.1);
 }
 
 /* --- SECCIÓ DE CERCA --- */
@@ -173,7 +207,7 @@ body {
 
 .search-section input:focus {
     outline: none;
-    border-color: #2563eb;
+    border-color: #dc2626;
 }
 
 /* --- REIXETA DE PROMPTS --- */
@@ -230,35 +264,24 @@ body {
     padding: 0.2rem 0.5rem;
 }
 
-/* Color per a Sociolingüística (Blau) */
 .badge-socioling {
     background-color: #e0f2fe;
     color: #0369a1;
     border: 1px solid #bae6fd;
 }
 
-/* Color per a Didàctic (Verd) */
-.badge-didactic {
-    background-color: #dcfce7;
-    color: #15803d;
-    border: 1px solid #bbf7d0;
-}
-
-/* Color per a NL - Nivell Lingüístic (Taronja) */
 .badge-nl {
     background-color: #fef3c7;
     color: #b45309;
     border: 1px solid #fde68a;
 }
 
-/* Color per a DL - Desenvolupament / Tècnic (Violeta) */
 .badge-dl {
-    background-color: #f3e8ff;
-    color: #6b21a8;
-    border: 1px solid #e9d5ff;
+    background-color: #dcfce7;
+    color: #15803d;
+    border: 1px solid #bbf7d0;
 }
 
-/* Color per defecte */
 .badge-default {
     background-color: #f1f5f9;
     color: #475569;
@@ -286,7 +309,7 @@ body {
 }
 
 .btn-copy {
-    background-color: #2563eb;
+    background-color: #dc2626;
     color: #ffffff;
     border: none;
     padding: 0.5rem 1rem;
@@ -298,7 +321,73 @@ body {
 }
 
 .btn-copy:hover {
-    background-color: #1d4ed8;
+    background-color: #b91c1c;
+}
+
+/* --- SOBRE EL PROJECTE I CTA --- */
+.about-card {
+    background-color: #ffffff;
+    border-radius: 16px;
+    padding: 2.5rem 2rem;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.04);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2rem;
+    max-width: 900px;
+    margin: 1rem auto 0 auto;
+    width: 100%;
+}
+
+.about-box {
+    border: 1.5px dashed #cbd5e1;
+    border-radius: 12px;
+    padding: 2rem;
+    text-align: center;
+    width: 100%;
+    background-color: #fafafa;
+}
+
+.about-box h3 {
+    color: #334155;
+    font-size: 1.2rem;
+    font-weight: 700;
+    margin-bottom: 0.8rem;
+}
+
+.about-box p {
+    color: #64748b;
+    font-size: 0.95rem;
+    line-height: 1.6;
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.cta-container {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+}
+
+.btn-cta {
+    background-color: #c81e1e;
+    color: #ffffff;
+    font-size: 1.1rem;
+    font-weight: 700;
+    padding: 0.9rem 2.2rem;
+    border-radius: 50px;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    box-shadow: 0 4px 14px rgba(200, 30, 30, 0.35);
+    transition: all 0.2s ease;
+}
+
+.btn-cta:hover {
+    background-color: #a71919;
+    transform: translateY(-1px);
+    box-shadow: 0 6px 18px rgba(200, 30, 30, 0.45);
 }
 
 /* --- FINESTRES MODALS --- */
@@ -340,24 +429,12 @@ body {
     margin-top: 1.5rem;
 }
 
-/* --- PEU DE PÀGINA --- */
-.main-footer {
-    background-color: #0f172a;
-    color: #94a3b8;
+/* --- PEU DE PÀGINA CLAR --- */
+.main-footer-light {
+    background-color: transparent;
+    color: #64748b;
     text-align: center;
-    padding: 2rem 1rem;
-    margin-top: 3rem;
+    padding: 2.5rem 1rem 1.5rem 1rem;
     font-size: 0.9rem;
-    display: flex;
-    flex-direction: column;
-    gap: 0.5rem;
-}
-
-.main-footer a {
-    color: #38bdf8;
-    text-decoration: none;
-}
-
-.main-footer a:hover {
-    text-decoration: underline;
+    font-weight: 500;
 }
