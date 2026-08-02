@@ -41,6 +41,7 @@ const TRANSLATIONS = {
         opt_type_socio: "Situació Sociolingüística",
         opt_type_didactic: "Didàctic",
         opt_type_nl: "Nivell Lingüístic (NL)",
+        opt_type_dl: "Desenvolupament / Tècnic (DL)",
         prompt_cat_label: "Matèria / Àmbit",
         prompt_body_label: "Contingut del Prompt",
         prompt_body_help: "Important: Copia i pega el prompt strictly en text pla (sense formats de Word o HTML).",
@@ -89,6 +90,7 @@ const TRANSLATIONS = {
         opt_type_socio: "Situacion Sociolinguistica",
         opt_type_didactic: "Didactic",
         opt_type_nl: "Nivèu Linguistic (NL)",
+        opt_type_dl: "Desvolopament / Tecnic (DL)",
         prompt_cat_label: "Materia / Ambit",
         prompt_body_label: "Contengut deth Prompt",
         prompt_body_help: "Important: Copiatz e pegatz eth prompt estrictament en tèxte meirada (sense formats de Word o HTML).",
@@ -137,6 +139,7 @@ const TRANSLATIONS = {
         opt_type_socio: "Situación Sociolingüística",
         opt_type_didactic: "Didáctico",
         opt_type_nl: "Nivel Lingüístico (NL)",
+        opt_type_dl: "Desarrollo / Técnico (DL)",
         prompt_cat_label: "Materia / Ámbito",
         prompt_body_label: "Contenido del Prompt",
         prompt_body_help: "Importante: Copie y pegue el prompt estrictamente en texto plano (sin formatos de Word o HTML).",
@@ -185,6 +188,7 @@ const TRANSLATIONS = {
         opt_type_socio: "Sociolinguistic Situation",
         opt_type_didactic: "Educational",
         opt_type_nl: "Linguistic Level (NL)",
+        opt_type_dl: "Development / Technical (DL)",
         prompt_cat_label: "Subject / Area",
         prompt_body_label: "Prompt Content",
         prompt_body_help: "Important: Copy and paste the prompt in plain text only (without Word or HTML formatting).",
@@ -233,6 +237,7 @@ const TRANSLATIONS = {
         opt_type_socio: "Situation sociolinguistique",
         opt_type_didactic: "Didactique",
         opt_type_nl: "Niveau linguistique (NL)",
+        opt_type_dl: "Développement / Technique (DL)",
         prompt_cat_label: "Matière / Domaine",
         prompt_body_label: "Contenu du Prompt",
         prompt_body_help: "Important : Copiez et collez le prompt strictement en texte brut (sans formatage Word ou HTML).",
@@ -281,6 +286,7 @@ const TRANSLATIONS = {
         opt_type_socio: "Situação Sociolinguística",
         opt_type_didactic: "Didático",
         opt_type_nl: "Nível Linguístico (NL)",
+        opt_type_dl: "Desenvolvimento / Técnico (DL)",
         prompt_cat_label: "Matéria / Âmbito",
         prompt_body_label: "Conteúdo do Prompt",
         prompt_body_help: "Importante: Copie e cole o prompt estritamente em texto simples (sem formatação Word ou HTML).",
@@ -333,6 +339,15 @@ const AMBITS_SOCIOLING = [
     "Altres"
 ];
 
+const AMBITS_DL = [
+    "Infraestructura / Servidors",
+    "Base de dades (Supabase)",
+    "Desenvolupament Frontend",
+    "Integració API / IA",
+    "Seguretat i Autenticació",
+    "Altres"
+];
+
 // Variables globals d'estat
 let totsElsPrompts = [];
 let idiomaActual = 'ca';
@@ -381,6 +396,7 @@ function actualitzarCategoriesModal(tipus) {
     if (tipus === 'socioling') opcions = AMBITS_SOCIOLING;
     else if (tipus === 'didactic') opcions = MATERIES_DIDACTIC;
     else if (tipus === 'nl') opcions = MATERIES_NL;
+    else if (tipus === 'dl') opcions = AMBITS_DL;
 
     opcions.forEach(op => {
         const opt = document.createElement('option');
@@ -472,14 +488,26 @@ function mostrarPrompts(llista) {
         const card = document.createElement('article');
         card.className = 'prompt-card';
 
-        let badgeText = prompt.tipus || 'General';
-        if (prompt.tipus === 'socioling') badgeText = 'Sociolingüística';
-        if (prompt.tipus === 'didactic') badgeText = 'Didàctic';
-        if (prompt.tipus === 'nl') badgeText = 'Nivell Lingüístic';
+        let badgeText = 'General';
+        let badgeClass = 'badge-default';
+
+        if (prompt.tipus === 'socioling') {
+            badgeText = 'Sociolingüística';
+            badgeClass = 'badge-socioling';
+        } else if (prompt.tipus === 'didactic') {
+            badgeText = 'Didàctic';
+            badgeClass = 'badge-didactic';
+        } else if (prompt.tipus === 'nl') {
+            badgeText = 'Nivell Lingüístic (NL)';
+            badgeClass = 'badge-nl';
+        } else if (prompt.tipus === 'dl') {
+            badgeText = 'Desenvolupament (DL)';
+            badgeClass = 'badge-dl';
+        }
 
         card.innerHTML = `
             <div class="prompt-header">
-                <span class="prompt-badge">${badgeText} — ${prompt.categoria || ''}</span>
+                <span class="prompt-badge ${badgeClass}">${badgeText} — ${prompt.categoria || ''}</span>
                 <h3>${prompt.titol}</h3>
                 <div class="prompt-author">Per: ${prompt.autor || 'Anònim'}</div>
             </div>
