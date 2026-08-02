@@ -1,458 +1,369 @@
-/* --- RESET I BASE --- */
-* {
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0;
+// --- CONFIGURACIÓ DE SUPABASE ---
+const SUPABASE_URL = "https://paxrolsjynqivoeltoyk.supabase.co";
+const SUPABASE_KEY = "AQUÍ_VA_EL_TEU_TOKEN_ANON_LLARG_eyJ..."; // Substitueix per la teua clau anon
+
+const supabaseClient = window.supabase ? window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY) : null;
+
+// --- DADES LOCALS I TRADUCCIONS (i18n) ---
+let allPrompts = [];
+
+const i18nTranslations = {
+    ca: {
+        page_title: "Projecte LlenguAI",
+        btn_admin: "Pujar Prompts",
+        socio_title: "Situació sociolingüística",
+        opt_know: "Coneixements",
+        opt_uses: "Usos",
+        opt_attitudes: "Actituds",
+        lbl_ambit: "Indiqueu l’àmbit:",
+        opt_select: "[municipi, comarca, classe social, sector laboral, etc.]",
+        ambit_municipi: "Municipi",
+        ambit_comarca: "Comarca",
+        ambit_social: "Classe social",
+        ambit_laboral: "Sector laboral",
+        ambit_altres: "Altres",
+        didactic_title: "Prompts didàctics",
+        lbl_materia_didactic: "Indiqueu matèria del prompt didàctic:",
+        opt_select_materia: "Seleccioneu la matèria...",
+        btn_download_form: "📥 Descarregueu el formulari",
+        nl_title: "Prompts de normalització lingüística",
+        lbl_materia_nl: "Indiqueu matèria del prompt de normalització lingüística:",
+        btn_download_form_nl: "📥 Descarregueu el formulari",
+        search_placeholder: "Cercar prompts per paraula clau, matèria, autor...",
+        list_prompts_title: "Relació de prompts",
+        about_title: "Sobre el projecte",
+        about_text: "La paraula LlenguAI es forma amb Llengua + AI (Intel·ligència Artificial). És l'expressió de la possibilitat de relacionar el desenvolupament de la nostra llengua amb la IA Generativa.",
+        btn_cta: "Accedir als prompts",
+        admin_panel_title: "Panell de Gestió de Prompts",
+        prompt_title_label: "Títol del Prompt",
+        prompt_author_label: "Nom de la persona que carrega el prompt",
+        prompt_type_label: "Tipus de Prompt",
+        opt_type_socio: "Situació Sociolingüística (SL)",
+        opt_type_didactic: "Prompt mestre de didàctica (DL)",
+        opt_type_nl: "Prompt mestre de normalització (NL)",
+        prompt_cat_label: "Matèria / Àmbit",
+        prompt_body_label: "Contingut del Prompt",
+        prompt_body_help: "Copieu i pegueu el prompt directament en text pla.",
+        btn_cancel: "Cancel·lar",
+        btn_save_prompt: "Guardar Prompt",
+        btn_copy: "Copiar Prompt",
+        btn_copied: "Copiat!"
+    },
+    es: {
+        page_title: "Proyecto LlenguAI",
+        btn_admin: "Subir Prompts",
+        socio_title: "Situación sociolingüística",
+        opt_know: "Conocimientos",
+        opt_uses: "Usos",
+        opt_attitudes: "Actitudes",
+        lbl_ambit: "Indique el ámbito:",
+        opt_select: "[municipio, comarca, clase social, sector laboral, etc.]",
+        ambit_municipi: "Municipio",
+        ambit_comarca: "Comarca",
+        ambit_social: "Clase social",
+        ambit_laboral: "Sector laboral",
+        ambit_altres: "Otros",
+        didactic_title: "Prompts didácticos",
+        lbl_materia_didactic: "Indique materia del prompt didáctico:",
+        opt_select_materia: "Seleccione la materia...",
+        btn_download_form: "📥 Descargar el formulario",
+        nl_title: "Prompts de normalización lingüística",
+        lbl_materia_nl: "Indique materia del prompt de normalización lingüística:",
+        btn_download_form_nl: "📥 Descargar el formulario",
+        search_placeholder: "Buscar prompts por palabra clave, materia, autor...",
+        list_prompts_title: "Relación de prompts",
+        about_title: "Sobre el proyecto",
+        about_text: "La palabra LlenguAI se forma con Llengua + AI (Inteligencia Artificial). Es la expresión de la posibilidad de relacionar el desarrollo de nuestra lengua con la IA Generativa.",
+        btn_cta: "Acceder a los prompts",
+        admin_panel_title: "Panel de Gestión de Prompts",
+        prompt_title_label: "Título del Prompt",
+        prompt_author_label: "Nombre de la persona que carga el prompt",
+        prompt_type_label: "Tipo de Prompt",
+        opt_type_socio: "Situación Sociolingüística (SL)",
+        opt_type_didactic: "Prompt maestro de didáctica (DL)",
+        opt_type_nl: "Prompt maestro de normalización (NL)",
+        prompt_cat_label: "Materia / Ámbito",
+        prompt_body_label: "Contenido del Prompt",
+        prompt_body_help: "Copie y pegue el prompt directamente en texto plano.",
+        btn_cancel: "Cancelar",
+        btn_save_prompt: "Guardar Prompt",
+        btn_copy: "Copiar Prompt",
+        btn_copied: "¡Copiado!"
+    },
+    en: {
+        page_title: "Project LlenguAI",
+        btn_admin: "Upload Prompts",
+        socio_title: "Sociolinguistic situation",
+        opt_know: "Knowledge",
+        opt_uses: "Uses",
+        opt_attitudes: "Attitudes",
+        lbl_ambit: "Select scope:",
+        opt_select: "[municipality, region, social class, work sector, etc.]",
+        ambit_municipi: "Municipality",
+        ambit_comarca: "Region",
+        ambit_social: "Social class",
+        ambit_laboral: "Work sector",
+        ambit_altres: "Others",
+        didactic_title: "Didactic prompts",
+        lbl_materia_didactic: "Select subject for didactic prompt:",
+        opt_select_materia: "Select subject...",
+        btn_download_form: "📥 Download form",
+        nl_title: "Language normalization prompts",
+        lbl_materia_nl: "Select subject for language normalization prompt:",
+        btn_download_form_nl: "📥 Download form",
+        search_placeholder: "Search prompts by keyword, subject, author...",
+        list_prompts_title: "List of prompts",
+        about_title: "About the project",
+        about_text: "The word LlenguAI combines Llengua (Language) + AI (Artificial Intelligence). It represents the possibility of combining language development with Generative AI.",
+        btn_cta: "Access prompts",
+        admin_panel_title: "Prompt Management Panel",
+        prompt_title_label: "Prompt Title",
+        prompt_author_label: "Author name",
+        prompt_type_label: "Prompt Type",
+        opt_type_socio: "Sociolinguistic Situation (SL)",
+        opt_type_didactic: "Master Didactic Prompt (DL)",
+        opt_type_nl: "Master Normalization Prompt (NL)",
+        prompt_cat_label: "Subject / Field",
+        prompt_body_label: "Prompt Content",
+        prompt_body_help: "Copy and paste prompt directly in plain text.",
+        btn_cancel: "Cancel",
+        btn_save_prompt: "Save Prompt",
+        btn_copy: "Copy Prompt",
+        btn_copied: "Copied!"
+    }
+};
+
+// --- ELEMENTS DEL DOM ---
+const promptsContainer = document.getElementById('prompts-container');
+const searchInput = document.getElementById('search-input');
+const adminModal = document.getElementById('admin-modal');
+const adminBtn = document.getElementById('admin-login-btn');
+const closeModalBtn = document.getElementById('btn-close-modal');
+const addPromptForm = document.getElementById('add-prompt-form');
+const langButtons = document.querySelectorAll('.lang-btn');
+
+// --- INICIALITZACIÓ ---
+document.addEventListener('DOMContentLoaded', () => {
+    fetchPrompts();
+    setupEventListeners();
+});
+
+// --- CARREGA DE PROMPTS DES DE SUPABASE ---
+async function fetchPrompts() {
+    if (supabaseClient) {
+        try {
+            const { data, error } = await supabaseClient
+                .from('prompts')
+                .select('*')
+                .order('created_at', { ascending: false });
+
+            if (error) throw error;
+            if (data && data.length > 0) {
+                allPrompts = data;
+                renderPrompts(allPrompts);
+                return;
+            }
+        } catch (err) {
+            console.warn('Usant dades de mostra locals:', err);
+        }
+    }
+
+    // Dades de mostra per defecte si no es connecta a la BD
+    allPrompts = [
+        {
+            id: 1,
+            title: "Anàlisi d'usos lingüístics municipals",
+            author: "Projecte LlenguAI",
+            type: "socioling",
+            category: "municipi",
+            body: "Actua com un sociolingüista expert. Analitza la situació dels usos lingüístics en l'àmbit municipal indicat..."
+        },
+        {
+            id: 2,
+            title: "Prompt mestre de didàctica de la llengua",
+            author: "Projecte LlenguAI",
+            type: "didactic",
+            category: "secundaria",
+            body: "Dissenya una unitat didàctica estructurada per al desenvolupament de la competència comunicativa..."
+        },
+        {
+            id: 3,
+            title: "Prompt mestre de normalització lingüística",
+            author: "Projecte LlenguAI",
+            type: "nl",
+            category: "dinamitzacio",
+            body: "Elabora una estratègia de foment i dinamització de l'ús del valencià en entorns institucionals o locals..."
+        }
+    ];
+
+    renderPrompts(allPrompts);
 }
 
-body {
-    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
-    background-color: #f8fafc;
-    color: #1e293b;
-    line-height: 1.5;
+// --- RENDERING DE PROMPTS ---
+function renderPrompts(prompts) {
+    if (!promptsContainer) return;
+    promptsContainer.innerHTML = '';
+
+    if (prompts.length === 0) {
+        promptsContainer.innerHTML = '<p style="color: #64748b; grid-column: 1/-1; text-align: center;">No s\'han trobat prompts que coincidisquen amb la cerca.</p>';
+        return;
+    }
+
+    prompts.forEach(prompt => {
+        const card = document.createElement('div');
+        card.className = 'prompt-card';
+
+        let badgeClass = 'badge-default';
+        let badgeLabel = prompt.type ? prompt.type.toUpperCase() : 'GENERAL';
+
+        if (prompt.type === 'socioling' || prompt.type === 'sl') {
+            badgeClass = 'badge-socioling';
+            badgeLabel = 'SL';
+        } else if (prompt.type === 'didactic' || prompt.type === 'dl') {
+            badgeClass = 'badge-dl';
+            badgeLabel = 'DL';
+        } else if (prompt.type === 'nl') {
+            badgeClass = 'badge-nl';
+            badgeLabel = 'NL';
+        }
+
+        card.innerHTML = `
+            <div class="prompt-header">
+                <span class="prompt-badge ${badgeClass}">${badgeLabel}</span>
+                <h3>${escapeHtml(prompt.title)}</h3>
+                <div class="prompt-author">Per: ${escapeHtml(prompt.author || 'Anònim')}</div>
+            </div>
+            <div class="prompt-body">
+                <pre>${escapeHtml(prompt.body)}</pre>
+            </div>
+            <button class="btn-copy" onclick="copyToClipboard(\`${escapeJsString(prompt.body)}\`, this)">Copiar Prompt</button>
+        `;
+
+        promptsContainer.appendChild(card);
+    });
 }
 
-/* --- CAPÇALERA --- */
-.main-header {
-    background-color: #ffffff;
-    padding: 0.8rem 2rem;
-    border-bottom: 1px solid #e2e8f0;
-    position: sticky;
-    top: 0;
-    z-index: 100;
+// --- ESDEVENIMENTS ---
+function setupEventListeners() {
+    if (searchInput) {
+        searchInput.addEventListener('input', (e) => {
+            const query = e.target.value.toLowerCase();
+            const filtered = allPrompts.filter(p => 
+                p.title.toLowerCase().includes(query) ||
+                p.body.toLowerCase().includes(query) ||
+                (p.author && p.author.toLowerCase().includes(query))
+            );
+            renderPrompts(filtered);
+        });
+    }
+
+    if (adminBtn) {
+        adminBtn.addEventListener('click', () => {
+            if (adminModal) adminModal.style.display = 'flex';
+        });
+    }
+
+    if (closeModalBtn) {
+        closeModalBtn.addEventListener('click', () => {
+            if (adminModal) adminModal.style.display = 'none';
+        });
+    }
+
+    if (addPromptForm) {
+        addPromptForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            const newPrompt = {
+                title: document.getElementById('new-prompt-title').value,
+                author: document.getElementById('new-prompt-author').value,
+                type: document.getElementById('new-prompt-type').value,
+                category: document.getElementById('new-prompt-category').value || 'general',
+                body: document.getElementById('new-prompt-body').value
+            };
+
+            if (supabaseClient) {
+                try {
+                    const { error } = await supabaseClient
+                        .from('prompts')
+                        .insert([newPrompt]);
+
+                    if (error) throw error;
+                    fetchPrompts();
+                } catch (err) {
+                    console.error('Error guardant prompt:', err);
+                    allPrompts.unshift({ ...newPrompt, id: Date.now() });
+                    renderPrompts(allPrompts);
+                }
+            } else {
+                allPrompts.unshift({ ...newPrompt, id: Date.now() });
+                renderPrompts(allPrompts);
+            }
+
+            addPromptForm.reset();
+            if (adminModal) adminModal.style.display = 'none';
+        });
+    }
+
+    // Gestió del canvi d'idioma
+    langButtons.forEach(btn => {
+        btn.addEventListener('click', () => {
+            langButtons.forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+            const lang = btn.getAttribute('data-lang');
+            changeLanguage(lang);
+        });
+    });
 }
 
-.header-container {
-    max-width: 1200px;
-    margin: 0 auto;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    flex-wrap: wrap;
-    gap: 1rem;
+// --- CANVI D'IDIOMA (i18n) ---
+function changeLanguage(lang) {
+    const langData = i18nTranslations[lang] || i18nTranslations['ca'];
+
+    document.querySelectorAll('[data-i18n]').forEach(element => {
+        const key = element.getAttribute('data-i18n');
+        if (langData[key]) {
+            element.textContent = langData[key];
+        }
+    });
+
+    document.querySelectorAll('[data-i18n-placeholder]').forEach(element => {
+        const key = element.getAttribute('data-i18n-placeholder');
+        if (langData[key]) {
+            element.placeholder = langData[key];
+        }
+    });
 }
 
-.brand {
-    display: flex;
-    align-items: center;
-    gap: 0.6rem;
+// --- FUNCIONS D'UTILITAT ---
+function copyToClipboard(text, buttonElement) {
+    navigator.clipboard.writeText(text).then(() => {
+        const originalText = buttonElement.innerText;
+        buttonElement.innerText = 'Copiat!';
+        buttonElement.style.backgroundColor = '#16a34a';
+
+        setTimeout(() => {
+            buttonElement.innerText = originalText;
+            buttonElement.style.backgroundColor = '';
+        }, 2000);
+    }).catch(err => {
+        console.error('Error en copiar:', err);
+    });
 }
 
-.header-logo {
-    height: 38px;
-    width: auto;
-    object-fit: contain;
+function escapeHtml(str) {
+    if (!str) return '';
+    return str
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#039;");
 }
 
-.brand-title {
-    font-size: 1.35rem;
-    font-weight: 700;
-}
-
-.brand-red {
-    color: #cc0000;
-}
-
-.brand-yellow {
-    color: #d97706;
-}
-
-/* Selector d'idiomes estil pastilla */
-.lang-selector {
-    display: flex;
-    gap: 0.2rem;
-    background-color: #f1f5f9;
-    padding: 0.3rem;
-    border-radius: 30px;
-    flex-wrap: wrap;
-}
-
-.lang-btn {
-    background: transparent;
-    border: none;
-    color: #64748b;
-    padding: 0.4rem 0.8rem;
-    font-size: 0.85rem;
-    font-weight: 600;
-    border-radius: 20px;
-    cursor: pointer;
-    transition: all 0.2s ease;
-}
-
-.lang-btn:hover {
-    color: #0f172a;
-}
-
-.lang-btn.active {
-    background-color: #dc2626;
-    color: #ffffff;
-    box-shadow: 0 2px 4px rgba(220, 38, 38, 0.25);
-}
-
-/* --- BOTONS --- */
-.btn-primary {
-    background-color: #dc2626;
-    color: #ffffff;
-    border: none;
-    padding: 0.55rem 1.25rem;
-    font-size: 0.9rem;
-    font-weight: 600;
-    border-radius: 20px;
-    cursor: pointer;
-    transition: background-color 0.2s ease;
-}
-
-.btn-primary:hover {
-    background-color: #b91c1c;
-}
-
-.btn-secondary {
-    background-color: #e2e8f0;
-    color: #1e293b;
-    border: none;
-    padding: 0.5rem 1rem;
-    font-size: 0.9rem;
-    font-weight: 600;
-    border-radius: 6px;
-    cursor: pointer;
-    transition: background-color 0.2s ease;
-}
-
-.btn-secondary:hover {
-    background-color: #cbd5e1;
-}
-
-/* --- CONTINGUT PRINCIPAL --- */
-.main-content {
-    max-width: 1200px;
-    margin: 2rem auto;
-    padding: 0 1rem;
-    display: flex;
-    flex-direction: column;
-    gap: 2rem;
-}
-
-.hero-image-container {
-    text-align: center;
-    margin-bottom: 0.5rem;
-}
-
-.hero-image {
-    max-width: 100%;
-    max-height: 320px;
-    width: auto;
-    height: auto;
-    border-radius: 12px;
-    box-shadow: 0 10px 25px rgba(0,0,0,0.05);
-}
-
-.card-section {
-    background-color: #ffffff;
-    border: 1px solid #e2e8f0;
-    border-radius: 8px;
-    padding: 1.5rem;
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
-}
-
-.card-section h2 {
-    font-size: 1.25rem;
-    margin-bottom: 1rem;
-    color: #0f172a;
-    border-bottom: 2px solid #f1f5f9;
-    padding-bottom: 0.5rem;
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-}
-
-.form-group {
-    margin-bottom: 1rem;
-    display: flex;
-    flex-direction: column;
-    gap: 0.5rem;
-}
-
-.form-group.flex-row {
-    flex-direction: row;
-    gap: 1.5rem;
-    align-items: center;
-}
-
-.form-group label {
-    font-weight: 600;
-    font-size: 0.9rem;
-    color: #334155;
-    display: flex;
-    align-items: center;
-    gap: 0.4rem;
-}
-
-.form-group select,
-.form-group input[type="text"],
-.form-group textarea {
-    width: 100%;
-    padding: 0.65rem;
-    border: 1px solid #cbd5e1;
-    border-radius: 6px;
-    font-size: 0.95rem;
-    font-family: inherit;
-}
-
-.form-group select:focus,
-.form-group input:focus,
-.form-group textarea:focus {
-    outline: none;
-    border-color: #dc2626;
-    box-shadow: 0 0 0 3px rgba(220, 38, 38, 0.1);
-}
-
-/* --- CERCA --- */
-.search-section input {
-    width: 100%;
-    padding: 0.85rem 1.2rem;
-    font-size: 1rem;
-    border: 2px solid #cbd5e1;
-    border-radius: 8px;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.02);
-}
-
-.search-section input:focus {
-    outline: none;
-    border-color: #dc2626;
-}
-
-/* --- REIXETA DE PROMPTS --- */
-.prompts-list-section h2 {
-    font-size: 1.3rem;
-    margin-bottom: 1rem;
-    color: #0f172a;
-}
-
-.prompts-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-    gap: 1.5rem;
-}
-
-.prompt-card {
-    background-color: #ffffff;
-    border: 1px solid #e2e8f0;
-    border-radius: 8px;
-    padding: 1.25rem;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
-    transition: transform 0.2s ease, box-shadow 0.2s ease;
-}
-
-.prompt-card:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 6px 12px rgba(0,0,0,0.08);
-}
-
-.prompt-header {
-    margin-bottom: 0.75rem;
-}
-
-.prompt-header h3 {
-    font-size: 1.1rem;
-    color: #0f172a;
-    margin-top: 0.4rem;
-}
-
-.prompt-author {
-    font-size: 0.8rem;
-    color: #64748b;
-    margin-top: 0.25rem;
-}
-
-/* ETIQUETES DE COLOR */
-.prompt-badge, .section-color-indicator {
-    display: inline-block;
-    padding: 0.25rem 0.6rem;
-    font-size: 0.75rem;
-    font-weight: 700;
-    border-radius: 4px;
-    text-transform: uppercase;
-    letter-spacing: 0.05em;
-}
-
-.section-color-indicator {
-    padding: 0.2rem 0.5rem;
-}
-
-.badge-socioling {
-    background-color: #e0f2fe;
-    color: #0369a1;
-    border: 1px solid #bae6fd;
-}
-
-.badge-nl {
-    background-color: #fef3c7;
-    color: #b45309;
-    border: 1px solid #fde68a;
-}
-
-.badge-dl {
-    background-color: #dcfce7;
-    color: #15803d;
-    border: 1px solid #bbf7d0;
-}
-
-.badge-default {
-    background-color: #f1f5f9;
-    color: #475569;
-    border: 1px solid #e2e8f0;
-}
-
-/* COS DE LA TARGETA DE PROMPT */
-.prompt-body {
-    background-color: #f8fafc;
-    border: 1px solid #f1f5f9;
-    border-radius: 6px;
-    padding: 0.75rem;
-    margin-bottom: 1rem;
-    max-height: 180px;
-    overflow-y: auto;
-}
-
-.prompt-body pre {
-    white-space: pre-wrap;
-    word-wrap: break-word;
-    margin: 0;
-    font-family: inherit;
-    font-size: 0.88rem;
-    color: #334155;
-}
-
-.btn-copy {
-    background-color: #dc2626;
-    color: #ffffff;
-    border: none;
-    padding: 0.6rem 1rem;
-    border-radius: 6px;
-    cursor: pointer;
-    font-weight: 600;
-    width: 100%;
-    transition: background-color 0.2s ease;
-}
-
-.btn-copy:hover {
-    background-color: #b91c1c;
-}
-
-/* --- SOBRE EL PROJECTE I CTA --- */
-.about-card {
-    background-color: #ffffff;
-    border-radius: 16px;
-    padding: 2.5rem 2rem;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.04);
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 2rem;
-    max-width: 900px;
-    margin: 1rem auto 0 auto;
-    width: 100%;
-}
-
-.about-box {
-    border: 1.5px dashed #cbd5e1;
-    border-radius: 12px;
-    padding: 2rem;
-    text-align: center;
-    width: 100%;
-    background-color: #fafafa;
-}
-
-.about-box h3 {
-    color: #334155;
-    font-size: 1.25rem;
-    font-weight: 700;
-    margin-bottom: 0.8rem;
-}
-
-.about-box p {
-    color: #64748b;
-    font-size: 0.95rem;
-    line-height: 1.6;
-    max-width: 650px;
-    margin: 0 auto;
-}
-
-.cta-container {
-    display: flex;
-    justify-content: center;
-    width: 100%;
-}
-
-.btn-cta {
-    background-color: #dc2626;
-    color: #ffffff;
-    font-size: 1.1rem;
-    font-weight: 700;
-    padding: 0.9rem 2.2rem;
-    border-radius: 50px;
-    text-decoration: none;
-    display: inline-flex;
-    align-items: center;
-    gap: 0.5rem;
-    box-shadow: 0 4px 14px rgba(220, 38, 38, 0.35);
-    transition: all 0.2s ease;
-}
-
-.btn-cta:hover {
-    background-color: #b91c1c;
-    transform: translateY(-2px);
-    box-shadow: 0 6px 18px rgba(220, 38, 38, 0.45);
-}
-
-/* --- MODALS --- */
-.modal-overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(15, 23, 42, 0.6);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    z-index: 1000;
-    padding: 1rem;
-}
-
-.modal-content {
-    background-color: #ffffff;
-    border-radius: 8px;
-    padding: 2rem;
-    width: 100%;
-    max-width: 600px;
-    max-height: 90vh;
-    overflow-y: auto;
-    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
-}
-
-.modal-content h2 {
-    margin-bottom: 1.5rem;
-    font-size: 1.25rem;
-    color: #0f172a;
-}
-
-.modal-actions {
-    display: flex;
-    justify-content: flex-end;
-    gap: 1rem;
-    margin-top: 1.5rem;
-}
-
-/* --- PEU DE PÀGINA --- */
-.main-footer-light {
-    background-color: transparent;
-    color: #64748b;
-    text-align: center;
-    padding: 2.5rem 1rem 1.5rem 1rem;
-    font-size: 0.9rem;
-    font-weight: 500;
+function escapeJsString(str) {
+    if (!str) return '';
+    return str
+        .replace(/\\/g, '\\\\')
+        .replace(/`/g, '\\`')
+        .replace(/\$/g, '\\$');
 }
