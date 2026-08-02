@@ -1,4 +1,4 @@
-/* --- ESTILS GENERALS I DISSENY --- */
+/* --- RESET I BASE --- */
 * {
     box-sizing: border-box;
     margin: 0;
@@ -12,11 +12,14 @@ body {
     line-height: 1.5;
 }
 
-/* --- CAPÇALERA BLANCA --- */
+/* --- CAPÇALERA --- */
 .main-header {
     background-color: #ffffff;
     padding: 0.8rem 2rem;
     border-bottom: 1px solid #e2e8f0;
+    position: sticky;
+    top: 0;
+    z-index: 100;
 }
 
 .header-container {
@@ -29,7 +32,6 @@ body {
     gap: 1rem;
 }
 
-/* Brand i Logo */
 .brand {
     display: flex;
     align-items: center;
@@ -37,13 +39,13 @@ body {
 }
 
 .header-logo {
-    height: 36px;
+    height: 38px;
     width: auto;
     object-fit: contain;
 }
 
 .brand-title {
-    font-size: 1.3rem;
+    font-size: 1.35rem;
     font-weight: 700;
 }
 
@@ -55,20 +57,21 @@ body {
     color: #d97706;
 }
 
-/* Selector d'idiomes estil pastilla clara */
+/* Selector d'idiomes estil pastilla */
 .lang-selector {
     display: flex;
     gap: 0.2rem;
     background-color: #f1f5f9;
     padding: 0.3rem;
     border-radius: 30px;
+    flex-wrap: wrap;
 }
 
 .lang-btn {
     background: transparent;
     border: none;
     color: #64748b;
-    padding: 0.4rem 0.9rem;
+    padding: 0.4rem 0.8rem;
     font-size: 0.85rem;
     font-weight: 600;
     border-radius: 20px;
@@ -86,12 +89,12 @@ body {
     box-shadow: 0 2px 4px rgba(220, 38, 38, 0.25);
 }
 
-/* --- BOTÓ PRIMARI I SECUNDARI --- */
+/* --- BOTONS --- */
 .btn-primary {
     background-color: #dc2626;
     color: #ffffff;
     border: none;
-    padding: 0.5rem 1.2rem;
+    padding: 0.55rem 1.25rem;
     font-size: 0.9rem;
     font-weight: 600;
     border-radius: 20px;
@@ -131,12 +134,12 @@ body {
 
 .hero-image-container {
     text-align: center;
-    margin-bottom: 1rem;
+    margin-bottom: 0.5rem;
 }
 
 .hero-image {
     max-width: 100%;
-    max-height: 350px;
+    max-height: 320px;
     width: auto;
     height: auto;
     border-radius: 12px;
@@ -169,18 +172,26 @@ body {
     gap: 0.5rem;
 }
 
+.form-group.flex-row {
+    flex-direction: row;
+    gap: 1.5rem;
+    align-items: center;
+}
+
 .form-group label {
     font-weight: 600;
     font-size: 0.9rem;
     color: #334155;
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
 }
 
 .form-group select,
 .form-group input[type="text"],
-.form-group input[type="email"],
 .form-group textarea {
     width: 100%;
-    padding: 0.6rem;
+    padding: 0.65rem;
     border: 1px solid #cbd5e1;
     border-radius: 6px;
     font-size: 0.95rem;
@@ -195,10 +206,10 @@ body {
     box-shadow: 0 0 0 3px rgba(220, 38, 38, 0.1);
 }
 
-/* --- SECCIÓ DE CERCA --- */
+/* --- CERCA --- */
 .search-section input {
     width: 100%;
-    padding: 0.8rem 1rem;
+    padding: 0.85rem 1.2rem;
     font-size: 1rem;
     border: 2px solid #cbd5e1;
     border-radius: 8px;
@@ -212,8 +223,9 @@ body {
 
 /* --- REIXETA DE PROMPTS --- */
 .prompts-list-section h2 {
-    font-size: 1.25rem;
+    font-size: 1.3rem;
     margin-bottom: 1rem;
+    color: #0f172a;
 }
 
 .prompts-grid {
@@ -231,10 +243,16 @@ body {
     flex-direction: column;
     justify-content: space-between;
     box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.prompt-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 12px rgba(0,0,0,0.08);
 }
 
 .prompt-header {
-    margin-bottom: 1rem;
+    margin-bottom: 0.75rem;
 }
 
 .prompt-header h3 {
@@ -249,7 +267,7 @@ body {
     margin-top: 0.25rem;
 }
 
-/* --- ETIQUETES I INDICADORS DE COLOR --- */
+/* ETIQUETES DE COLOR */
 .prompt-badge, .section-color-indicator {
     display: inline-block;
     padding: 0.25rem 0.6rem;
@@ -288,14 +306,14 @@ body {
     border: 1px solid #e2e8f0;
 }
 
-/* --- COS I BOTONS DE LA TARGETA --- */
+/* COS DE LA TARGETA DE PROMPT */
 .prompt-body {
     background-color: #f8fafc;
     border: 1px solid #f1f5f9;
-    border-radius: 4px;
+    border-radius: 6px;
     padding: 0.75rem;
     margin-bottom: 1rem;
-    max-height: 200px;
+    max-height: 180px;
     overflow-y: auto;
 }
 
@@ -304,7 +322,7 @@ body {
     word-wrap: break-word;
     margin: 0;
     font-family: inherit;
-    font-size: 0.9rem;
+    font-size: 0.88rem;
     color: #334155;
 }
 
@@ -312,8 +330,8 @@ body {
     background-color: #dc2626;
     color: #ffffff;
     border: none;
-    padding: 0.5rem 1rem;
-    border-radius: 4px;
+    padding: 0.6rem 1rem;
+    border-radius: 6px;
     cursor: pointer;
     font-weight: 600;
     width: 100%;
@@ -350,7 +368,7 @@ body {
 
 .about-box h3 {
     color: #334155;
-    font-size: 1.2rem;
+    font-size: 1.25rem;
     font-weight: 700;
     margin-bottom: 0.8rem;
 }
@@ -359,7 +377,7 @@ body {
     color: #64748b;
     font-size: 0.95rem;
     line-height: 1.6;
-    max-width: 600px;
+    max-width: 650px;
     margin: 0 auto;
 }
 
@@ -370,7 +388,7 @@ body {
 }
 
 .btn-cta {
-    background-color: #c81e1e;
+    background-color: #dc2626;
     color: #ffffff;
     font-size: 1.1rem;
     font-weight: 700;
@@ -380,17 +398,17 @@ body {
     display: inline-flex;
     align-items: center;
     gap: 0.5rem;
-    box-shadow: 0 4px 14px rgba(200, 30, 30, 0.35);
+    box-shadow: 0 4px 14px rgba(220, 38, 38, 0.35);
     transition: all 0.2s ease;
 }
 
 .btn-cta:hover {
-    background-color: #a71919;
-    transform: translateY(-1px);
-    box-shadow: 0 6px 18px rgba(200, 30, 30, 0.45);
+    background-color: #b91c1c;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 18px rgba(220, 38, 38, 0.45);
 }
 
-/* --- FINESTRES MODALS --- */
+/* --- MODALS --- */
 .modal-overlay {
     position: fixed;
     top: 0;
@@ -429,7 +447,7 @@ body {
     margin-top: 1.5rem;
 }
 
-/* --- PEU DE PÀGINA CLAR --- */
+/* --- PEU DE PÀGINA --- */
 .main-footer-light {
     background-color: transparent;
     color: #64748b;
