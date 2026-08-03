@@ -76,34 +76,20 @@
                 </label>
             </div>
             <div class="form-group">
-                <label data-i18n="lbl_ambit">Indiqueu l’àmbit:</label>
-                <select id="socioling-ambit">
-                    <option value="" disabled selected data-i18n="opt_select">[municipi, comarca, classe social, sector laboral, etc.]</option>
-                    <option value="municipi" data-i18n="ambit_municipi">Municipi</option>
-                    <option value="comarca" data-i18n="ambit_comarca">Comarca</option>
-                    <option value="classe_social" data-i18n="ambit_social">Classe social</option>
-                    <option value="sector_laboral" data-i18n="ambit_laboral">Sector laboral</option>
-                    <option value="altres" data-i18n="ambit_altres">Altres</option>
-                </select>
+                <label for="socioling-search" data-i18n="lbl_ambit_sl">Consulta la situació sociolingüística d'un poble, una comarca, un sector laboral, un col·lectiu, etc.:</label>
+                <input type="text" id="socioling-search" placeholder="Escriu un poble, comarca, sector laboral..." data-i18n-placeholder="ph_ambit_sl">
             </div>
         </section>
 
-        <!-- Secció: Prompts Didàctics -->
+        <!-- Secció: Didàctica de la Llengua -->
         <section class="card-section">
             <h2>
                 <span class="section-color-indicator badge-dl">DL</span>
-                <span data-i18n="didactic_title">Prompts didàctics</span>
+                <span data-i18n="didactic_title">Didàctica de la llengua</span>
             </h2>
             <div class="form-group">
-                <label data-i18n="lbl_materia_didactic">Indiqueu matèria del prompt didàctic:</label>
-                <select id="didactic-materia">
-                    <option value="" disabled selected data-i18n="opt_select_materia">Seleccioneu la matèria...</option>
-                    <option value="valencia">Valencià / Català</option>
-                    <option value="literatura">Literatura</option>
-                    <option value="angles">Llengües estrangeres</option>
-                    <option value="primaria">Educació Primària</option>
-                    <option value="secundaria">Educació Secundària</option>
-                </select>
+                <label for="didactic-search" data-i18n="lbl_materia_didactic">Indiqueu matèria del prompt de didàctica de la llengua, nivell educatiu, etc.:</label>
+                <input type="text" id="didactic-search" placeholder="Escriu la matèria, nivell educatiu (Primària, Secundària...)" data-i18n-placeholder="ph_materia_didactic">
             </div>
             <button class="btn-secondary" data-i18n="btn_download_form">📥 Descarregueu el formulari</button>
         </section>
@@ -115,19 +101,13 @@
                 <span data-i18n="nl_title">Prompts de normalització lingüística</span>
             </h2>
             <div class="form-group">
-                <label data-i18n="lbl_materia_nl">Indiqueu matèria del prompt de normalització lingüística:</label>
-                <select id="nl-materia">
-                    <option value="" disabled selected data-i18n="opt_select_materia">Seleccioneu la matèria...</option>
-                    <option value="administracio">Administració local</option>
-                    <option value="comerç">Comerç i empresa</option>
-                    <option value="mitjans">Mitjans de comunicació</option>
-                    <option value="dinamitzacio">Dinamització cultural</option>
-                </select>
+                <label for="nl-search" data-i18n="lbl_materia_nl">Indiqueu matèria del prompt de normalització lingüística:</label>
+                <input type="text" id="nl-search" placeholder="Escriu la matèria o àmbit (Administració local, comerç, mitjans...)" data-i18n-placeholder="ph_materia_nl">
             </div>
             <button class="btn-secondary" data-i18n="btn_download_form_nl">📥 Descarregueu el formulari</button>
         </section>
 
-        <!-- Cercador de Prompts -->
+        <!-- Cercador General de Prompts -->
         <section class="search-section">
             <input type="text" id="search-input" data-i18n-placeholder="search_placeholder" placeholder="Cercar prompts per paraula clau, matèria, autor...">
         </section>
