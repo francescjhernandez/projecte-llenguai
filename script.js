@@ -15,19 +15,15 @@ const i18nTranslations = {
         opt_know: "Coneixements",
         opt_uses: "Usos",
         opt_attitudes: "Actituds",
-        lbl_ambit: "Indiqueu l’àmbit:",
-        opt_select: "[municipi, comarca, classe social, sector laboral, etc.]",
-        ambit_municipi: "Municipi",
-        ambit_comarca: "Comarca",
-        ambit_social: "Classe social",
-        ambit_laboral: "Sector laboral",
-        ambit_altres: "Altres",
-        didactic_title: "Prompts didàctics",
-        lbl_materia_didactic: "Indiqueu matèria del prompt didàctic:",
-        opt_select_materia: "Seleccioneu la matèria...",
+        lbl_ambit_sl: "Consulta la situació sociolingüística d'un poble, una comarca, un sector laboral, un col·lectiu, etc.:",
+        ph_ambit_sl: "Escriu un poble, comarca, sector laboral...",
+        didactic_title: "Didàctica de la llengua",
+        lbl_materia_didactic: "Indiqueu matèria del prompt de didàctica de la llengua, nivell educatiu, etc.:",
+        ph_materia_didactic: "Escriu la matèria, nivell educatiu (Primària, Secundària...)",
         btn_download_form: "📥 Descarregueu el formulari",
         nl_title: "Prompts de normalització lingüística",
         lbl_materia_nl: "Indiqueu matèria del prompt de normalització lingüística:",
+        ph_materia_nl: "Escriu la matèria o àmbit (Administració local, comerç, mitjans...)",
         btn_download_form_nl: "📥 Descarregueu el formulari",
         search_placeholder: "Cercar prompts per paraula clau, matèria, autor...",
         list_prompts_title: "Relació de prompts",
@@ -56,19 +52,15 @@ const i18nTranslations = {
         opt_know: "Conocimientos",
         opt_uses: "Usos",
         opt_attitudes: "Actitudes",
-        lbl_ambit: "Indique el ámbito:",
-        opt_select: "[municipio, comarca, clase social, sector laboral, etc.]",
-        ambit_municipi: "Municipio",
-        ambit_comarca: "Comarca",
-        ambit_social: "Clase social",
-        ambit_laboral: "Sector laboral",
-        ambit_altres: "Otros",
-        didactic_title: "Prompts didácticos",
-        lbl_materia_didactic: "Indique materia del prompt didáctico:",
-        opt_select_materia: "Seleccione la materia...",
+        lbl_ambit_sl: "Consulte la situación sociolingüística de un pueblo, comarca, sector laboral, colectivo, etc.:",
+        ph_ambit_sl: "Escriba un pueblo, comarca, sector laboral...",
+        didactic_title: "Didáctica de la lengua",
+        lbl_materia_didactic: "Indique materia del prompt de didáctica de la lengua, nivel educativo, etc.:",
+        ph_materia_didactic: "Escriba la materia, nivel educativo (Primaria, Secundaria...)",
         btn_download_form: "📥 Descargar el formulario",
         nl_title: "Prompts de normalización lingüística",
         lbl_materia_nl: "Indique materia del prompt de normalización lingüística:",
+        ph_materia_nl: "Escriba la materia o ámbito (Administración local, comercio, medios...)",
         btn_download_form_nl: "📥 Descargar el formulario",
         search_placeholder: "Buscar prompts por palabra clave, materia, autor...",
         list_prompts_title: "Relación de prompts",
@@ -97,19 +89,15 @@ const i18nTranslations = {
         opt_know: "Knowledge",
         opt_uses: "Uses",
         opt_attitudes: "Attitudes",
-        lbl_ambit: "Select scope:",
-        opt_select: "[municipality, region, social class, work sector, etc.]",
-        ambit_municipi: "Municipality",
-        ambit_comarca: "Region",
-        ambit_social: "Social class",
-        ambit_laboral: "Work sector",
-        ambit_altres: "Others",
-        didactic_title: "Didactic prompts",
-        lbl_materia_didactic: "Select subject for didactic prompt:",
-        opt_select_materia: "Select subject...",
+        lbl_ambit_sl: "Check the sociolinguistic situation of a town, region, work sector, group, etc.:",
+        ph_ambit_sl: "Enter a town, region, work sector...",
+        didactic_title: "Language Didactics",
+        lbl_materia_didactic: "Indicate subject for language didactics prompt, educational level, etc.:",
+        ph_materia_didactic: "Enter subject, educational level (Primary, Secondary...)",
         btn_download_form: "📥 Download form",
         nl_title: "Language normalization prompts",
         lbl_materia_nl: "Select subject for language normalization prompt:",
+        ph_materia_nl: "Enter subject or field (Local administration, trade, media...)",
         btn_download_form_nl: "📥 Download form",
         search_placeholder: "Search prompts by keyword, subject, author...",
         list_prompts_title: "List of prompts",
@@ -136,6 +124,10 @@ const i18nTranslations = {
 // --- ELEMENTS DEL DOM ---
 const promptsContainer = document.getElementById('prompts-container');
 const searchInput = document.getElementById('search-input');
+const sociolingSearch = document.getElementById('socioling-search');
+const didacticSearch = document.getElementById('didactic-search');
+const nlSearch = document.getElementById('nl-search');
+
 const adminModal = document.getElementById('admin-modal');
 const adminBtn = document.getElementById('admin-login-btn');
 const closeModalBtn = document.getElementById('btn-close-modal');
@@ -148,7 +140,7 @@ document.addEventListener('DOMContentLoaded', () => {
     setupEventListeners();
 });
 
-// --- CARREGA DE PROMPTS DES DE SUPABASE ---
+// --- CARREGA DE PROMPTS DES DE SUPABASE (DL / NL) ---
 async function fetchPrompts() {
     if (supabaseClient) {
         try {
@@ -168,18 +160,9 @@ async function fetchPrompts() {
         }
     }
 
-    // Dades de mostra per defecte si no es connecta a la BD
     allPrompts = [
         {
             id: 1,
-            title: "Anàlisi d'usos lingüístics municipals",
-            author: "Projecte LlenguAI",
-            type: "socioling",
-            category: "municipi",
-            body: "Actua com un sociolingüista expert. Analitza la situació dels usos lingüístics en l'àmbit municipal indicat..."
-        },
-        {
-            id: 2,
             title: "Prompt mestre de didàctica de la llengua",
             author: "Projecte LlenguAI",
             type: "didactic",
@@ -187,7 +170,7 @@ async function fetchPrompts() {
             body: "Dissenya una unitat didàctica estructurada per al desenvolupament de la competència comunicativa..."
         },
         {
-            id: 3,
+            id: 2,
             title: "Prompt mestre de normalització lingüística",
             author: "Projecte LlenguAI",
             type: "nl",
@@ -197,6 +180,20 @@ async function fetchPrompts() {
     ];
 
     renderPrompts(allPrompts);
+}
+
+// --- CONSULTA DADES SL DES DE FITXERS EXTERNS (AGENT-IA / JSON) ---
+async function querySLData(searchTerm) {
+    try {
+        const response = await fetch('/data/sl/municipis.json');
+        if (!response.ok) return;
+        const data = await response.json();
+        
+        // Filtre bàsic de mostra sobre les dades externes SL
+        return data.filter(item => item.nom.toLowerCase().includes(searchTerm.toLowerCase()));
+    } catch (err) {
+        console.info('Fitxer extern SL no trobat o pendents de carregar:', err);
+    }
 }
 
 // --- RENDERING DE PROMPTS ---
@@ -245,15 +242,34 @@ function renderPrompts(prompts) {
 
 // --- ESDEVENIMENTS ---
 function setupEventListeners() {
+    // Cerca General
     if (searchInput) {
         searchInput.addEventListener('input', (e) => {
-            const query = e.target.value.toLowerCase();
-            const filtered = allPrompts.filter(p => 
-                p.title.toLowerCase().includes(query) ||
-                p.body.toLowerCase().includes(query) ||
-                (p.author && p.author.toLowerCase().includes(query))
-            );
-            renderPrompts(filtered);
+            filterPrompts(e.target.value);
+        });
+    }
+
+    // Cerca específica DL
+    if (didacticSearch) {
+        didacticSearch.addEventListener('input', (e) => {
+            filterPrompts(e.target.value, 'didactic');
+        });
+    }
+
+    // Cerca específica NL
+    if (nlSearch) {
+        nlSearch.addEventListener('input', (e) => {
+            filterPrompts(e.target.value, 'nl');
+        });
+    }
+
+    // Cerca específica SL (Consulta dades externes)
+    if (sociolingSearch) {
+        sociolingSearch.addEventListener('input', async (e) => {
+            const query = e.target.value.trim();
+            if (query.length > 2) {
+                await querySLData(query);
+            }
         });
     }
 
@@ -304,7 +320,7 @@ function setupEventListeners() {
         });
     }
 
-    // Gestió del canvi d'idioma
+    // Canvi d'idioma
     langButtons.forEach(btn => {
         btn.addEventListener('click', () => {
             langButtons.forEach(b => b.classList.remove('active'));
@@ -313,6 +329,19 @@ function setupEventListeners() {
             changeLanguage(lang);
         });
     });
+}
+
+function filterPrompts(query, typeFilter = null) {
+    const q = query.toLowerCase();
+    const filtered = allPrompts.filter(p => {
+        const matchesType = typeFilter ? (p.type === typeFilter || (typeFilter === 'didactic' && p.type === 'dl')) : true;
+        const matchesText = p.title.toLowerCase().includes(q) ||
+                            p.body.toLowerCase().includes(q) ||
+                            (p.category && p.category.toLowerCase().includes(q)) ||
+                            (p.author && p.author.toLowerCase().includes(q));
+        return matchesType && matchesText;
+    });
+    renderPrompts(filtered);
 }
 
 // --- CANVI D'IDIOMA (i18n) ---
@@ -334,7 +363,7 @@ function changeLanguage(lang) {
     });
 }
 
-// --- FUNCIONS D'UTILITAT ---
+// --- UTILITATS ---
 function copyToClipboard(text, buttonElement) {
     navigator.clipboard.writeText(text).then(() => {
         const originalText = buttonElement.innerText;
