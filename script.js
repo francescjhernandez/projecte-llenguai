@@ -140,7 +140,7 @@ document.addEventListener('DOMContentLoaded', () => {
     setupEventListeners();
 });
 
-// --- CARREGA DE PROMPTS DES DE SUPABASE ---
+// --- CÀRREGA DE PROMPTS DES DE SUPABASE ---
 async function fetchPrompts() {
     if (supabaseClient) {
         try {
@@ -151,7 +151,6 @@ async function fetchPrompts() {
 
             if (error) throw error;
 
-            // Assignem directament les dades de Supabase (o array buit si no n'hi ha cap)
             allPrompts = data || [];
             renderPrompts(allPrompts);
             return;
@@ -160,12 +159,11 @@ async function fetchPrompts() {
         }
     }
 
-    // Si no hi ha client o falla la connexió, es buida la llista
     allPrompts = [];
     renderPrompts(allPrompts);
 }
 
-// --- CONSULTA DADES SL DES DE FITXERS EXTERNS (AGENT-IA / JSON) ---
+// --- CONSULTA DADES SL DES DE FITXERS EXTERNS ---
 async function querySLData(searchTerm) {
     try {
         const response = await fetch('/data/sl/municipis.json');
@@ -178,7 +176,7 @@ async function querySLData(searchTerm) {
     }
 }
 
-// --- RENDERING DE PROMPTS ---
+// --- RENDERING DE PROMPTS (TARGETES COMPACTES) ---
 function renderPrompts(prompts) {
     if (!promptsContainer) return;
     promptsContainer.innerHTML = '';
@@ -188,7 +186,7 @@ function renderPrompts(prompts) {
         return;
     }
 
-    prompts.forEach(prompt => {
+    prompts.forEach((prompt, index) => {
         const card = document.createElement('div');
         card.className = 'prompt-card';
 
@@ -206,20 +204,59 @@ function renderPrompts(prompts) {
             badgeLabel = 'NL';
         }
 
+        // Extracte de text curt
+        const previewText = prompt.body.length > 120 
+            ? prompt.body.substring(0, 120) + '...' 
+            : prompt.body;
+
         card.innerHTML = `
             <div class="prompt-header">
                 <span class="prompt-badge ${badgeClass}">${badgeLabel}</span>
                 <h3>${escapeHtml(prompt.title)}</h3>
                 <div class="prompt-author">Per: ${escapeHtml(prompt.author || 'Anònim')}</div>
             </div>
-            <div class="prompt-body">
-                <pre>${escapeHtml(prompt.body)}</pre>
+            <p class="prompt-preview">${escapeHtml(previewText)}</p>
+            <div class="prompt-actions">
+                <button class="btn-copy" onclick="copyToClipboard(\`${escapeJsString(prompt.body)}\`, this)">Copiar</button>
+                <button class="btn-view" onclick="openPromptModal(${index})">Veure complet</button>
             </div>
-            <button class="btn-copy" onclick="copyToClipboard(\`${escapeJsString(prompt.body)}\`, this)">Copiar Prompt</button>
         `;
 
         promptsContainer.appendChild(card);
     });
+}
+
+// --- MODAL PER A VEURE EL PROMPT COMPLET ---
+function openPromptModal(index) {
+    const prompt = allPrompts[index];
+    if (!prompt) return;
+
+    let viewModal = document.getElementById('view-prompt-modal');
+    if (!viewModal) {
+        viewModal = document.createElement('div');
+        viewModal.id = 'view-prompt-modal';
+        viewModal.className = 'modal';
+        document.body.appendChild(viewModal);
+    }
+
+    viewModal.innerHTML = `
+        <div class="modal-content" style="max-width: 700px; max-height: 85vh; overflow-y: auto;">
+            <div style="display:flex; justify-content:space-between; align-items:flex-start; margin-bottom:1rem;">
+                <h2>${escapeHtml(prompt.title)}</h2>
+                <button onclick="document.getElementById('view-prompt-modal').style.display='none'" style="background:none; border:none; font-size:1.5rem; cursor:pointer;">&times;</button>
+            </div>
+            <p style="color:#64748b; margin-bottom:1rem;"><strong>Autor:</strong> ${escapeHtml(prompt.author || 'Anònim')}</p>
+            <div style="background:#f8fafc; border:1px solid #e2e8f0; padding:1rem; border-radius:8px; white-space:pre-wrap; font-family:monospace; font-size:0.9rem; margin-bottom:1.5rem; max-height:50vh; overflow-y:auto;">
+                ${escapeHtml(prompt.body)}
+            </div>
+            <div style="display:flex; gap:10px; justify-content:flex-end;">
+                <button class="btn-copy" style="padding:0.6rem 1.2rem;" onclick="copyToClipboard(\`${escapeJsString(prompt.body)}\`, this)">Copiar Prompt</button>
+                <button class="btn-cancel" onclick="document.getElementById('view-prompt-modal').style.display='none'">Tancar</button>
+            </div>
+        </div>
+    `;
+
+    viewModal.style.display = 'flex';
 }
 
 // --- ESDEVENIMENTS ---
