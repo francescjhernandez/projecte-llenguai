@@ -1,6 +1,6 @@
 // --- CONFIGURACIÓ DE SUPABASE ---
 const SUPABASE_URL = "https://paxrolsjynqivoeltoyk.supabase.co";
-const SUPABASE_KEY = "AQUÍ_VA_EL_TEU_TOKEN_ANON_LLARG_eyJ..."; // Substitueix per la teua clau anon
+const SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InBheHJvbHNqeW5xaXZvZWx0b3lrIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODU2ODA4MTUsImV4cCI6MjEwMTI1NjgxNX0.8sYrtc7D5-_2keQPf2Ra-0Ff_lNC3PJkH0P6H9gqbXA";
 
 const supabaseClient = window.supabase ? window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY) : null;
 
@@ -140,7 +140,7 @@ document.addEventListener('DOMContentLoaded', () => {
     setupEventListeners();
 });
 
-// --- CARREGA DE PROMPTS DES DE SUPABASE (DL / NL) ---
+// --- CARREGA DE PROMPTS DES DE SUPABASE ---
 async function fetchPrompts() {
     if (supabaseClient) {
         try {
@@ -150,35 +150,18 @@ async function fetchPrompts() {
                 .order('created_at', { ascending: false });
 
             if (error) throw error;
-            if (data && data.length > 0) {
-                allPrompts = data;
-                renderPrompts(allPrompts);
-                return;
-            }
+
+            // Assignem directament les dades de Supabase (o array buit si no n'hi ha cap)
+            allPrompts = data || [];
+            renderPrompts(allPrompts);
+            return;
         } catch (err) {
-            console.warn('Usant dades de mostra locals:', err);
+            console.error('Error en connectar amb Supabase:', err);
         }
     }
 
-    allPrompts = [
-        {
-            id: 1,
-            title: "Prompt mestre de didàctica de la llengua",
-            author: "Projecte LlenguAI",
-            type: "didactic",
-            category: "secundaria",
-            body: "Dissenya una unitat didàctica estructurada per al desenvolupament de la competència comunicativa..."
-        },
-        {
-            id: 2,
-            title: "Prompt mestre de normalització lingüística",
-            author: "Projecte LlenguAI",
-            type: "nl",
-            category: "dinamitzacio",
-            body: "Elabora una estratègia de foment i dinamització de l'ús del valencià en entorns institucionals o locals..."
-        }
-    ];
-
+    // Si no hi ha client o falla la connexió, es buida la llista
+    allPrompts = [];
     renderPrompts(allPrompts);
 }
 
@@ -189,7 +172,6 @@ async function querySLData(searchTerm) {
         if (!response.ok) return;
         const data = await response.json();
         
-        // Filtre bàsic de mostra sobre les dades externes SL
         return data.filter(item => item.nom.toLowerCase().includes(searchTerm.toLowerCase()));
     } catch (err) {
         console.info('Fitxer extern SL no trobat o pendents de carregar:', err);
@@ -242,28 +224,24 @@ function renderPrompts(prompts) {
 
 // --- ESDEVENIMENTS ---
 function setupEventListeners() {
-    // Cerca General
     if (searchInput) {
         searchInput.addEventListener('input', (e) => {
             filterPrompts(e.target.value);
         });
     }
 
-    // Cerca específica DL
     if (didacticSearch) {
         didacticSearch.addEventListener('input', (e) => {
             filterPrompts(e.target.value, 'didactic');
         });
     }
 
-    // Cerca específica NL
     if (nlSearch) {
         nlSearch.addEventListener('input', (e) => {
             filterPrompts(e.target.value, 'nl');
         });
     }
 
-    // Cerca específica SL (Consulta dades externes)
     if (sociolingSearch) {
         sociolingSearch.addEventListener('input', async (e) => {
             const query = e.target.value.trim();
@@ -320,7 +298,6 @@ function setupEventListeners() {
         });
     }
 
-    // Canvi d'idioma
     langButtons.forEach(btn => {
         btn.addEventListener('click', () => {
             langButtons.forEach(b => b.classList.remove('active'));
