@@ -22,21 +22,24 @@ const i18nTranslations = {
         ph_materia_nl: "Escriu la matèria o àmbit (Administració local, comerç, mitjans...)",
         btn_download_form_nl: "📥 Descarregueu el formulari",
         search_placeholder: "Cercar prompts per paraula clau, matèria, autor...",
-        list_prompts_title: "Relació de prompts",
-        about_title: "Sobre el projecte",
-        about_text: "La paraula LlenguAI es forma amb Llengua + AI (Intel·ligència Artificial). És l'expressió de la possibilitat de relacionar el desenvolupament de la nostra llengua amb la IA Generativa.",
-        admin_panel_title: "Panell de Gestió de Prompts",
-        prompt_title_label: "Títol del Prompt",
-        prompt_author_label: "Nom de la persona que carrega el prompt",
-        prompt_type_label: "Tipus de Prompt",
-        opt_type_socio: "Situació Sociolingüística (SL)",
-        opt_type_didactic: "Prompt mestre de didàctica (DL)",
-        opt_type_nl: "Prompt mestre de normalització (NL)",
-        prompt_cat_label: "Matèria / Àmbit",
-        prompt_body_label: "Contingut del Prompt",
-        prompt_body_help: "Copieu i pegueu el prompt directament en text pla.",
-        btn_cancel: "Cancel·lar",
-        btn_save_prompt: "Guardar Prompt"
+        list_prompts_title: "Relació de prompts"
+    },
+    an: {
+        page_title: "Projècte LlenguAI",
+        btn_admin: "Cargar Prompts",
+        socio_title: "Situacion sociolingüistica",
+        lbl_ambit_sl: "Consultar la situacion sociolingüistica d'un pòble, comarca, sector laborau...",
+        ph_ambit_sl: "Escriure un pòble, comarca...",
+        didactic_title: "Didactica dera lengua",
+        lbl_materia_didactic: "Indicar matèria deu prompt de didactica dera lengua...",
+        ph_materia_didactic: "Escriure la matèria...",
+        btn_download_form: "📥 Descargar eth formulari",
+        nl_title: "Prompts de normalizacion lingüistica",
+        lbl_materia_nl: "Indicar matèria deu prompt de normalizacion lingüistica:",
+        ph_materia_nl: "Escriure la matèria...",
+        btn_download_form_nl: "📥 Descargar eth formulari",
+        search_placeholder: "Cercar prompts per paraula clau...",
+        list_prompts_title: "Relacion de prompts"
     },
     es: {
         page_title: "Proyecto LlenguAI",
@@ -53,21 +56,7 @@ const i18nTranslations = {
         ph_materia_nl: "Escriba la materia o ámbito (Administración local, comercio, medios...)",
         btn_download_form_nl: "📥 Descargar el formulario",
         search_placeholder: "Buscar prompts por palabra clave, materia, autor...",
-        list_prompts_title: "Relación de prompts",
-        about_title: "Sobre el proyecto",
-        about_text: "La palabra LlenguAI se forma con Llengua + AI (Inteligencia Artificial). Es la expresión de la posibilidad de relacionar el desarrollo de nuestra lengua con la IA Generativa.",
-        admin_panel_title: "Panel de Gestión de Prompts",
-        prompt_title_label: "Título del Prompt",
-        prompt_author_label: "Nombre de la persona que carga el prompt",
-        prompt_type_label: "Tipo de Prompt",
-        opt_type_socio: "Situación Sociolingüística (SL)",
-        opt_type_didactic: "Prompt maestro de didáctica (DL)",
-        opt_type_nl: "Prompt maestro de normalización (NL)",
-        prompt_cat_label: "Materia / Ámbito",
-        prompt_body_label: "Contenido del Prompt",
-        prompt_body_help: "Copie y pegue el prompt directamente en texto plano.",
-        btn_cancel: "Cancelar",
-        btn_save_prompt: "Guardar Prompt"
+        list_prompts_title: "Relación de prompts"
     },
     en: {
         page_title: "Project LlenguAI",
@@ -84,21 +73,41 @@ const i18nTranslations = {
         ph_materia_nl: "Enter subject or field (Local administration, trade, media...)",
         btn_download_form_nl: "📥 Download form",
         search_placeholder: "Search prompts by keyword, subject, author...",
-        list_prompts_title: "List of prompts",
-        about_title: "About the project",
-        about_text: "The word LlenguAI combines Llengua (Language) + AI (Artificial Intelligence). It represents the possibility of combining language development with Generative AI.",
-        admin_panel_title: "Prompt Management Panel",
-        prompt_title_label: "Prompt Title",
-        prompt_author_label: "Author name",
-        prompt_type_label: "Prompt Type",
-        opt_type_socio: "Sociolinguistic Situation (SL)",
-        opt_type_didactic: "Master Didactic Prompt (DL)",
-        opt_type_nl: "Master Normalization Prompt (NL)",
-        prompt_cat_label: "Subject / Field",
-        prompt_body_label: "Prompt Content",
-        prompt_body_help: "Copy and paste prompt directly in plain text.",
-        btn_cancel: "Cancel",
-        btn_save_prompt: "Save Prompt"
+        list_prompts_title: "List of prompts"
+    },
+    fr: {
+        page_title: "Projet LlenguAI",
+        btn_admin: "Charger Prompts",
+        socio_title: "Situation sociolinguistique",
+        lbl_ambit_sl: "Consultez la situation sociolinguistique d'un village, d'une région...",
+        ph_ambit_sl: "Écrivez un village, une région...",
+        didactic_title: "Didactique de la langue",
+        lbl_materia_didactic: "Indiquez la matière du prompt de didactique...",
+        ph_materia_didactic: "Écrivez la matière...",
+        btn_download_form: "📥 Télécharger le formulaire",
+        nl_title: "Prompts de normalisation linguistique",
+        lbl_materia_nl: "Indiquez la matière du prompt de normalisation...",
+        ph_materia_nl: "Écrivez la matière...",
+        btn_download_form_nl: "📥 Télécharger le formulaire",
+        search_placeholder: "Rechercher des prompts par mot-clé...",
+        list_prompts_title: "Liste de prompts"
+    },
+    pt: {
+        page_title: "Projeto LlenguAI",
+        btn_admin: "Carregar Prompts",
+        socio_title: "Situação sociolinguística",
+        lbl_ambit_sl: "Consulte a situação sociolinguística de uma vila, região...",
+        ph_ambit_sl: "Escreva uma vila, região...",
+        didactic_title: "Didática da língua",
+        lbl_materia_didactic: "Indique a matéria do prompt de didática...",
+        ph_materia_didactic: "Escreva a matéria...",
+        btn_download_form: "📥 Descarregar o formulário",
+        nl_title: "Prompts de normalização linguística",
+        lbl_materia_nl: "Indique a matéria do prompt de normalização...",
+        ph_materia_nl: "Escreva a matéria...",
+        btn_download_form_nl: "📥 Descarregar o formulário",
+        search_placeholder: "Pesquisar prompts por palavra-chave...",
+        list_prompts_title: "Relação de prompts"
     }
 };
 
@@ -155,19 +164,15 @@ function renderPrompts(prompts) {
             badgeLabel = 'NL';
         }
 
-        const previewText = prompt.body.length > 130 
-            ? prompt.body.substring(0, 130) + '...' 
-            : prompt.body;
-
         card.innerHTML = `
             <div class="prompt-header">
-                <span class="prompt-badge ${badgeClass}">${badgeLabel}</span>
+                <span class="badge-badge ${badgeClass}">${badgeLabel}</span>
                 <h3>${escapeHtml(prompt.title)}</h3>
                 <div class="prompt-author">Per: ${escapeHtml(prompt.author || 'Anònim')}</div>
             </div>
-            <p class="prompt-preview">${escapeHtml(previewText)}</p>
+            <div class="prompt-preview">${escapeHtml(prompt.body)}</div>
             <div class="prompt-actions">
-                <button class="btn-copy-card" onclick="copyText(\`${escapeJsString(prompt.body)}\`, this)">Copiar</button>
+                <button class="btn-copy-card" onclick="copyText(\`${escapeJsString(prompt.body)}\`, this)">Copiar Prompt</button>
                 <button class="btn-view-card" onclick="openPromptModal(${index})">Veure complet</button>
             </div>
         `;
@@ -198,8 +203,8 @@ function openPromptModal(index) {
                 ${escapeHtml(prompt.body)}
             </div>
             <div style="display:flex; gap:10px; justify-content:flex-end;">
-                <button class="btn-primary" onclick="copyText(\`${escapeJsString(prompt.body)}\`, this)">Copiar Prompt</button>
-                <button class="btn-cancel" onclick="document.getElementById('view-prompt-modal').style.display='none'">Tancar</button>
+                <button class="btn-copy-card" style="padding:0.6rem 1.2rem;" onclick="copyText(\`${escapeJsString(prompt.body)}\`, this)">Copiar Prompt</button>
+                <button class="btn-secondary" onclick="document.getElementById('view-prompt-modal').style.display='none'">Tancar</button>
             </div>
         </div>
     `;
@@ -221,32 +226,6 @@ function setupEventListeners() {
 
     if (adminBtn) adminBtn.addEventListener('click', () => adminModal.style.display = 'flex');
     if (closeModalBtn) closeModalBtn.addEventListener('click', () => adminModal.style.display = 'none');
-
-    const addPromptForm = document.getElementById('add-prompt-form');
-    if (addPromptForm) {
-        addPromptForm.addEventListener('submit', async (e) => {
-            e.preventDefault();
-            const newPrompt = {
-                title: document.getElementById('new-prompt-title').value,
-                author: document.getElementById('new-prompt-author').value,
-                type: document.getElementById('new-prompt-type').value,
-                category: document.getElementById('new-prompt-category').value || 'general',
-                body: document.getElementById('new-prompt-body').value
-            };
-
-            if (supabaseClient) {
-                try {
-                    const { error } = await supabaseClient.from('prompts').insert([newPrompt]);
-                    if (error) throw error;
-                    fetchPrompts();
-                } catch (err) {
-                    console.error('Error guardant:', err);
-                }
-            }
-            addPromptForm.reset();
-            adminModal.style.display = 'none';
-        });
-    }
 
     document.querySelectorAll('.lang-btn').forEach(btn => {
         btn.addEventListener('click', () => {
