@@ -165,12 +165,14 @@ function renderPrompts(prompts) {
         }
 
         card.innerHTML = `
-            <div class="prompt-header">
-                <span class="badge-badge ${badgeClass}">${badgeLabel}</span>
-                <h3>${escapeHtml(prompt.title)}</h3>
-                <div class="prompt-author">Per: ${escapeHtml(prompt.author || 'Anònim')}</div>
+            <div>
+                <div class="prompt-header">
+                    <span class="badge-badge ${badgeClass}">${badgeLabel}</span>
+                    <h3>${escapeHtml(prompt.title)}</h3>
+                    <div class="prompt-author">Per: ${escapeHtml(prompt.author || 'Anònim')}</div>
+                </div>
+                <div class="prompt-preview">${escapeHtml(prompt.body)}</div>
             </div>
-            <div class="prompt-preview">${escapeHtml(prompt.body)}</div>
             <div class="prompt-actions">
                 <button class="btn-copy-card" onclick="copyText(\`${escapeJsString(prompt.body)}\`, this)">Copiar Prompt</button>
                 <button class="btn-view-card" onclick="openPromptModal(${index})">Veure complet</button>
