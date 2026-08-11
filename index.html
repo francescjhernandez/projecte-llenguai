@@ -4,143 +4,80 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title data-i18n="page_title">Projecte LlenguAI</title>
-    
-    <!-- Google tag (gtag.js) -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-0BMWT79KQM"></script>
-    <script>
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
-
-      gtag('config', 'G-0BMWT79KQM');
-    </script>
-
-    <!-- Supabase JS CDN -->
-    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-    
-    <!-- CSS Principal -->
     <link rel="stylesheet" href="style.css">
+    <!-- Supabase SDK -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 </head>
 <body>
 
-    <!-- CAPÇALERA -->
-    <header class="main-header">
-        <div class="header-container">
-            <!-- Brand / Logo amb imatge -->
-            <div class="brand">
-                <img src="https://www.uv.es/senex/imatgeLlenguaAI.png" alt="Logo Projecte LlenguAI" class="header-logo">
-                <span class="brand-title"><strong class="brand-red">Projecte</strong> <strong class="brand-yellow">LlenguAI</strong></span>
+    <header>
+        <div class="container header-content">
+            <div class="logo-container">
+                <h1 data-i18n="page_title">Projecte LlenguAI</h1>
             </div>
-            
-            <!-- Selector d'idiomes estil pastilla -->
-            <div class="lang-selector">
-                <button id="btn-ca" class="lang-btn active" data-lang="ca">Català / Valencià</button>
-                <button id="btn-an" class="lang-btn" data-lang="an">Aranés</button>
-                <button id="btn-es" class="lang-btn" data-lang="es">Castellano</button>
-                <button id="btn-en" class="lang-btn" data-lang="en">English</button>
-                <button id="btn-fr" class="lang-btn" data-lang="fr">Français</button>
-                <button id="btn-pt" class="lang-btn" data-lang="pt">Português</button>
+            <div class="header-actions">
+                <div class="lang-selector">
+                    <button class="lang-btn active" data-lang="ca">Català / Valencià</button>
+                    <button class="lang-btn" data-lang="es">Castellano</button>
+                    <button class="lang-btn" data-lang="en">English</button>
+                </div>
+                <button id="admin-login-btn" class="btn-admin" data-i18n="btn_admin">Pujar Prompts</button>
             </div>
-
-            <!-- Botó Administració / Pujar Prompts -->
-            <button id="admin-login-btn" class="btn-primary" data-i18n="btn_admin">Pujar Prompts</button>
         </div>
     </header>
 
-    <!-- CONTINGUT PRINCIPAL -->
-    <main class="main-content">
+    <main class="container">
 
-        <!-- Imatge principal central -->
-        <section class="hero-image-container">
-            <img src="https://www.uv.es/senex/imatgeLlenguaAI.png" alt="Projecte LlenguAI" class="hero-image">
+        <!-- Banner / Presentació -->
+        <section class="hero-section">
+            <h2 data-i18n="about_title">Sobre el projecte</h2>
+            <p data-i18n="about_text">La paraula LlenguAI es forma amb Llengua + AI (Intel·ligència Artificial). És l'expressió de la possibilitat de relacionar el desenvolupament de la nostra llengua amb la IA Generativa.</p>
         </section>
 
-        <!-- Secció: Situació Sociolingüística -->
-        <section class="card-section">
-            <h2>
-                <span class="section-color-indicator badge-socioling">SL</span>
-                <span data-i18n="socio_title">Situació sociolingüística</span>
-            </h2>
-            <div class="form-group flex-row">
-                <label>
-                    <input type="radio" name="socio-opt" value="coneixements" checked> 
-                    <span data-i18n="opt_know">Coneixements</span>
-                </label>
-                <label>
-                    <input type="radio" name="socio-opt" value="usos"> 
-                    <span data-i18n="opt_uses">Usos</span>
-                </label>
-                <label>
-                    <input type="radio" name="socio-opt" value="actituds"> 
-                    <span data-i18n="opt_attitudes">Actituds</span>
-                </label>
-            </div>
+        <!-- Cercadors i Àmbits -->
+        <section class="section-card">
+            <h3 class="section-title"><span class="badge-badge badge-sl">SL</span> <span data-i18n="socio_title">Situació sociolingüística</span></h3>
             <div class="form-group">
-                <label for="socioling-search" data-i18n="lbl_ambit_sl">Consulta la situació sociolingüística d'un poble, una comarca, un sector laboral, un col·lectiu, etc.:</label>
-                <input type="text" id="socioling-search" placeholder="Escriu un poble, comarca, sector laboral..." data-i18n-placeholder="ph_ambit_sl">
+                <label data-i18n="lbl_ambit_sl">Consulta la situació sociolingüística d'un poble, una comarca, un sector laboral, un col·lectiu, etc.:</label>
+                <input type="text" id="socioling-search" data-i18n-placeholder="ph_ambit_sl" placeholder="Escriu un poble, comarca, sector laboral...">
             </div>
         </section>
 
-        <!-- Secció: Didàctica de la Llengua -->
-        <section class="card-section">
-            <h2>
-                <span class="section-color-indicator badge-dl">DL</span>
-                <span data-i18n="didactic_title">Didàctica de la llengua</span>
-            </h2>
+        <section class="section-card">
+            <h3 class="section-title"><span class="badge-badge badge-dl">DL</span> <span data-i18n="didactic_title">Didàctica de la llengua</span></h3>
             <div class="form-group">
-                <label for="didactic-search" data-i18n="lbl_materia_didactic">Indiqueu matèria del prompt de didàctica de la llengua, nivell educatiu, etc.:</label>
-                <input type="text" id="didactic-search" placeholder="Escriu la matèria, nivell educatiu (Primària, Secundària...)" data-i18n-placeholder="ph_materia_didactic">
+                <label data-i18n="lbl_materia_didactic">Indiqueu matèria del prompt de didàctica de la llengua, nivell educatiu, etc.:</label>
+                <input type="text" id="didactic-search" data-i18n-placeholder="ph_materia_didactic" placeholder="Escriu la matèria, nivell educatiu (Primària, Secundària...)">
             </div>
             <button class="btn-secondary" data-i18n="btn_download_form">📥 Descarregueu el formulari</button>
         </section>
 
-        <!-- Secció: Prompts de Normalització Lingüística -->
-        <section class="card-section">
-            <h2>
-                <span class="section-color-indicator badge-nl">NL</span>
-                <span data-i18n="nl_title">Prompts de normalització lingüística</span>
-            </h2>
+        <section class="section-card">
+            <h3 class="section-title"><span class="badge-badge badge-nl">NL</span> <span data-i18n="nl_title">Prompts de normalització lingüística</span></h3>
             <div class="form-group">
-                <label for="nl-search" data-i18n="lbl_materia_nl">Indiqueu matèria del prompt de normalització lingüística:</label>
-                <input type="text" id="nl-search" placeholder="Escriu la matèria o àmbit (Administració local, comerç, mitjans...)" data-i18n-placeholder="ph_materia_nl">
+                <label data-i18n="lbl_materia_nl">Indiqueu matèria del prompt de normalització lingüística:</label>
+                <input type="text" id="nl-search" data-i18n-placeholder="ph_materia_nl" placeholder="Escriu la matèria o àmbit (Administració local, comerç, mitjans...)">
             </div>
             <button class="btn-secondary" data-i18n="btn_download_form_nl">📥 Descarregueu el formulari</button>
         </section>
 
-        <!-- Cercador General de Prompts -->
-        <section class="search-section">
+        <!-- Cercador General -->
+        <div class="search-container">
             <input type="text" id="search-input" data-i18n-placeholder="search_placeholder" placeholder="Cercar prompts per paraula clau, matèria, autor...">
-        </section>
+        </div>
 
-        <!-- Llista de Prompts Carregats -->
-        <section class="prompts-list-section">
-            <h2 data-i18n="list_prompts_title">Relació de prompts</h2>
+        <!-- Llista de Prompts -->
+        <section>
+            <h2 class="list-title" data-i18n="list_prompts_title">Relació de prompts</h2>
             <div id="prompts-container" class="prompts-grid">
-                <!-- Els prompts es carregaran dinàmicament ací des de Supabase -->
-            </div>
-        </section>
-
-        <!-- Secció: Sobre el projecte -->
-        <section class="about-card">
-            <div class="about-box">
-                <h3 data-i18n="about_title">Sobre el projecte</h3>
-                <p data-i18n="about_text">La paraula LlenguAI es forma amb Llengua + AI (Intel·ligència Artificial). És l'expressió de la possibilitat de relacionar el desenvolupament de la nostra llengua (normalització, revitalització, aprenentatge, anàlisi sociològica) amb la IA Generativa.</p>
-            </div>
-
-            <div class="cta-container">
-                <a href="#prompts-container" class="btn-cta"><span data-i18n="btn_cta">Accedir als prompts</span> ➔</a>
+                <!-- Les targetes es carreguen dinàmicament des de script.js -->
             </div>
         </section>
 
     </main>
 
-    <!-- PEU DE PÀGINA -->
-    <footer class="main-footer-light">
-        <p>Projecte LlenguAI © 2026 — Universitat de València & IEC</p>
-    </footer>
-
-    <!-- MODAL: PUJAR PROMPTS (ADMIN) -->
-    <div id="admin-modal" class="modal-overlay" style="display: none;">
+    <!-- Modal d'administració -->
+    <div id="admin-modal" class="modal">
         <div class="modal-content">
             <h2 data-i18n="admin_panel_title">Panell de Gestió de Prompts</h2>
             <form id="add-prompt-form">
@@ -155,29 +92,28 @@
                 <div class="form-group">
                     <label data-i18n="prompt_type_label">Tipus de Prompt</label>
                     <select id="new-prompt-type" required>
-                        <option value="socioling" data-i18n="opt_type_socio">Situació Sociolingüística (SL)</option>
-                        <option value="didactic" data-i18n="opt_type_didactic">Prompt mestre de didàctica (DL)</option>
+                        <option value="sl" data-i18n="opt_type_socio">Situació Sociolingüística (SL)</option>
+                        <option value="dl" data-i18n="opt_type_didactic">Prompt mestre de didàctica (DL)</option>
                         <option value="nl" data-i18n="opt_type_nl">Prompt mestre de normalització (NL)</option>
                     </select>
                 </div>
                 <div class="form-group">
                     <label data-i18n="prompt_cat_label">Matèria / Àmbit</label>
-                    <input type="text" id="new-prompt-category" placeholder="Ex. Valencià, Secundària, Comerç..." required>
+                    <input type="text" id="new-prompt-category">
                 </div>
                 <div class="form-group">
                     <label data-i18n="prompt_body_label">Contingut del Prompt</label>
                     <textarea id="new-prompt-body" rows="6" required></textarea>
-                    <small data-i18n="prompt_body_help">Copieu i pegueu el prompt directament en text pla.</small>
+                    <small style="color:#64748b;" data-i18n="prompt_body_help">Copieu i pegueu el prompt directament en text pla.</small>
                 </div>
-                <div class="modal-actions">
-                    <button type="button" id="btn-close-modal" class="btn-secondary" data-i18n="btn_cancel">Cancel·lar</button>
+                <div style="display: flex; gap: 10px; justify-content: flex-end; margin-top: 1rem;">
+                    <button type="button" id="btn-close-modal" class="btn-cancel" data-i18n="btn_cancel">Cancel·lar</button>
                     <button type="submit" class="btn-primary" data-i18n="btn_save_prompt">Guardar Prompt</button>
                 </div>
             </form>
         </div>
     </div>
 
-    <!-- JS Principal -->
     <script src="script.js"></script>
 </body>
 </html>
