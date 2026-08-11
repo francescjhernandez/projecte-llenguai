@@ -24,23 +24,6 @@ const i18nTranslations = {
         search_placeholder: "Cercar prompts per paraula clau, matèria, autor...",
         list_prompts_title: "Relació de prompts"
     },
-    an: {
-        page_title: "Projècte LlenguAI",
-        btn_admin: "Cargar Prompts",
-        socio_title: "Situacion sociolingüistica",
-        lbl_ambit_sl: "Consultar la situacion sociolingüistica d'un pòble, comarca, sector laborau...",
-        ph_ambit_sl: "Escriure un pòble, comarca...",
-        didactic_title: "Didactica dera lengua",
-        lbl_materia_didactic: "Indicar matèria deu prompt de didactica dera lengua...",
-        ph_materia_didactic: "Escriure la matèria...",
-        btn_download_form: "📥 Descargar eth formulari",
-        nl_title: "Prompts de normalizacion lingüistica",
-        lbl_materia_nl: "Indicar matèria deu prompt de normalizacion lingüistica:",
-        ph_materia_nl: "Escriure la matèria...",
-        btn_download_form_nl: "📥 Descargar eth formulari",
-        search_placeholder: "Cercar prompts per paraula clau...",
-        list_prompts_title: "Relacion de prompts"
-    },
     es: {
         page_title: "Proyecto LlenguAI",
         btn_admin: "Subir Prompts",
@@ -57,57 +40,6 @@ const i18nTranslations = {
         btn_download_form_nl: "📥 Descargar el formulario",
         search_placeholder: "Buscar prompts por palabra clave, materia, autor...",
         list_prompts_title: "Relación de prompts"
-    },
-    en: {
-        page_title: "Project LlenguAI",
-        btn_admin: "Upload Prompts",
-        socio_title: "Sociolinguistic situation",
-        lbl_ambit_sl: "Check the sociolinguistic situation of a town, region, work sector, group, etc.:",
-        ph_ambit_sl: "Enter a town, region, work sector...",
-        didactic_title: "Language Didactics",
-        lbl_materia_didactic: "Indicate subject for language didactics prompt, educational level, etc.:",
-        ph_materia_didactic: "Enter subject, educational level (Primary, Secondary...)",
-        btn_download_form: "📥 Download form",
-        nl_title: "Language normalization prompts",
-        lbl_materia_nl: "Select subject for language normalization prompt:",
-        ph_materia_nl: "Enter subject or field (Local administration, trade, media...)",
-        btn_download_form_nl: "📥 Download form",
-        search_placeholder: "Search prompts by keyword, subject, author...",
-        list_prompts_title: "List of prompts"
-    },
-    fr: {
-        page_title: "Projet LlenguAI",
-        btn_admin: "Charger Prompts",
-        socio_title: "Situation sociolinguistique",
-        lbl_ambit_sl: "Consultez la situation sociolinguistique d'un village, d'une région...",
-        ph_ambit_sl: "Écrivez un village, une région...",
-        didactic_title: "Didactique de la langue",
-        lbl_materia_didactic: "Indiquez la matière du prompt de didactique...",
-        ph_materia_didactic: "Écrivez la matière...",
-        btn_download_form: "📥 Télécharger le formulaire",
-        nl_title: "Prompts de normalisation linguistique",
-        lbl_materia_nl: "Indiquez la matière du prompt de normalisation...",
-        ph_materia_nl: "Écrivez la matière...",
-        btn_download_form_nl: "📥 Télécharger le formulaire",
-        search_placeholder: "Rechercher des prompts par mot-clé...",
-        list_prompts_title: "Liste de prompts"
-    },
-    pt: {
-        page_title: "Projeto LlenguAI",
-        btn_admin: "Carregar Prompts",
-        socio_title: "Situação sociolinguística",
-        lbl_ambit_sl: "Consulte a situação sociolinguística de uma vila, região...",
-        ph_ambit_sl: "Escreva uma vila, região...",
-        didactic_title: "Didática da língua",
-        lbl_materia_didactic: "Indique a matéria do prompt de didática...",
-        ph_materia_didactic: "Escreva a matéria...",
-        btn_download_form: "📥 Descarregar o formulário",
-        nl_title: "Prompts de normalização linguística",
-        lbl_materia_nl: "Indique a matéria do prompt de normalização...",
-        ph_materia_nl: "Escreva a matéria...",
-        btn_download_form_nl: "📥 Descarregar o formulário",
-        search_placeholder: "Pesquisar prompts por palavra-chave...",
-        list_prompts_title: "Relação de prompts"
     }
 };
 
@@ -116,6 +48,7 @@ document.addEventListener('DOMContentLoaded', () => {
     setupEventListeners();
 });
 
+// Carregar prompts des de Supabase
 async function fetchPrompts() {
     if (supabaseClient) {
         try {
@@ -129,13 +62,14 @@ async function fetchPrompts() {
             renderPrompts(allPrompts);
             return;
         } catch (err) {
-            console.error('Error Supabase:', err);
+            console.error('Error carregant prompts de Supabase:', err);
         }
     }
     allPrompts = [];
     renderPrompts(allPrompts);
 }
 
+// Renderitzar la llista de prompts
 function renderPrompts(prompts) {
     const container = document.getElementById('prompts-container');
     if (!container) return;
@@ -184,6 +118,74 @@ function renderPrompts(prompts) {
     });
 }
 
+// Gestió d'esdeveniments i el formulari
+function setupEventListeners() {
+    const searchInput = document.getElementById('search-input');
+    const didacticSearch = document.getElementById('didactic-search');
+    const nlSearch = document.getElementById('nl-search');
+
+    if (searchInput) searchInput.addEventListener('input', (e) => filterPrompts(e.target.value));
+    if (didacticSearch) didacticSearch.addEventListener('input', (e) => filterPrompts(e.target.value, 'dl'));
+    if (nlSearch) nlSearch.addEventListener('input', (e) => filterPrompts(e.target.value, 'nl'));
+
+    const adminBtn = document.getElementById('admin-login-btn');
+    const closeModalBtn = document.getElementById('btn-close-modal');
+    const adminModal = document.getElementById('admin-modal');
+    const addForm = document.getElementById('add-prompt-form');
+
+    if (adminBtn) adminBtn.addEventListener('click', () => adminModal.style.display = 'flex');
+    if (closeModalBtn) closeModalBtn.addEventListener('click', () => adminModal.style.display = 'none');
+
+    // ENVIAR NOU PROMPT A SUPABASE
+    if (addForm) {
+        addForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+
+            const title = document.getElementById('new-prompt-title').value.trim();
+            const author = document.getElementById('new-prompt-author').value.trim();
+            const type = document.getElementById('new-prompt-type').value;
+            const category = document.getElementById('new-prompt-category').value.trim();
+            const body = document.getElementById('new-prompt-body').value.trim();
+
+            if (!title || !body) {
+                alert("Si us plau, ompli el títol i el contingut.");
+                return;
+            }
+
+            try {
+                const { data, error } = await supabaseClient
+                    .from('prompts')
+                    .insert([
+                        { title, author, type, category, body }
+                    ]);
+
+                if (error) {
+                    console.error("Error de Supabase:", error);
+                    alert("Error en desar el prompt: " + error.message);
+                    return;
+                }
+
+                alert("Prompt desat correctament!");
+                addForm.reset();
+                adminModal.style.display = 'none';
+                fetchPrompts(); // Tormar a carregar la llista actualitzada
+
+            } catch (err) {
+                console.error("Error inesperat:", err);
+                alert("S'ha produït un error en enviar les dades.");
+            }
+        });
+    }
+
+    document.querySelectorAll('.lang-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+            document.querySelectorAll('.lang-btn').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+            changeLanguage(btn.getAttribute('data-lang'));
+        });
+    });
+}
+
 function openPromptModal(index) {
     const prompt = allPrompts[index];
     if (!prompt) return;
@@ -213,31 +215,6 @@ function openPromptModal(index) {
         </div>
     `;
     viewModal.style.display = 'flex';
-}
-
-function setupEventListeners() {
-    const searchInput = document.getElementById('search-input');
-    const didacticSearch = document.getElementById('didactic-search');
-    const nlSearch = document.getElementById('nl-search');
-
-    if (searchInput) searchInput.addEventListener('input', (e) => filterPrompts(e.target.value));
-    if (didacticSearch) didacticSearch.addEventListener('input', (e) => filterPrompts(e.target.value, 'dl'));
-    if (nlSearch) nlSearch.addEventListener('input', (e) => filterPrompts(e.target.value, 'nl'));
-
-    const adminBtn = document.getElementById('admin-login-btn');
-    const closeModalBtn = document.getElementById('btn-close-modal');
-    const adminModal = document.getElementById('admin-modal');
-
-    if (adminBtn) adminBtn.addEventListener('click', () => adminModal.style.display = 'flex');
-    if (closeModalBtn) closeModalBtn.addEventListener('click', () => adminModal.style.display = 'none');
-
-    document.querySelectorAll('.lang-btn').forEach(btn => {
-        btn.addEventListener('click', () => {
-            document.querySelectorAll('.lang-btn').forEach(b => b.classList.remove('active'));
-            btn.classList.add('active');
-            changeLanguage(btn.getAttribute('data-lang'));
-        });
-    });
 }
 
 function filterPrompts(query, typeFilter = null) {
