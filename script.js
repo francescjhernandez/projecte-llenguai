@@ -164,10 +164,7 @@ function renderPrompts(prompts) {
             badgeLabel = 'NL';
         }
 
-        // TALLAREM A MAX 120 CARÀCTERS SENSE SALTS DE LÍNIA PER A DISSENY UNIFORME
-        const fullBody = prompt.body || '';
-        const cleanBody = fullBody.replace(/[\r\n]+/g, ' '); 
-        const shortBody = cleanBody.length > 120 ? cleanBody.substring(0, 120) + '...' : cleanBody;
+        const categoryText = prompt.category ? `<div class="prompt-category"><strong>Àmbit:</strong> ${escapeHtml(prompt.category)}</div>` : '';
 
         card.innerHTML = `
             <div>
@@ -176,10 +173,10 @@ function renderPrompts(prompts) {
                     <h3>${escapeHtml(prompt.title)}</h3>
                     <div class="prompt-author">Per: ${escapeHtml(prompt.author || 'Anònim')}</div>
                 </div>
-                <div class="prompt-preview">${escapeHtml(shortBody)}</div>
+                ${categoryText}
             </div>
             <div class="prompt-actions">
-                <button class="btn-copy-card" onclick="copyText(\`${escapeJsString(fullBody)}\`, this)">Copiar Prompt</button>
+                <button class="btn-copy-card" onclick="copyText(\`${escapeJsString(prompt.body || '')}\`, this)">Copiar Prompt</button>
                 <button class="btn-view-card" onclick="openPromptModal(${index})">Veure complet</button>
             </div>
         `;
