@@ -35,11 +35,11 @@ body {
     padding: 0 1rem;
 }
 
-/* --- CAPÇALERA I IMATGES --- */
+/* --- CAPÇALERA --- */
 header {
     background-color: #ffffff;
     border-bottom: 1px solid var(--border-color);
-    padding: 1rem 0 0.5rem 0;
+    padding: 1.5rem 0 0.5rem 0;
     margin-bottom: 1.5rem;
 }
 
@@ -48,11 +48,22 @@ header {
     margin-bottom: 1rem;
 }
 
-.main-banner-img {
-    max-width: 100%;
-    height: auto;
-    max-height: 180px;
-    object-fit: contain;
+.main-title {
+    font-size: 2.2rem;
+    font-weight: 800;
+    color: #1e293b;
+    letter-spacing: -0.5px;
+}
+
+.main-title .highlight {
+    color: var(--primary-color);
+}
+
+.sub-title {
+    font-size: 1.1rem;
+    color: #dc2626;
+    font-weight: 600;
+    margin-top: -0.2rem;
 }
 
 .header-nav {
@@ -61,7 +72,7 @@ header {
     align-items: center;
     flex-wrap: wrap;
     gap: 0.5rem;
-    padding-top: 0.5rem;
+    padding-top: 0.75rem;
     border-top: 1px solid #f1f5f9;
 }
 
@@ -107,19 +118,6 @@ header {
     border-radius: 4px;
     font-size: 0.75rem;
     cursor: pointer;
-}
-
-/* --- IL·LUSTRACIÓ CENTRAL --- */
-.illustration-container {
-    text-align: center;
-    margin: 1rem 0 2rem 0;
-}
-
-.central-illustration {
-    max-width: 100%;
-    max-height: 320px;
-    height: auto;
-    object-fit: contain;
 }
 
 /* --- SECCIONS DE FORMULARI --- */
@@ -191,24 +189,27 @@ input[type="text"], textarea, select {
 /* --- GRELLA I TARGETES DE PROMPTS --- */
 .prompts-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
     gap: 1.25rem;
 }
 
 .prompt-card {
     background: #ffffff;
     border: 1px solid var(--border-color);
-    border-radius: 8px;
-    padding: 1rem;
+    border-radius: 10px;
+    padding: 1.25rem;
     display: flex;
     flex-direction: column;
-    height: 380px;
+    justify-content: space-between;
+    height: 220px; /* Alçada reduïda i simètrica */
+    box-shadow: 0 1px 3px rgba(0,0,0,0.05);
 }
 
 .prompt-header h3 {
-    font-size: 1rem;
+    font-size: 0.95rem;
     font-weight: 700;
     margin-top: 0.3rem;
+    color: #0f172a;
 }
 
 .prompt-author {
@@ -216,18 +217,17 @@ input[type="text"], textarea, select {
     color: var(--text-muted);
 }
 
+/* FIX DEL TEXT LLARG EN LA TARGETA */
 .prompt-preview {
     font-size: 0.85rem;
     color: #475569;
-    margin: 0.75rem 0;
-    flex-grow: 1;
-    overflow-y: auto;
-    white-space: pre-wrap;
-    word-wrap: break-word;
-    background: #f8fafc;
-    padding: 0.5rem;
-    border-radius: 6px;
-    border: 1px solid #f1f5f9;
+    margin: 0.5rem 0;
+    display: -webkit-box;
+    -webkit-line-clamp: 3; /* Max 3 línies de text */
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    line-height: 1.4;
 }
 
 .prompt-actions {
