@@ -35,35 +35,24 @@ body {
     padding: 0 1rem;
 }
 
-/* --- CAPÇALERA --- */
+/* --- CAPÇALERA I IL·LUSTRACIÓ --- */
 header {
     background-color: #ffffff;
     border-bottom: 1px solid var(--border-color);
-    padding: 1.5rem 0 0.5rem 0;
+    padding: 0.75rem 0;
     margin-bottom: 1.5rem;
 }
 
-.header-banner {
+.illustration-container {
     text-align: center;
-    margin-bottom: 1rem;
+    margin: 1rem 0 2rem 0;
 }
 
-.main-title {
-    font-size: 2.2rem;
-    font-weight: 800;
-    color: #1e293b;
-    letter-spacing: -0.5px;
-}
-
-.main-title .highlight {
-    color: var(--primary-color);
-}
-
-.sub-title {
-    font-size: 1.1rem;
-    color: #dc2626;
-    font-weight: 600;
-    margin-top: -0.2rem;
+.central-illustration {
+    max-width: 100%;
+    max-height: 260px;
+    height: auto;
+    object-fit: contain;
 }
 
 .header-nav {
@@ -72,8 +61,6 @@ header {
     align-items: center;
     flex-wrap: wrap;
     gap: 0.5rem;
-    padding-top: 0.75rem;
-    border-top: 1px solid #f1f5f9;
 }
 
 .lang-selector {
@@ -186,7 +173,7 @@ input[type="text"], textarea, select {
     margin-bottom: 1rem;
 }
 
-/* --- GRELLA I TARGETES DE PROMPTS --- */
+/* --- TARGETES DE PROMPT PETITES I NORTADES --- */
 .prompts-grid {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
@@ -196,12 +183,12 @@ input[type="text"], textarea, select {
 .prompt-card {
     background: #ffffff;
     border: 1px solid var(--border-color);
-    border-radius: 10px;
+    border-radius: 8px;
     padding: 1.25rem;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    height: 220px; /* Alçada reduïda i simètrica */
+    height: 220px; /* Alçada rígida */
     box-shadow: 0 1px 3px rgba(0,0,0,0.05);
 }
 
@@ -210,24 +197,24 @@ input[type="text"], textarea, select {
     font-weight: 700;
     margin-top: 0.3rem;
     color: #0f172a;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 .prompt-author {
     font-size: 0.75rem;
     color: var(--text-muted);
+    margin-bottom: 0.5rem;
 }
 
-/* FIX DEL TEXT LLARG EN LA TARGETA */
 .prompt-preview {
     font-size: 0.85rem;
     color: #475569;
-    margin: 0.5rem 0;
-    display: -webkit-box;
-    -webkit-line-clamp: 3; /* Max 3 línies de text */
-    -webkit-box-orient: vertical;
-    overflow: hidden;
-    text-overflow: ellipsis;
     line-height: 1.4;
+    height: 60px;
+    overflow: hidden;
+    word-break: break-word;
 }
 
 .prompt-actions {
