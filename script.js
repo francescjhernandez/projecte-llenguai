@@ -164,6 +164,11 @@ function renderPrompts(prompts) {
             badgeLabel = 'NL';
         }
 
+        // TALLAREM A MAX 120 CARÀCTERS SENSE SALTS DE LÍNIA PER A DISSENY UNIFORME
+        const fullBody = prompt.body || '';
+        const cleanBody = fullBody.replace(/[\r\n]+/g, ' '); 
+        const shortBody = cleanBody.length > 120 ? cleanBody.substring(0, 120) + '...' : cleanBody;
+
         card.innerHTML = `
             <div>
                 <div class="prompt-header">
@@ -171,10 +176,10 @@ function renderPrompts(prompts) {
                     <h3>${escapeHtml(prompt.title)}</h3>
                     <div class="prompt-author">Per: ${escapeHtml(prompt.author || 'Anònim')}</div>
                 </div>
-                <div class="prompt-preview">${escapeHtml(prompt.body)}</div>
+                <div class="prompt-preview">${escapeHtml(shortBody)}</div>
             </div>
             <div class="prompt-actions">
-                <button class="btn-copy-card" onclick="copyText(\`${escapeJsString(prompt.body)}\`, this)">Copiar Prompt</button>
+                <button class="btn-copy-card" onclick="copyText(\`${escapeJsString(fullBody)}\`, this)">Copiar Prompt</button>
                 <button class="btn-view-card" onclick="openPromptModal(${index})">Veure complet</button>
             </div>
         `;
@@ -242,8 +247,8 @@ function filterPrompts(query, typeFilter = null) {
     const q = query.toLowerCase();
     const filtered = allPrompts.filter(p => {
         const matchesType = typeFilter ? (p.type === typeFilter || (typeFilter === 'dl' && p.type === 'didactic')) : true;
-        const matchesText = p.title.toLowerCase().includes(q) ||
-                            p.body.toLowerCase().includes(q) ||
+        const matchesText = (p.title && p.title.toLowerCase().includes(q)) ||
+                            (p.body && p.body.toLowerCase().includes(q)) ||
                             (p.category && p.category.toLowerCase().includes(q)) ||
                             (p.author && p.author.toLowerCase().includes(q));
         return matchesType && matchesText;
