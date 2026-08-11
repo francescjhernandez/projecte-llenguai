@@ -173,10 +173,10 @@ input[type="text"], textarea, select {
     margin-bottom: 1rem;
 }
 
-/* --- TARGETES DE PROMPT PETITES I NORTADES --- */
+/* --- TARGETES NETES I SENSE TEXT D'EXEMPLE --- */
 .prompts-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
     gap: 1.25rem;
 }
 
@@ -188,39 +188,38 @@ input[type="text"], textarea, select {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    height: 220px; /* Alçada rígida */
+    min-height: 160px;
     box-shadow: 0 1px 3px rgba(0,0,0,0.05);
 }
 
 .prompt-header h3 {
-    font-size: 0.95rem;
+    font-size: 1rem;
     font-weight: 700;
-    margin-top: 0.3rem;
+    margin-top: 0.4rem;
     color: #0f172a;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
+    line-height: 1.3;
 }
 
 .prompt-author {
-    font-size: 0.75rem;
+    font-size: 0.8rem;
     color: var(--text-muted);
-    margin-bottom: 0.5rem;
+    margin-bottom: 0.4rem;
 }
 
-.prompt-preview {
-    font-size: 0.85rem;
+.prompt-category {
+    font-size: 0.8rem;
     color: #475569;
-    line-height: 1.4;
-    height: 60px;
-    overflow: hidden;
-    word-break: break-word;
+    margin-bottom: 0.8rem;
+    background-color: #f1f5f9;
+    padding: 0.25rem 0.5rem;
+    border-radius: 4px;
+    display: inline-block;
 }
 
 .prompt-actions {
     display: flex;
     gap: 8px;
-    margin-top: auto;
+    margin-top: 0.8rem;
 }
 
 .btn-copy-card {
