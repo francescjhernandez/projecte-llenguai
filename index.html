@@ -12,12 +12,6 @@
 
     <header>
         <div class="container header-container">
-            <!-- Títol / Logotip Principal -->
-            <div class="header-banner">
-                <h1 class="main-title">Projecte <span class="highlight">LlenguAI</span></h1>
-                <p class="sub-title">la nostra llengua + intel·ligència artificial</p>
-            </div>
-
             <!-- Navegació i Idiomes -->
             <div class="header-nav">
                 <div class="lang-selector">
@@ -37,6 +31,11 @@
     </header>
 
     <main class="container">
+
+        <!-- Il·lustració Principal (URL UV) -->
+        <div class="illustration-container">
+            <img src="https://www.uv.es/senex/imatgeLlenguaAI.png" alt="Projecte LlenguAI" class="central-illustration">
+        </div>
 
         <!-- Situació sociolingüística -->
         <section class="section-card">
@@ -76,13 +75,13 @@
         <section>
             <h2 class="list-title" data-i18n="list_prompts_title">Relació de prompts</h2>
             <div id="prompts-container" class="prompts-grid">
-                <!-- Targetes carregades des de script.js -->
+                <!-- Carregat dinàmicament des de JS -->
             </div>
         </section>
 
     </main>
 
-    <!-- Modal Admin -->
+    <!-- Modal Administració / Afegir Prompt -->
     <div id="admin-modal" class="modal">
         <div class="modal-content">
             <h2 data-i18n="admin_panel_title">Panell de Gestió de Prompts</h2>
