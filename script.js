@@ -6,43 +6,6 @@ const supabaseClient = window.supabase ? window.supabase.createClient(SUPABASE_U
 
 let allPrompts = [];
 
-const i18nTranslations = {
-    ca: {
-        page_title: "Projecte LlenguAI",
-        btn_admin: "Pujar Prompts",
-        socio_title: "Situació sociolingüística",
-        lbl_ambit_sl: "Consulta la situació sociolingüística d'un poble, una comarca, un sector laboral, un col·lectiu, etc.:",
-        ph_ambit_sl: "Escriu un poble, comarca, sector laboral...",
-        didactic_title: "Didàctica de la llengua",
-        lbl_materia_didactic: "Indiqueu matèria del prompt de didàctica de la llengua, nivell educatiu, etc.:",
-        ph_materia_didactic: "Escriu la matèria, nivell educatiu (Primària, Secundària...)",
-        btn_download_form: "📥 Descarregueu el formulari",
-        nl_title: "Prompts de normalització lingüística",
-        lbl_materia_nl: "Indiqueu matèria del prompt de normalització lingüística:",
-        ph_materia_nl: "Escriu la matèria o àmbit (Administració local, comerç, mitjans...)",
-        btn_download_form_nl: "📥 Descarregueu el formulari",
-        search_placeholder: "Cercar prompts per paraula clau, matèria, autor...",
-        list_prompts_title: "Relació de prompts"
-    },
-    es: {
-        page_title: "Proyecto LlenguAI",
-        btn_admin: "Subir Prompts",
-        socio_title: "Situación sociolingüística",
-        lbl_ambit_sl: "Consulte la situación sociolingüística de un pueblo, comarca, sector laboral, colectivo, etc.:",
-        ph_ambit_sl: "Escriba un pueblo, comarca, sector laboral...",
-        didactic_title: "Didáctica de la lengua",
-        lbl_materia_didactic: "Indique materia del prompt de didáctica de la lengua, nivel educativo, etc.:",
-        ph_materia_didactic: "Escriba la materia, nivel educativo (Primaria, Secundaria...)",
-        btn_download_form: "📥 Descargar el formulario",
-        nl_title: "Prompts de normalización lingüística",
-        lbl_materia_nl: "Indique materia del prompt de normalización lingüística:",
-        ph_materia_nl: "Escriba la materia o ámbito (Administración local, comercio, medios...)",
-        btn_download_form_nl: "📥 Descargar el formulario",
-        search_placeholder: "Buscar prompts por palabra clave, materia, autor...",
-        list_prompts_title: "Relación de prompts"
-    }
-};
-
 document.addEventListener('DOMContentLoaded', () => {
     fetchPrompts();
     setupEventListeners();
@@ -62,14 +25,14 @@ async function fetchPrompts() {
             renderPrompts(allPrompts);
             return;
         } catch (err) {
-            console.error('Error carregant prompts de Supabase:', err);
+            console.error('Error carregant de Supabase:', err);
         }
     }
     allPrompts = [];
     renderPrompts(allPrompts);
 }
 
-// Renderitzar la llista de prompts
+// Renderitzar les targetes (SENSE el cos del prompt, només capçalera, àmbit i botons)
 function renderPrompts(prompts) {
     const container = document.getElementById('prompts-container');
     if (!container) return;
@@ -85,7 +48,7 @@ function renderPrompts(prompts) {
         card.className = 'prompt-card';
 
         let badgeClass = 'badge-sl';
-        let badgeLabel = (prompt.type || 'GENERAL').toUpperCase();
+        let badgeLabel = (prompt.type || 'SL').toUpperCase();
 
         if (prompt.type === 'sl' || prompt.type === 'socioling') {
             badgeClass = 'badge-sl';
@@ -100,8 +63,9 @@ function renderPrompts(prompts) {
 
         const categoryText = prompt.category ? `<div class="prompt-category"><strong>Àmbit:</strong> ${escapeHtml(prompt.category)}</div>` : '';
 
+        // ÚNICAMENT DIBUIXEM CAPÇALERA, ÀMBIT I BOTONS
         card.innerHTML = `
-            <div>
+            <div class="prompt-content-top">
                 <div class="prompt-header">
                     <span class="badge-badge ${badgeClass}">${badgeLabel}</span>
                     <h3>${escapeHtml(prompt.title)}</h3>
@@ -118,74 +82,7 @@ function renderPrompts(prompts) {
     });
 }
 
-// Gestió d'esdeveniments i el formulari
-function setupEventListeners() {
-    const searchInput = document.getElementById('search-input');
-    const didacticSearch = document.getElementById('didactic-search');
-    const nlSearch = document.getElementById('nl-search');
-
-    if (searchInput) searchInput.addEventListener('input', (e) => filterPrompts(e.target.value));
-    if (didacticSearch) didacticSearch.addEventListener('input', (e) => filterPrompts(e.target.value, 'dl'));
-    if (nlSearch) nlSearch.addEventListener('input', (e) => filterPrompts(e.target.value, 'nl'));
-
-    const adminBtn = document.getElementById('admin-login-btn');
-    const closeModalBtn = document.getElementById('btn-close-modal');
-    const adminModal = document.getElementById('admin-modal');
-    const addForm = document.getElementById('add-prompt-form');
-
-    if (adminBtn) adminBtn.addEventListener('click', () => adminModal.style.display = 'flex');
-    if (closeModalBtn) closeModalBtn.addEventListener('click', () => adminModal.style.display = 'none');
-
-    // ENVIAR NOU PROMPT A SUPABASE
-    if (addForm) {
-        addForm.addEventListener('submit', async (e) => {
-            e.preventDefault();
-
-            const title = document.getElementById('new-prompt-title').value.trim();
-            const author = document.getElementById('new-prompt-author').value.trim();
-            const type = document.getElementById('new-prompt-type').value;
-            const category = document.getElementById('new-prompt-category').value.trim();
-            const body = document.getElementById('new-prompt-body').value.trim();
-
-            if (!title || !body) {
-                alert("Si us plau, ompli el títol i el contingut.");
-                return;
-            }
-
-            try {
-                const { data, error } = await supabaseClient
-                    .from('prompts')
-                    .insert([
-                        { title, author, type, category, body }
-                    ]);
-
-                if (error) {
-                    console.error("Error de Supabase:", error);
-                    alert("Error en desar el prompt: " + error.message);
-                    return;
-                }
-
-                alert("Prompt desat correctament!");
-                addForm.reset();
-                adminModal.style.display = 'none';
-                fetchPrompts(); // Tormar a carregar la llista actualitzada
-
-            } catch (err) {
-                console.error("Error inesperat:", err);
-                alert("S'ha produït un error en enviar les dades.");
-            }
-        });
-    }
-
-    document.querySelectorAll('.lang-btn').forEach(btn => {
-        btn.addEventListener('click', () => {
-            document.querySelectorAll('.lang-btn').forEach(b => b.classList.remove('active'));
-            btn.classList.add('active');
-            changeLanguage(btn.getAttribute('data-lang'));
-        });
-    });
-}
-
+// Mostrar la finestra emergent (modal) amb el text complet
 function openPromptModal(index) {
     const prompt = allPrompts[index];
     if (!prompt) return;
@@ -205,7 +102,7 @@ function openPromptModal(index) {
                 <button onclick="document.getElementById('view-prompt-modal').style.display='none'" style="background:none; border:none; font-size:1.5rem; cursor:pointer;">&times;</button>
             </div>
             <p style="color:#64748b; margin-bottom:1rem;"><strong>Autor:</strong> ${escapeHtml(prompt.author || 'Anònim')}</p>
-            <div style="background:#f8fafc; border:1px solid #e2e8f0; padding:1rem; border-radius:8px; white-space:pre-wrap; font-family:monospace; font-size:0.875rem; margin-bottom:1.5rem; max-height:50vh; overflow-y:auto;">
+            <div style="background:#f8fafc; border:1px solid #e2e8f0; padding:1rem; border-radius:8px; white-space:pre-wrap; font-family:monospace; font-size:0.875rem; margin-bottom:1.5rem; max-height:50vh; overflow-y:auto; color:#1e293b;">
                 ${escapeHtml(prompt.body)}
             </div>
             <div style="display:flex; gap:10px; justify-content:flex-end;">
@@ -215,6 +112,62 @@ function openPromptModal(index) {
         </div>
     `;
     viewModal.style.display = 'flex';
+}
+
+function setupEventListeners() {
+    const searchInput = document.getElementById('search-input');
+    const didacticSearch = document.getElementById('didactic-search');
+    const nlSearch = document.getElementById('nl-search');
+
+    if (searchInput) searchInput.addEventListener('input', (e) => filterPrompts(e.target.value));
+    if (didacticSearch) didacticSearch.addEventListener('input', (e) => filterPrompts(e.target.value, 'dl'));
+    if (nlSearch) nlSearch.addEventListener('input', (e) => filterPrompts(e.target.value, 'nl'));
+
+    const adminBtn = document.getElementById('admin-login-btn');
+    const closeModalBtn = document.getElementById('btn-close-modal');
+    const adminModal = document.getElementById('admin-modal');
+    const addForm = document.getElementById('add-prompt-form');
+
+    if (adminBtn) adminBtn.addEventListener('click', () => adminModal.style.display = 'flex');
+    if (closeModalBtn) closeModalBtn.addEventListener('click', () => adminModal.style.display = 'none');
+
+    if (addForm) {
+        addForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+
+            const title = document.getElementById('new-prompt-title').value.trim();
+            const author = document.getElementById('new-prompt-author').value.trim();
+            const type = document.getElementById('new-prompt-type').value;
+            const category = document.getElementById('new-prompt-category').value.trim();
+            const body = document.getElementById('new-prompt-body').value.trim();
+
+            if (!title || !body) {
+                alert("Si us plau, ompli el títol i el contingut.");
+                return;
+            }
+
+            try {
+                const { data, error } = await supabaseClient
+                    .from('prompts')
+                    .insert([{ title, author, type, category, body }]);
+
+                if (error) {
+                    console.error("Error Supabase:", error);
+                    alert("Error en desar el prompt: " + error.message);
+                    return;
+                }
+
+                alert("Prompt desat correctament!");
+                addForm.reset();
+                adminModal.style.display = 'none';
+                fetchPrompts();
+
+            } catch (err) {
+                console.error("Error inesperat:", err);
+                alert("S'ha produït un error en enviar les dades.");
+            }
+        });
+    }
 }
 
 function filterPrompts(query, typeFilter = null) {
@@ -228,18 +181,6 @@ function filterPrompts(query, typeFilter = null) {
         return matchesType && matchesText;
     });
     renderPrompts(filtered);
-}
-
-function changeLanguage(lang) {
-    const langData = i18nTranslations[lang] || i18nTranslations['ca'];
-    document.querySelectorAll('[data-i18n]').forEach(el => {
-        const key = el.getAttribute('data-i18n');
-        if (langData[key]) el.textContent = langData[key];
-    });
-    document.querySelectorAll('[data-i18n-placeholder]').forEach(el => {
-        const key = el.getAttribute('data-i18n-placeholder');
-        if (langData[key]) el.placeholder = langData[key];
-    });
 }
 
 function copyText(text, btn) {
