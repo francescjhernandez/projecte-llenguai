@@ -4,7 +4,6 @@ const SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZ
 
 const supabaseClient = window.supabase ? window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY) : null;
 
-// --- DADES LOCALS I TRADUCCIONS (i18n) ---
 let allPrompts = [];
 
 const i18nTranslations = {
@@ -12,9 +11,6 @@ const i18nTranslations = {
         page_title: "Projecte LlenguAI",
         btn_admin: "Pujar Prompts",
         socio_title: "Situació sociolingüística",
-        opt_know: "Coneixements",
-        opt_uses: "Usos",
-        opt_attitudes: "Actituds",
         lbl_ambit_sl: "Consulta la situació sociolingüística d'un poble, una comarca, un sector laboral, un col·lectiu, etc.:",
         ph_ambit_sl: "Escriu un poble, comarca, sector laboral...",
         didactic_title: "Didàctica de la llengua",
@@ -29,7 +25,6 @@ const i18nTranslations = {
         list_prompts_title: "Relació de prompts",
         about_title: "Sobre el projecte",
         about_text: "La paraula LlenguAI es forma amb Llengua + AI (Intel·ligència Artificial). És l'expressió de la possibilitat de relacionar el desenvolupament de la nostra llengua amb la IA Generativa.",
-        btn_cta: "Accedir als prompts",
         admin_panel_title: "Panell de Gestió de Prompts",
         prompt_title_label: "Títol del Prompt",
         prompt_author_label: "Nom de la persona que carrega el prompt",
@@ -41,17 +36,12 @@ const i18nTranslations = {
         prompt_body_label: "Contingut del Prompt",
         prompt_body_help: "Copieu i pegueu el prompt directament en text pla.",
         btn_cancel: "Cancel·lar",
-        btn_save_prompt: "Guardar Prompt",
-        btn_copy: "Copiar Prompt",
-        btn_copied: "Copiat!"
+        btn_save_prompt: "Guardar Prompt"
     },
     es: {
         page_title: "Proyecto LlenguAI",
         btn_admin: "Subir Prompts",
         socio_title: "Situación sociolingüística",
-        opt_know: "Conocimientos",
-        opt_uses: "Usos",
-        opt_attitudes: "Actitudes",
         lbl_ambit_sl: "Consulte la situación sociolingüística de un pueblo, comarca, sector laboral, colectivo, etc.:",
         ph_ambit_sl: "Escriba un pueblo, comarca, sector laboral...",
         didactic_title: "Didáctica de la lengua",
@@ -66,7 +56,6 @@ const i18nTranslations = {
         list_prompts_title: "Relación de prompts",
         about_title: "Sobre el proyecto",
         about_text: "La palabra LlenguAI se forma con Llengua + AI (Inteligencia Artificial). Es la expresión de la posibilidad de relacionar el desarrollo de nuestra lengua con la IA Generativa.",
-        btn_cta: "Acceder a los prompts",
         admin_panel_title: "Panel de Gestión de Prompts",
         prompt_title_label: "Título del Prompt",
         prompt_author_label: "Nombre de la persona que carga el prompt",
@@ -78,17 +67,12 @@ const i18nTranslations = {
         prompt_body_label: "Contenido del Prompt",
         prompt_body_help: "Copie y pegue el prompt directamente en texto plano.",
         btn_cancel: "Cancelar",
-        btn_save_prompt: "Guardar Prompt",
-        btn_copy: "Copiar Prompt",
-        btn_copied: "¡Copiado!"
+        btn_save_prompt: "Guardar Prompt"
     },
     en: {
         page_title: "Project LlenguAI",
         btn_admin: "Upload Prompts",
         socio_title: "Sociolinguistic situation",
-        opt_know: "Knowledge",
-        opt_uses: "Uses",
-        opt_attitudes: "Attitudes",
         lbl_ambit_sl: "Check the sociolinguistic situation of a town, region, work sector, group, etc.:",
         ph_ambit_sl: "Enter a town, region, work sector...",
         didactic_title: "Language Didactics",
@@ -103,7 +87,6 @@ const i18nTranslations = {
         list_prompts_title: "List of prompts",
         about_title: "About the project",
         about_text: "The word LlenguAI combines Llengua (Language) + AI (Artificial Intelligence). It represents the possibility of combining language development with Generative AI.",
-        btn_cta: "Access prompts",
         admin_panel_title: "Prompt Management Panel",
         prompt_title_label: "Prompt Title",
         prompt_author_label: "Author name",
@@ -115,32 +98,15 @@ const i18nTranslations = {
         prompt_body_label: "Prompt Content",
         prompt_body_help: "Copy and paste prompt directly in plain text.",
         btn_cancel: "Cancel",
-        btn_save_prompt: "Save Prompt",
-        btn_copy: "Copy Prompt",
-        btn_copied: "Copied!"
+        btn_save_prompt: "Save Prompt"
     }
 };
 
-// --- ELEMENTS DEL DOM ---
-const promptsContainer = document.getElementById('prompts-container');
-const searchInput = document.getElementById('search-input');
-const sociolingSearch = document.getElementById('socioling-search');
-const didacticSearch = document.getElementById('didactic-search');
-const nlSearch = document.getElementById('nl-search');
-
-const adminModal = document.getElementById('admin-modal');
-const adminBtn = document.getElementById('admin-login-btn');
-const closeModalBtn = document.getElementById('btn-close-modal');
-const addPromptForm = document.getElementById('add-prompt-form');
-const langButtons = document.querySelectorAll('.lang-btn');
-
-// --- INICIALITZACIÓ ---
 document.addEventListener('DOMContentLoaded', () => {
     fetchPrompts();
     setupEventListeners();
 });
 
-// --- CÀRREGA DE PROMPTS DES DE SUPABASE ---
 async function fetchPrompts() {
     if (supabaseClient) {
         try {
@@ -150,39 +116,24 @@ async function fetchPrompts() {
                 .order('created_at', { ascending: false });
 
             if (error) throw error;
-
             allPrompts = data || [];
             renderPrompts(allPrompts);
             return;
         } catch (err) {
-            console.error('Error en connectar amb Supabase:', err);
+            console.error('Error Supabase:', err);
         }
     }
-
     allPrompts = [];
     renderPrompts(allPrompts);
 }
 
-// --- CONSULTA DADES SL DES DE FITXERS EXTERNS ---
-async function querySLData(searchTerm) {
-    try {
-        const response = await fetch('/data/sl/municipis.json');
-        if (!response.ok) return;
-        const data = await response.json();
-        
-        return data.filter(item => item.nom.toLowerCase().includes(searchTerm.toLowerCase()));
-    } catch (err) {
-        console.info('Fitxer extern SL no trobat o pendents de carregar:', err);
-    }
-}
-
-// --- RENDERING DE PROMPTS (TARGETES COMPACTES) ---
 function renderPrompts(prompts) {
-    if (!promptsContainer) return;
-    promptsContainer.innerHTML = '';
+    const container = document.getElementById('prompts-container');
+    if (!container) return;
+    container.innerHTML = '';
 
     if (prompts.length === 0) {
-        promptsContainer.innerHTML = '<p style="color: #64748b; grid-column: 1/-1; text-align: center;">No s\'han trobat prompts que coincidisquen amb la cerca.</p>';
+        container.innerHTML = '<p style="color: #64748b; grid-column: 1/-1; text-align: center;">No s\'han trobat prompts.</p>';
         return;
     }
 
@@ -190,13 +141,13 @@ function renderPrompts(prompts) {
         const card = document.createElement('div');
         card.className = 'prompt-card';
 
-        let badgeClass = 'badge-default';
-        let badgeLabel = prompt.type ? prompt.type.toUpperCase() : 'GENERAL';
+        let badgeClass = 'badge-sl';
+        let badgeLabel = (prompt.type || 'GENERAL').toUpperCase();
 
-        if (prompt.type === 'socioling' || prompt.type === 'sl') {
-            badgeClass = 'badge-socioling';
+        if (prompt.type === 'sl' || prompt.type === 'socioling') {
+            badgeClass = 'badge-sl';
             badgeLabel = 'SL';
-        } else if (prompt.type === 'didactic' || prompt.type === 'dl') {
+        } else if (prompt.type === 'dl' || prompt.type === 'didactic') {
             badgeClass = 'badge-dl';
             badgeLabel = 'DL';
         } else if (prompt.type === 'nl') {
@@ -204,9 +155,8 @@ function renderPrompts(prompts) {
             badgeLabel = 'NL';
         }
 
-        // Extracte de text curt
-        const previewText = prompt.body.length > 120 
-            ? prompt.body.substring(0, 120) + '...' 
+        const previewText = prompt.body.length > 130 
+            ? prompt.body.substring(0, 130) + '...' 
             : prompt.body;
 
         card.innerHTML = `
@@ -217,16 +167,14 @@ function renderPrompts(prompts) {
             </div>
             <p class="prompt-preview">${escapeHtml(previewText)}</p>
             <div class="prompt-actions">
-                <button class="btn-copy" onclick="copyToClipboard(\`${escapeJsString(prompt.body)}\`, this)">Copiar</button>
-                <button class="btn-view" onclick="openPromptModal(${index})">Veure complet</button>
+                <button class="btn-copy-card" onclick="copyText(\`${escapeJsString(prompt.body)}\`, this)">Copiar</button>
+                <button class="btn-view-card" onclick="openPromptModal(${index})">Veure complet</button>
             </div>
         `;
-
-        promptsContainer.appendChild(card);
+        container.appendChild(card);
     });
 }
 
-// --- MODAL PER A VEURE EL PROMPT COMPLET ---
 function openPromptModal(index) {
     const prompt = allPrompts[index];
     if (!prompt) return;
@@ -241,69 +189,43 @@ function openPromptModal(index) {
 
     viewModal.innerHTML = `
         <div class="modal-content" style="max-width: 700px; max-height: 85vh; overflow-y: auto;">
-            <div style="display:flex; justify-content:space-between; align-items:flex-start; margin-bottom:1rem;">
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:1rem;">
                 <h2>${escapeHtml(prompt.title)}</h2>
                 <button onclick="document.getElementById('view-prompt-modal').style.display='none'" style="background:none; border:none; font-size:1.5rem; cursor:pointer;">&times;</button>
             </div>
             <p style="color:#64748b; margin-bottom:1rem;"><strong>Autor:</strong> ${escapeHtml(prompt.author || 'Anònim')}</p>
-            <div style="background:#f8fafc; border:1px solid #e2e8f0; padding:1rem; border-radius:8px; white-space:pre-wrap; font-family:monospace; font-size:0.9rem; margin-bottom:1.5rem; max-height:50vh; overflow-y:auto;">
+            <div style="background:#f8fafc; border:1px solid #e2e8f0; padding:1rem; border-radius:8px; white-space:pre-wrap; font-family:monospace; font-size:0.875rem; margin-bottom:1.5rem; max-height:50vh; overflow-y:auto;">
                 ${escapeHtml(prompt.body)}
             </div>
             <div style="display:flex; gap:10px; justify-content:flex-end;">
-                <button class="btn-copy" style="padding:0.6rem 1.2rem;" onclick="copyToClipboard(\`${escapeJsString(prompt.body)}\`, this)">Copiar Prompt</button>
+                <button class="btn-primary" onclick="copyText(\`${escapeJsString(prompt.body)}\`, this)">Copiar Prompt</button>
                 <button class="btn-cancel" onclick="document.getElementById('view-prompt-modal').style.display='none'">Tancar</button>
             </div>
         </div>
     `;
-
     viewModal.style.display = 'flex';
 }
 
-// --- ESDEVENIMENTS ---
 function setupEventListeners() {
-    if (searchInput) {
-        searchInput.addEventListener('input', (e) => {
-            filterPrompts(e.target.value);
-        });
-    }
+    const searchInput = document.getElementById('search-input');
+    const didacticSearch = document.getElementById('didactic-search');
+    const nlSearch = document.getElementById('nl-search');
 
-    if (didacticSearch) {
-        didacticSearch.addEventListener('input', (e) => {
-            filterPrompts(e.target.value, 'didactic');
-        });
-    }
+    if (searchInput) searchInput.addEventListener('input', (e) => filterPrompts(e.target.value));
+    if (didacticSearch) didacticSearch.addEventListener('input', (e) => filterPrompts(e.target.value, 'dl'));
+    if (nlSearch) nlSearch.addEventListener('input', (e) => filterPrompts(e.target.value, 'nl'));
 
-    if (nlSearch) {
-        nlSearch.addEventListener('input', (e) => {
-            filterPrompts(e.target.value, 'nl');
-        });
-    }
+    const adminBtn = document.getElementById('admin-login-btn');
+    const closeModalBtn = document.getElementById('btn-close-modal');
+    const adminModal = document.getElementById('admin-modal');
 
-    if (sociolingSearch) {
-        sociolingSearch.addEventListener('input', async (e) => {
-            const query = e.target.value.trim();
-            if (query.length > 2) {
-                await querySLData(query);
-            }
-        });
-    }
+    if (adminBtn) adminBtn.addEventListener('click', () => adminModal.style.display = 'flex');
+    if (closeModalBtn) closeModalBtn.addEventListener('click', () => adminModal.style.display = 'none');
 
-    if (adminBtn) {
-        adminBtn.addEventListener('click', () => {
-            if (adminModal) adminModal.style.display = 'flex';
-        });
-    }
-
-    if (closeModalBtn) {
-        closeModalBtn.addEventListener('click', () => {
-            if (adminModal) adminModal.style.display = 'none';
-        });
-    }
-
+    const addPromptForm = document.getElementById('add-prompt-form');
     if (addPromptForm) {
         addPromptForm.addEventListener('submit', async (e) => {
             e.preventDefault();
-            
             const newPrompt = {
                 title: document.getElementById('new-prompt-title').value,
                 author: document.getElementById('new-prompt-author').value,
@@ -314,33 +236,23 @@ function setupEventListeners() {
 
             if (supabaseClient) {
                 try {
-                    const { error } = await supabaseClient
-                        .from('prompts')
-                        .insert([newPrompt]);
-
+                    const { error } = await supabaseClient.from('prompts').insert([newPrompt]);
                     if (error) throw error;
                     fetchPrompts();
                 } catch (err) {
-                    console.error('Error guardant prompt:', err);
-                    allPrompts.unshift({ ...newPrompt, id: Date.now() });
-                    renderPrompts(allPrompts);
+                    console.error('Error guardant:', err);
                 }
-            } else {
-                allPrompts.unshift({ ...newPrompt, id: Date.now() });
-                renderPrompts(allPrompts);
             }
-
             addPromptForm.reset();
-            if (adminModal) adminModal.style.display = 'none';
+            adminModal.style.display = 'none';
         });
     }
 
-    langButtons.forEach(btn => {
+    document.querySelectorAll('.lang-btn').forEach(btn => {
         btn.addEventListener('click', () => {
-            langButtons.forEach(b => b.classList.remove('active'));
+            document.querySelectorAll('.lang-btn').forEach(b => b.classList.remove('active'));
             btn.classList.add('active');
-            const lang = btn.getAttribute('data-lang');
-            changeLanguage(lang);
+            changeLanguage(btn.getAttribute('data-lang'));
         });
     });
 }
@@ -348,7 +260,7 @@ function setupEventListeners() {
 function filterPrompts(query, typeFilter = null) {
     const q = query.toLowerCase();
     const filtered = allPrompts.filter(p => {
-        const matchesType = typeFilter ? (p.type === typeFilter || (typeFilter === 'didactic' && p.type === 'dl')) : true;
+        const matchesType = typeFilter ? (p.type === typeFilter || (typeFilter === 'dl' && p.type === 'didactic')) : true;
         const matchesText = p.title.toLowerCase().includes(q) ||
                             p.body.toLowerCase().includes(q) ||
                             (p.category && p.category.toLowerCase().includes(q)) ||
@@ -358,55 +270,32 @@ function filterPrompts(query, typeFilter = null) {
     renderPrompts(filtered);
 }
 
-// --- CANVI D'IDIOMA (i18n) ---
 function changeLanguage(lang) {
     const langData = i18nTranslations[lang] || i18nTranslations['ca'];
-
-    document.querySelectorAll('[data-i18n]').forEach(element => {
-        const key = element.getAttribute('data-i18n');
-        if (langData[key]) {
-            element.textContent = langData[key];
-        }
+    document.querySelectorAll('[data-i18n]').forEach(el => {
+        const key = el.getAttribute('data-i18n');
+        if (langData[key]) el.textContent = langData[key];
     });
-
-    document.querySelectorAll('[data-i18n-placeholder]').forEach(element => {
-        const key = element.getAttribute('data-i18n-placeholder');
-        if (langData[key]) {
-            element.placeholder = langData[key];
-        }
+    document.querySelectorAll('[data-i18n-placeholder]').forEach(el => {
+        const key = el.getAttribute('data-i18n-placeholder');
+        if (langData[key]) el.placeholder = langData[key];
     });
 }
 
-// --- UTILITATS ---
-function copyToClipboard(text, buttonElement) {
+function copyText(text, btn) {
     navigator.clipboard.writeText(text).then(() => {
-        const originalText = buttonElement.innerText;
-        buttonElement.innerText = 'Copiat!';
-        buttonElement.style.backgroundColor = '#16a34a';
-
-        setTimeout(() => {
-            buttonElement.innerText = originalText;
-            buttonElement.style.backgroundColor = '';
-        }, 2000);
-    }).catch(err => {
-        console.error('Error en copiar:', err);
+        const original = btn.innerText;
+        btn.innerText = 'Copiat!';
+        setTimeout(() => btn.innerText = original, 2000);
     });
 }
 
 function escapeHtml(str) {
     if (!str) return '';
-    return str
-        .replace(/&/g, "&amp;")
-        .replace(/</g, "&lt;")
-        .replace(/>/g, "&gt;")
-        .replace(/"/g, "&quot;")
-        .replace(/'/g, "&#039;");
+    return str.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;").replace(/'/g, "&#039;");
 }
 
 function escapeJsString(str) {
     if (!str) return '';
-    return str
-        .replace(/\\/g, '\\\\')
-        .replace(/`/g, '\\`')
-        .replace(/\$/g, '\\$');
+    return str.replace(/\\/g, '\\\\').replace(/`/g, '\\`').replace(/\$/g, '\\$');
 }
