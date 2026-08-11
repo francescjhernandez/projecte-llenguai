@@ -11,30 +11,38 @@
 <body>
 
     <header>
-        <div class="container header-content">
-            <div class="logo-container">
-                <h1 data-i18n="page_title">Projecte LlenguAI</h1>
+        <div class="container header-container">
+            <!-- Imatge Capçalera Superior -->
+            <div class="header-banner">
+                <img src="img/llenguai-logo.png" alt="Projecte LlenguAI" class="main-banner-img">
             </div>
-            <div class="header-actions">
+
+            <!-- Navegació i Idiomes -->
+            <div class="header-nav">
                 <div class="lang-selector">
                     <button class="lang-btn active" data-lang="ca">Català / Valencià</button>
+                    <button class="lang-btn" data-lang="an">Aranés</button>
                     <button class="lang-btn" data-lang="es">Castellano</button>
                     <button class="lang-btn" data-lang="en">English</button>
+                    <button class="lang-btn" data-lang="fr">Français</button>
+                    <button class="lang-btn" data-lang="pt">Português</button>
                 </div>
-                <button id="admin-login-btn" class="btn-admin" data-i18n="btn_admin">Pujar Prompts</button>
+                <div class="nav-right">
+                    <span class="project-tag">Projecte LlenguAI</span>
+                    <button id="admin-login-btn" class="btn-admin" data-i18n="btn_admin">Pujar Prompts</button>
+                </div>
             </div>
         </div>
     </header>
 
     <main class="container">
 
-        <!-- Banner / Presentació -->
-        <section class="hero-section">
-            <h2 data-i18n="about_title">Sobre el projecte</h2>
-            <p data-i18n="about_text">La paraula LlenguAI es forma amb Llengua + AI (Intel·ligència Artificial). És l'expressió de la possibilitat de relacionar el desenvolupament de la nostra llengua amb la IA Generativa.</p>
-        </section>
+        <!-- Banner Central / Il·lustració -->
+        <div class="illustration-container">
+            <img src="img/llenguai-illustration.png" alt="LlenguAI AI Logo" class="central-illustration">
+        </div>
 
-        <!-- Cercadors i Àmbits -->
+        <!-- Situació sociolingüística -->
         <section class="section-card">
             <h3 class="section-title"><span class="badge-badge badge-sl">SL</span> <span data-i18n="socio_title">Situació sociolingüística</span></h3>
             <div class="form-group">
@@ -43,6 +51,7 @@
             </div>
         </section>
 
+        <!-- Didàctica de la llengua -->
         <section class="section-card">
             <h3 class="section-title"><span class="badge-badge badge-dl">DL</span> <span data-i18n="didactic_title">Didàctica de la llengua</span></h3>
             <div class="form-group">
@@ -52,6 +61,7 @@
             <button class="btn-secondary" data-i18n="btn_download_form">📥 Descarregueu el formulari</button>
         </section>
 
+        <!-- Normalització lingüística -->
         <section class="section-card">
             <h3 class="section-title"><span class="badge-badge badge-nl">NL</span> <span data-i18n="nl_title">Prompts de normalització lingüística</span></h3>
             <div class="form-group">
@@ -66,17 +76,17 @@
             <input type="text" id="search-input" data-i18n-placeholder="search_placeholder" placeholder="Cercar prompts per paraula clau, matèria, autor...">
         </div>
 
-        <!-- Llista de Prompts -->
+        <!-- Relació de Prompts -->
         <section>
             <h2 class="list-title" data-i18n="list_prompts_title">Relació de prompts</h2>
             <div id="prompts-container" class="prompts-grid">
-                <!-- Les targetes es carreguen dinàmicament des de script.js -->
+                <!-- Targetes carregades des de script.js -->
             </div>
         </section>
 
     </main>
 
-    <!-- Modal d'administració -->
+    <!-- Modal Admin -->
     <div id="admin-modal" class="modal">
         <div class="modal-content">
             <h2 data-i18n="admin_panel_title">Panell de Gestió de Prompts</h2>
@@ -104,7 +114,6 @@
                 <div class="form-group">
                     <label data-i18n="prompt_body_label">Contingut del Prompt</label>
                     <textarea id="new-prompt-body" rows="6" required></textarea>
-                    <small style="color:#64748b;" data-i18n="prompt_body_help">Copieu i pegueu el prompt directament en text pla.</small>
                 </div>
                 <div style="display: flex; gap: 10px; justify-content: flex-end; margin-top: 1rem;">
                     <button type="button" id="btn-close-modal" class="btn-cancel" data-i18n="btn_cancel">Cancel·lar</button>
