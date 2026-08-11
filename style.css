@@ -1,4 +1,3 @@
-/* --- VARIABLES I BASE --- */
 :root {
     --primary-color: #dc2626;
     --primary-hover: #b91c1c;
@@ -7,13 +6,13 @@
     --text-main: #1e293b;
     --text-muted: #64748b;
     --border-color: #e2e8f0;
-    
+
     --badge-sl-bg: #fef3c7;
     --badge-sl-text: #92400e;
     --badge-dl-bg: #dcfce7;
     --badge-dl-text: #166534;
-    --badge-nl-bg: #fee2e2;
-    --badge-nl-text: #991b1b;
+    --badge-nl-bg: #fef3c7;
+    --badge-nl-text: #92400e;
 }
 
 * {
@@ -31,215 +30,185 @@ body {
 }
 
 .container {
-    max-width: 1100px;
+    max-width: 1000px;
     margin: 0 auto;
-    padding: 0 1.5rem;
+    padding: 0 1rem;
 }
 
-/* --- CAPÇALERA --- */
+/* --- CAPÇALERA I IMATGES --- */
 header {
     background-color: #ffffff;
     border-bottom: 1px solid var(--border-color);
-    padding: 1rem 0;
-    margin-bottom: 2rem;
+    padding: 1rem 0 0.5rem 0;
+    margin-bottom: 1.5rem;
 }
 
-.header-content {
+.header-banner {
+    text-align: center;
+    margin-bottom: 1rem;
+}
+
+.main-banner-img {
+    max-width: 100%;
+    height: auto;
+    max-height: 180px;
+    object-fit: contain;
+}
+
+.header-nav {
     display: flex;
     justify-content: space-between;
     align-items: center;
     flex-wrap: wrap;
-    gap: 1rem;
-}
-
-.header-actions {
-    display: flex;
-    align-items: center;
-    gap: 1rem;
-}
-
-h1 {
-    font-size: 1.5rem;
-    font-weight: 800;
-    color: var(--primary-color);
+    gap: 0.5rem;
+    padding-top: 0.5rem;
+    border-top: 1px solid #f1f5f9;
 }
 
 .lang-selector {
     display: flex;
+    flex-wrap: wrap;
     gap: 0.25rem;
 }
 
 .lang-btn {
     background: none;
     border: none;
-    padding: 0.4rem 0.75rem;
-    border-radius: 20px;
-    font-weight: 600;
-    font-size: 0.85rem;
+    padding: 0.3rem 0.6rem;
+    border-radius: 15px;
+    font-size: 0.8rem;
     color: var(--text-muted);
     cursor: pointer;
-    transition: all 0.2s;
 }
 
 .lang-btn.active {
     background-color: var(--primary-color);
     color: #ffffff;
+    font-weight: 600;
+}
+
+.nav-right {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.project-tag {
+    font-weight: 700;
+    font-size: 0.85rem;
+    color: #1e293b;
 }
 
 .btn-admin {
-    background-color: #1e293b;
-    color: #ffffff;
+    background: #1e293b;
+    color: white;
     border: none;
-    padding: 0.5rem 1rem;
-    border-radius: 6px;
-    font-size: 0.85rem;
-    font-weight: 600;
+    padding: 0.3rem 0.6rem;
+    border-radius: 4px;
+    font-size: 0.75rem;
     cursor: pointer;
 }
 
-/* --- SECCIONS I FORMULARIS --- */
-.hero-section {
-    background: #ffffff;
-    border: 1px solid var(--border-color);
-    border-radius: 12px;
-    padding: 1.5rem;
-    margin-bottom: 1.5rem;
+/* --- IL·LUSTRACIÓ CENTRAL --- */
+.illustration-container {
+    text-align: center;
+    margin: 1rem 0 2rem 0;
 }
 
-.hero-section h2 {
-    font-size: 1.25rem;
-    margin-bottom: 0.5rem;
-    color: var(--text-main);
+.central-illustration {
+    max-width: 100%;
+    max-height: 320px;
+    height: auto;
+    object-fit: contain;
 }
 
+/* --- SECCIONS DE FORMULARI --- */
 .section-card {
     background: var(--bg-card);
     border: 1px solid var(--border-color);
-    border-radius: 12px;
+    border-radius: 8px;
     padding: 1.25rem;
     margin-bottom: 1.25rem;
-    box-shadow: 0 1px 3px rgba(0,0,0,0.02);
 }
 
 .section-title {
     display: flex;
     align-items: center;
     gap: 0.5rem;
-    font-size: 1.1rem;
+    font-size: 1.15rem;
     font-weight: 700;
-    margin-bottom: 0.75rem;
+    margin-bottom: 0.5rem;
 }
 
-.form-group {
-    margin-bottom: 0.75rem;
+.badge-badge {
+    padding: 0.1rem 0.4rem;
+    border-radius: 4px;
+    font-size: 0.85rem;
+    font-weight: 800;
 }
+
+.badge-sl { background: var(--badge-sl-bg); color: var(--badge-sl-text); }
+.badge-dl { background: var(--badge-dl-bg); color: var(--badge-dl-text); }
+.badge-nl { background: var(--badge-nl-bg); color: var(--badge-nl-text); }
 
 .form-group label {
     display: block;
-    font-size: 0.875rem;
+    font-size: 0.85rem;
     color: var(--text-muted);
     margin-bottom: 0.4rem;
 }
 
-input[type="text"],
-textarea,
-select {
+input[type="text"], textarea, select {
     width: 100%;
-    padding: 0.65rem 0.85rem;
+    padding: 0.6rem 0.8rem;
     border: 1px solid var(--border-color);
-    border-radius: 8px;
-    font-size: 0.95rem;
+    border-radius: 6px;
+    font-size: 0.9rem;
     outline: none;
-    background-color: #ffffff;
-}
-
-input[type="text"]:focus,
-textarea:focus,
-select:focus {
-    border-color: var(--primary-color);
 }
 
 .btn-secondary {
-    background-color: #f1f5f9;
+    background-color: #e2e8f0;
     color: #334155;
-    border: 1px solid var(--border-color);
-    padding: 0.5rem 1rem;
-    border-radius: 6px;
-    font-weight: 600;
-    font-size: 0.85rem;
-    cursor: pointer;
-}
-
-.btn-primary {
-    background-color: var(--primary-color);
-    color: #ffffff;
     border: none;
-    padding: 0.6rem 1.2rem;
+    padding: 0.4rem 0.8rem;
     border-radius: 6px;
+    font-size: 0.8rem;
     font-weight: 600;
     cursor: pointer;
+    margin-top: 0.5rem;
 }
 
 .search-container {
-    margin: 2rem 0 1rem 0;
+    margin: 1.5rem 0;
 }
 
 .list-title {
-    font-size: 1.3rem;
+    font-size: 1.25rem;
     margin-bottom: 1rem;
 }
 
-/* --- TARGETES DE PROMPTS --- */
+/* --- GRELLA I TARGETES DE PROMPTS --- */
 .prompts-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
     gap: 1.25rem;
 }
 
 .prompt-card {
-    background: var(--bg-card);
+    background: #ffffff;
     border: 1px solid var(--border-color);
-    border-radius: 12px;
-    padding: 1.25rem;
+    border-radius: 8px;
+    padding: 1rem;
     display: flex;
     flex-direction: column;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.03);
-    height: 280px; /* Alçada fixa i neta */
-}
-
-.prompt-header {
-    margin-bottom: 0.5rem;
-}
-
-.prompt-badge {
-    display: inline-block;
-    padding: 0.15rem 0.4rem;
-    border-radius: 4px;
-    font-size: 0.7rem;
-    font-weight: 700;
-    text-transform: uppercase;
-}
-
-.badge-socioling, .badge-sl {
-    background-color: var(--badge-sl-bg);
-    color: var(--badge-sl-text);
-}
-
-.badge-dl, .badge-didactic {
-    background-color: var(--badge-dl-bg);
-    color: var(--badge-dl-text);
-}
-
-.badge-nl {
-    background-color: var(--badge-nl-bg);
-    color: var(--badge-nl-text);
+    height: 380px;
 }
 
 .prompt-header h3 {
     font-size: 1rem;
     font-weight: 700;
     margin-top: 0.3rem;
-    line-height: 1.3;
 }
 
 .prompt-author {
@@ -252,11 +221,13 @@ select:focus {
     color: #475569;
     margin: 0.75rem 0;
     flex-grow: 1;
-    overflow: hidden;
-    display: -webkit-box;
-    -webkit-line-clamp: 4;
-    -webkit-box-orient: vertical;
-    white-space: normal;
+    overflow-y: auto;
+    white-space: pre-wrap;
+    word-wrap: break-word;
+    background: #f8fafc;
+    padding: 0.5rem;
+    border-radius: 6px;
+    border: 1px solid #f1f5f9;
 }
 
 .prompt-actions {
@@ -289,11 +260,11 @@ select:focus {
     cursor: pointer;
 }
 
-/* --- MODAL --- */
+/* MODAL */
 .modal {
     display: none;
     position: fixed;
-    top: 0; left: 0; width: 100%; height: 100%;
+    top:0; left:0; width:100%; height:100%;
     background: rgba(0,0,0,0.5);
     justify-content: center;
     align-items: center;
@@ -301,17 +272,9 @@ select:focus {
 }
 
 .modal-content {
-    background: #ffffff;
-    border-radius: 12px;
+    background: white;
     padding: 1.5rem;
+    border-radius: 8px;
     width: 90%;
     max-width: 600px;
-}
-
-.btn-cancel {
-    background: #f1f5f9;
-    border: 1px solid var(--border-color);
-    padding: 0.5rem 1rem;
-    border-radius: 6px;
-    cursor: pointer;
 }
