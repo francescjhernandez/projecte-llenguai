@@ -1,4 +1,4 @@
-/* --- VARIABLES I ESTILS GENERALS --- */
+/* --- VARIABLES I BASE --- */
 :root {
     --primary-color: #dc2626;
     --primary-hover: #b91c1c;
@@ -8,13 +8,12 @@
     --text-muted: #64748b;
     --border-color: #e2e8f0;
     
-    /* Colors de les etiquetes (Badges) */
     --badge-sl-bg: #fef3c7;
     --badge-sl-text: #92400e;
     --badge-dl-bg: #dcfce7;
     --badge-dl-text: #166534;
-    --badge-nl-bg: #fef3c7;
-    --badge-nl-text: #92400e;
+    --badge-nl-bg: #fee2e2;
+    --badge-nl-text: #991b1b;
 }
 
 * {
@@ -37,7 +36,7 @@ body {
     padding: 0 1.5rem;
 }
 
-/* --- CAPÇALERA I NAVEGACIÓ --- */
+/* --- CAPÇALERA --- */
 header {
     background-color: #ffffff;
     border-bottom: 1px solid var(--border-color);
@@ -49,17 +48,14 @@ header {
     display: flex;
     justify-content: space-between;
     align-items: center;
+    flex-wrap: wrap;
+    gap: 1rem;
 }
 
-.logo-container {
+.header-actions {
     display: flex;
     align-items: center;
-    gap: 0.75rem;
-}
-
-.logo-img {
-    height: 40px;
-    width: auto;
+    gap: 1rem;
 }
 
 h1 {
@@ -70,13 +66,13 @@ h1 {
 
 .lang-selector {
     display: flex;
-    gap: 0.5rem;
+    gap: 0.25rem;
 }
 
 .lang-btn {
     background: none;
     border: none;
-    padding: 0.4rem 0.8rem;
+    padding: 0.4rem 0.75rem;
     border-radius: 20px;
     font-weight: 600;
     font-size: 0.85rem;
@@ -90,14 +86,39 @@ h1 {
     color: #ffffff;
 }
 
+.btn-admin {
+    background-color: #1e293b;
+    color: #ffffff;
+    border: none;
+    padding: 0.5rem 1rem;
+    border-radius: 6px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    cursor: pointer;
+}
+
 /* --- SECCIONS I FORMULARIS --- */
-.section-card {
-    background: var(--bg-card);
+.hero-section {
+    background: #ffffff;
     border: 1px solid var(--border-color);
     border-radius: 12px;
     padding: 1.5rem;
     margin-bottom: 1.5rem;
-    box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+}
+
+.hero-section h2 {
+    font-size: 1.25rem;
+    margin-bottom: 0.5rem;
+    color: var(--text-main);
+}
+
+.section-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+    padding: 1.25rem;
+    margin-bottom: 1.25rem;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.02);
 }
 
 .section-title {
@@ -106,30 +127,30 @@ h1 {
     gap: 0.5rem;
     font-size: 1.1rem;
     font-weight: 700;
-    margin-bottom: 1rem;
+    margin-bottom: 0.75rem;
 }
 
 .form-group {
-    margin-bottom: 1rem;
+    margin-bottom: 0.75rem;
 }
 
 .form-group label {
     display: block;
-    font-size: 0.9rem;
+    font-size: 0.875rem;
     color: var(--text-muted);
-    margin-bottom: 0.5rem;
+    margin-bottom: 0.4rem;
 }
 
 input[type="text"],
 textarea,
 select {
     width: 100%;
-    padding: 0.75rem 1rem;
+    padding: 0.65rem 0.85rem;
     border: 1px solid var(--border-color);
     border-radius: 8px;
     font-size: 0.95rem;
     outline: none;
-    transition: border-color 0.2s;
+    background-color: #ffffff;
 }
 
 input[type="text"]:focus,
@@ -139,40 +160,40 @@ select:focus {
 }
 
 .btn-secondary {
-    background-color: #e2e8f0;
+    background-color: #f1f5f9;
     color: #334155;
-    border: none;
-    padding: 0.6rem 1.2rem;
+    border: 1px solid var(--border-color);
+    padding: 0.5rem 1rem;
     border-radius: 6px;
     font-weight: 600;
     font-size: 0.85rem;
     cursor: pointer;
-    display: inline-flex;
-    align-items: center;
-    gap: 0.4rem;
 }
 
-.btn-secondary:hover {
-    background-color: #cbd5e1;
+.btn-primary {
+    background-color: var(--primary-color);
+    color: #ffffff;
+    border: none;
+    padding: 0.6rem 1.2rem;
+    border-radius: 6px;
+    font-weight: 600;
+    cursor: pointer;
 }
 
-/* --- CERCA PRINCIPAL --- */
 .search-container {
-    margin: 2rem 0;
+    margin: 2rem 0 1rem 0;
 }
 
-.search-container input {
-    font-size: 1rem;
-    padding: 1rem 1.25rem;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.02);
+.list-title {
+    font-size: 1.3rem;
+    margin-bottom: 1rem;
 }
 
-/* --- GRELLA DE TARGETES (PROMPTS) --- */
+/* --- TARGETES DE PROMPTS --- */
 .prompts-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-    gap: 1.5rem;
-    margin-top: 1rem;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 1.25rem;
 }
 
 .prompt-card {
@@ -182,41 +203,24 @@ select:focus {
     padding: 1.25rem;
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
-    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
-    height: 380px; /* Alçada fixa per a mantenir la simetria */
-    overflow: hidden;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.03);
+    height: 280px; /* Alçada fixa i neta */
 }
 
 .prompt-header {
-    margin-bottom: 0.75rem;
+    margin-bottom: 0.5rem;
 }
 
-.prompt-header h3 {
-    font-size: 1.1rem;
-    font-weight: 700;
-    color: var(--text-main);
-    margin-top: 0.4rem;
-    line-height: 1.3;
-}
-
-.prompt-author {
-    font-size: 0.8rem;
-    color: var(--text-muted);
-    margin-top: 0.2rem;
-}
-
-/* Badges / Etiquetes de tipus */
 .prompt-badge {
     display: inline-block;
-    padding: 0.2rem 0.5rem;
+    padding: 0.15rem 0.4rem;
     border-radius: 4px;
-    font-size: 0.75rem;
+    font-size: 0.7rem;
     font-weight: 700;
     text-transform: uppercase;
 }
 
-.badge-socioling, .badge-sl, .badge-nl {
+.badge-socioling, .badge-sl {
     background-color: var(--badge-sl-bg);
     color: var(--badge-sl-text);
 }
@@ -226,87 +230,88 @@ select:focus {
     color: var(--badge-dl-text);
 }
 
-.badge-default {
-    background-color: #e2e8f0;
-    color: #475569;
+.badge-nl {
+    background-color: var(--badge-nl-bg);
+    color: var(--badge-nl-text);
 }
 
-/* Caixeta del text del prompt */
-.prompt-body {
-    background-color: #f8fafc;
-    border: 1px solid var(--border-color);
-    border-radius: 8px;
-    padding: 0.75rem;
-    margin-bottom: 1rem;
-    flex-grow: 1;
-    overflow-y: auto; /* Permet scroll intern net si és molt llarg */
-    max-height: 180px;
+.prompt-header h3 {
+    font-size: 1rem;
+    font-weight: 700;
+    margin-top: 0.3rem;
+    line-height: 1.3;
 }
 
-.prompt-body pre {
-    white-space: pre-wrap; /* Força salts de línia automàtics */
-    word-wrap: break-word;
-    font-family: inherit;
+.prompt-author {
+    font-size: 0.75rem;
+    color: var(--text-muted);
+}
+
+.prompt-preview {
     font-size: 0.85rem;
-    color: #334155;
-    margin: 0;
+    color: #475569;
+    margin: 0.75rem 0;
+    flex-grow: 1;
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-line-clamp: 4;
+    -webkit-box-orient: vertical;
+    white-space: normal;
 }
 
-/* Botó de copiar */
-.btn-copy {
-    width: 100%;
+.prompt-actions {
+    display: flex;
+    gap: 8px;
+    margin-top: auto;
+}
+
+.btn-copy-card {
+    flex: 1;
     background-color: var(--primary-color);
     color: #ffffff;
     border: none;
-    padding: 0.65rem 1rem;
+    padding: 0.5rem;
     border-radius: 6px;
     font-weight: 600;
-    font-size: 0.9rem;
+    font-size: 0.8rem;
     cursor: pointer;
-    transition: background-color 0.2s ease;
-    margin-top: auto;
-    display: block;
-    text-align: center;
 }
 
-.btn-copy:hover {
-    background-color: var(--primary-hover);
+.btn-view-card {
+    flex: 1;
+    background-color: #f1f5f9;
+    color: #334155;
+    border: 1px solid var(--border-color);
+    padding: 0.5rem;
+    border-radius: 6px;
+    font-weight: 600;
+    font-size: 0.8rem;
+    cursor: pointer;
 }
 
-/* --- MODALS (FINESTRES EMERGENTS) --- */
+/* --- MODAL --- */
 .modal {
     display: none;
     position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.5);
+    top: 0; left: 0; width: 100%; height: 100%;
+    background: rgba(0,0,0,0.5);
     justify-content: center;
     align-items: center;
     z-index: 1000;
-    padding: 1rem;
 }
 
 .modal-content {
     background: #ffffff;
     border-radius: 12px;
-    padding: 2rem;
-    width: 100%;
+    padding: 1.5rem;
+    width: 90%;
     max-width: 600px;
-    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
 }
 
 .btn-cancel {
-    background-color: #f1f5f9;
-    color: #475569;
+    background: #f1f5f9;
     border: 1px solid var(--border-color);
-    padding: 0.6rem 1.2rem;
+    padding: 0.5rem 1rem;
     border-radius: 6px;
-    font-weight: 600;
     cursor: pointer;
-}
-
-.btn-cancel:hover {
-    background-color: #e2e8f0;
 }
