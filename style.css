@@ -107,7 +107,6 @@ header {
     cursor: pointer;
 }
 
-/* Seccions amb colors identificatius destacats */
 .section-card {
     background: var(--bg-card);
     border: 2px solid var(--border-color);
@@ -195,7 +194,6 @@ input[type="text"], textarea, select {
     margin-bottom: 1rem;
 }
 
-/* --- DISSENY DE LA TARGETA NETA --- */
 .prompts-grid {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
@@ -272,7 +270,6 @@ input[type="text"], textarea, select {
     background-color: #e2e8f0;
 }
 
-/* MODAL */
 .modal {
     display: none;
     position: fixed;
