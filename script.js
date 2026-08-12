@@ -31,14 +31,19 @@ async function fetchPrompts() {
     renderPrompts(allPrompts);
 }
 
-// LLISTA VERTICAL: títol + botó de color (tipus) + botó copiar
+// LLISTA VERTICAL: títol + badge de color + botó copiar (creat amb DOM API, sense innerHTML)
 function renderPrompts(prompts) {
     const container = document.getElementById('prompts-container');
     if (!container) return;
     container.innerHTML = '';
 
     if (prompts.length === 0) {
-        container.innerHTML = '<p style="color: #64748b; text-align: center; font-size: 1.1rem;">No s\'han trobat prompts.</p>';
+        const msg = document.createElement('p');
+        msg.style.color = '#64748b';
+        msg.style.textAlign = 'center';
+        msg.style.fontSize = '1.1rem';
+        msg.textContent = 'No s\'han trobat prompts.';
+        container.appendChild(msg);
         return;
     }
 
@@ -46,27 +51,48 @@ function renderPrompts(prompts) {
         const row = document.createElement('div');
         row.className = 'prompt-row';
 
-        let typeClass = 'btn-type-sl';
-        let typeLabel = 'SL';
+        // Títol
+        const titleDiv = document.createElement('div');
+        titleDiv.className = 'prompt-row-title';
+        titleDiv.textContent = prompt.title || 'Sense títol';
+        row.appendChild(titleDiv);
+
+        // Contenidor de badges + botó
+        const badgesDiv = document.createElement('div');
+        badgesDiv.className = 'prompt-row-badges';
+
+        // Badge de tipus
+        const typeBadge = document.createElement('span');
+        typeBadge.className = 'btn-type-badge';
 
         if (prompt.type === 'sl' || prompt.type === 'socioling') {
-            typeClass = 'btn-type-sl';
-            typeLabel = 'SL';
+            typeBadge.classList.add('btn-type-sl');
+            typeBadge.textContent = 'SL';
         } else if (prompt.type === 'dl' || prompt.type === 'didactic') {
-            typeClass = 'btn-type-dl';
-            typeLabel = 'DL';
+            typeBadge.classList.add('btn-type-dl');
+            typeBadge.textContent = 'DL';
         } else if (prompt.type === 'nl') {
-            typeClass = 'btn-type-nl';
-            typeLabel = 'NL';
+            typeBadge.classList.add('btn-type-nl');
+            typeBadge.textContent = 'NL';
+        } else {
+            typeBadge.classList.add('btn-type-sl');
+            typeBadge.textContent = (prompt.type || 'SL').toUpperCase();
         }
 
-        row.innerHTML = `
-            <div class="prompt-row-title">${escapeHtml(prompt.title)}</div>
-            <div class="prompt-row-badges">
-                <span class="btn-type-badge ${typeClass}">${typeLabel}</span>
-                <button class="btn-copy-list" onclick="copyText(\`${escapeJsString(prompt.body || '')}\`, this)">Copiar</button>
-            </div>
-        `;
+        // Botó Copiar
+        const copyBtn = document.createElement('button');
+        copyBtn.className = 'btn-copy-list';
+        copyBtn.textContent = 'Copiar';
+        copyBtn.addEventListener('click', () => {
+            navigator.clipboard.writeText(prompt.body || '').then(() => {
+                copyBtn.textContent = 'Copiat!';
+                setTimeout(() => copyBtn.textContent = 'Copiar', 2000);
+            });
+        });
+
+        badgesDiv.appendChild(typeBadge);
+        badgesDiv.appendChild(copyBtn);
+        row.appendChild(badgesDiv);
         container.appendChild(row);
     });
 }
@@ -138,14 +164,6 @@ function filterPrompts(query, typeFilter = null) {
         return matchesType && matchesText;
     });
     renderPrompts(filtered);
-}
-
-function copyText(text, btn) {
-    navigator.clipboard.writeText(text).then(() => {
-        const original = btn.innerText;
-        btn.innerText = 'Copiat!';
-        setTimeout(() => btn.innerText = original, 2000);
-    });
 }
 
 function escapeHtml(str) {
