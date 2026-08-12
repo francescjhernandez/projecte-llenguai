@@ -38,16 +38,17 @@
         </div>
 
         <!-- Situació sociolingüística -->
-        <section class="section-card">
+        <section class="section-card section-sl">
             <h3 class="section-title"><span class="badge-badge badge-sl">SL</span> <span data-i18n="socio_title">Situació sociolingüística</span></h3>
             <div class="form-group">
                 <label data-i18n="lbl_ambit_sl">Consulta la situació sociolingüística d'un poble, una comarca, un sector laboral, un col·lectiu, etc.:</label>
+                <p class="trial-notice">[Període de prova de la plataforma: només dades del País Valencià]</p>
                 <input type="text" id="socioling-search" data-i18n-placeholder="ph_ambit_sl" placeholder="Escriu un poble, comarca, sector laboral...">
             </div>
         </section>
 
         <!-- Didàctica de la llengua -->
-        <section class="section-card">
+        <section class="section-card section-dl">
             <h3 class="section-title"><span class="badge-badge badge-dl">DL</span> <span data-i18n="didactic_title">Didàctica de la llengua</span></h3>
             <div class="form-group">
                 <label data-i18n="lbl_materia_didactic">Indiqueu matèria del prompt de didàctica de la llengua, nivell educatiu, etc.:</label>
@@ -57,10 +58,11 @@
         </section>
 
         <!-- Normalització lingüística -->
-        <section class="section-card">
+        <section class="section-card section-nl">
             <h3 class="section-title"><span class="badge-badge badge-nl">NL</span> <span data-i18n="nl_title">Prompts de normalització lingüística</span></h3>
             <div class="form-group">
                 <label data-i18n="lbl_materia_nl">Indiqueu matèria del prompt de normalització lingüística:</label>
+                <p class="trial-notice">[Període de prova de la plataforma: només dades de Catalunya]</p>
                 <input type="text" id="nl-search" data-i18n-placeholder="ph_materia_nl" placeholder="Escriu la matèria o àmbit (Administració local, comerç, mitjans...)">
             </div>
             <button class="btn-secondary" data-i18n="btn_download_form_nl">📥 Descarregueu el formulari</button>
@@ -118,6 +120,6 @@
         </div>
     </div>
 <!-- Forcem la recàrrega del script actualitzant la versió  -->
-    <script src="script.js?v=5"></script>
+    <script src="script.js?v=6"></script>
 </body>
 </html>
