@@ -194,82 +194,77 @@ input[type="text"], textarea, select {
     margin-bottom: 1rem;
 }
 
-.prompts-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
-    gap: 1rem;
-}
-
-.prompt-card {
-    background: #ffffff;
-    border: 2px solid var(--border-color);
-    border-radius: 10px;
-    padding: 1rem;
+/* --- LLISTA DE PROMPTS --- */
+.prompts-list {
     display: flex;
     flex-direction: column;
+    gap: 0.75rem;
+}
+
+.prompt-row {
+    display: flex;
+    align-items: center;
     justify-content: space-between;
-    min-height: 120px;
-    box-shadow: 0 2px 6px rgba(0,0,0,0.06);
-    transition: transform 0.15s ease, box-shadow 0.15s ease;
+    gap: 1rem;
+    background: #ffffff;
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    padding: 0.9rem 1.1rem;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+    transition: box-shadow 0.15s ease;
 }
 
-.prompt-card:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+.prompt-row:hover {
+    box-shadow: 0 3px 8px rgba(0,0,0,0.08);
 }
 
-.prompt-card .prompt-header {
-    margin-bottom: 0.75rem;
-}
-
-.prompt-card .prompt-header h3 {
+.prompt-row-title {
+    flex: 1;
     font-size: 1.05rem;
-    font-weight: 700;
-    margin-top: 0.4rem;
+    font-weight: 600;
     color: #0f172a;
     line-height: 1.35;
 }
 
-.prompt-actions {
+.prompt-row-badges {
     display: flex;
-    gap: 8px;
-    margin-top: auto;
+    gap: 0.5rem;
+    align-items: center;
+    flex-shrink: 0;
 }
 
-.btn-copy-card {
-    flex: 1;
+.btn-type-badge {
+    border: none;
+    padding: 0.35rem 0.7rem;
+    border-radius: 5px;
+    font-size: 0.8rem;
+    font-weight: 700;
+    cursor: default;
+    pointer-events: none;
+}
+
+.btn-type-sl { background: var(--badge-sl-bg); color: var(--badge-sl-text); }
+.btn-type-dl { background: var(--badge-dl-bg); color: var(--badge-dl-text); }
+.btn-type-nl { background: var(--badge-nl-bg); color: var(--badge-nl-text); }
+
+.btn-copy-list {
     background-color: var(--primary-color);
     color: #ffffff;
     border: none;
-    padding: 0.55rem;
+    padding: 0.4rem 0.9rem;
     border-radius: 6px;
     font-weight: 600;
     font-size: 0.85rem;
     cursor: pointer;
+    flex-shrink: 0;
     transition: background 0.2s;
 }
 
-.btn-copy-card:hover {
+.btn-copy-list:hover {
     background-color: var(--primary-hover);
 }
 
-.btn-view-card {
-    flex: 1;
-    background-color: #f1f5f9;
-    color: #334155;
-    border: 1px solid var(--border-color);
-    padding: 0.55rem;
-    border-radius: 6px;
-    font-weight: 600;
-    font-size: 0.85rem;
-    cursor: pointer;
-    transition: background 0.2s;
-}
-
-.btn-view-card:hover {
-    background-color: #e2e8f0;
-}
-
+/* MODAL */
 .modal {
     display: none;
     position: fixed;
