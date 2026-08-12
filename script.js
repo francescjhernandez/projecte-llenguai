@@ -31,77 +31,44 @@ async function fetchPrompts() {
     renderPrompts(allPrompts);
 }
 
+// LLISTA VERTICAL: títol + botó de color (tipus) + botó copiar
 function renderPrompts(prompts) {
     const container = document.getElementById('prompts-container');
     if (!container) return;
     container.innerHTML = '';
 
     if (prompts.length === 0) {
-        container.innerHTML = '<p style="color: #64748b; grid-column: 1/-1; text-align: center; font-size: 1.1rem;">No s\'han trobat prompts.</p>';
+        container.innerHTML = '<p style="color: #64748b; text-align: center; font-size: 1.1rem;">No s\'han trobat prompts.</p>';
         return;
     }
 
-    prompts.forEach((prompt, index) => {
-        const card = document.createElement('div');
-        card.className = 'prompt-card';
+    prompts.forEach((prompt) => {
+        const row = document.createElement('div');
+        row.className = 'prompt-row';
 
-        let badgeClass = 'badge-sl';
-        let badgeLabel = (prompt.type || 'SL').toUpperCase();
+        let typeClass = 'btn-type-sl';
+        let typeLabel = 'SL';
 
         if (prompt.type === 'sl' || prompt.type === 'socioling') {
-            badgeClass = 'badge-sl';
-            badgeLabel = 'SL';
+            typeClass = 'btn-type-sl';
+            typeLabel = 'SL';
         } else if (prompt.type === 'dl' || prompt.type === 'didactic') {
-            badgeClass = 'badge-dl';
-            badgeLabel = 'DL';
+            typeClass = 'btn-type-dl';
+            typeLabel = 'DL';
         } else if (prompt.type === 'nl') {
-            badgeClass = 'badge-nl';
-            badgeLabel = 'NL';
+            typeClass = 'btn-type-nl';
+            typeLabel = 'NL';
         }
 
-        card.innerHTML = `
-            <div class="prompt-header">
-                <span class="badge-badge ${badgeClass}">${badgeLabel}</span>
-                <h3>${escapeHtml(prompt.title)}</h3>
-            </div>
-            <div class="prompt-actions">
-                <button class="btn-copy-card" onclick="copyText(\`${escapeJsString(prompt.body || '')}\`, this)">Copiar</button>
-                <button class="btn-view-card" onclick="openPromptModal(${index})">Ampliar</button>
+        row.innerHTML = `
+            <div class="prompt-row-title">${escapeHtml(prompt.title)}</div>
+            <div class="prompt-row-badges">
+                <span class="btn-type-badge ${typeClass}">${typeLabel}</span>
+                <button class="btn-copy-list" onclick="copyText(\`${escapeJsString(prompt.body || '')}\`, this)">Copiar</button>
             </div>
         `;
-        container.appendChild(card);
+        container.appendChild(row);
     });
-}
-
-function openPromptModal(index) {
-    const prompt = allPrompts[index];
-    if (!prompt) return;
-
-    let viewModal = document.getElementById('view-prompt-modal');
-    if (!viewModal) {
-        viewModal = document.createElement('div');
-        viewModal.id = 'view-prompt-modal';
-        viewModal.className = 'modal';
-        document.body.appendChild(viewModal);
-    }
-
-    viewModal.innerHTML = `
-        <div class="modal-content" style="max-width: 700px; max-height: 85vh; overflow-y: auto;">
-            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:1rem;">
-                <h2>${escapeHtml(prompt.title)}</h2>
-                <button onclick="document.getElementById('view-prompt-modal').style.display='none'" style="background:none; border:none; font-size:1.5rem; cursor:pointer;">&times;</button>
-            </div>
-            <p style="color:#64748b; margin-bottom:1rem;"><strong>Autor:</strong> ${escapeHtml(prompt.author || 'Anònim')}</p>
-            <div style="background:#f8fafc; border:1px solid #e2e8f0; padding:1rem; border-radius:8px; white-space:pre-wrap; font-family:monospace; font-size:0.875rem; margin-bottom:1.5rem; max-height:50vh; overflow-y:auto; color:#1e293b;">
-                ${escapeHtml(prompt.body)}
-            </div>
-            <div style="display:flex; gap:10px; justify-content:flex-end;">
-                <button class="btn-copy-card" style="padding:0.6rem 1.2rem;" onclick="copyText(\`${escapeJsString(prompt.body)}\`, this)">Copiar Prompt</button>
-                <button class="btn-secondary" onclick="document.getElementById('view-prompt-modal').style.display='none'">Tancar</button>
-            </div>
-        </div>
-    `;
-    viewModal.style.display = 'flex';
 }
 
 function setupEventListeners() {
