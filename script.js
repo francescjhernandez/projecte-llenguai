@@ -11,7 +11,6 @@ document.addEventListener('DOMContentLoaded', () => {
     setupEventListeners();
 });
 
-// Carregar prompts des de Supabase
 async function fetchPrompts() {
     if (supabaseClient) {
         try {
@@ -32,7 +31,6 @@ async function fetchPrompts() {
     renderPrompts(allPrompts);
 }
 
-// Renderitzar les targetes (NOMÉS títol, badge i botons)
 function renderPrompts(prompts) {
     const container = document.getElementById('prompts-container');
     if (!container) return;
@@ -61,7 +59,6 @@ function renderPrompts(prompts) {
             badgeLabel = 'NL';
         }
 
-        // NOMÉS BADGE, TÍTOL I BOTONS
         card.innerHTML = `
             <div class="prompt-header">
                 <span class="badge-badge ${badgeClass}">${badgeLabel}</span>
@@ -76,7 +73,6 @@ function renderPrompts(prompts) {
     });
 }
 
-// Mostrar la finestra emergent (modal) amb el text complet
 function openPromptModal(index) {
     const prompt = allPrompts[index];
     if (!prompt) return;
