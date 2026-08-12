@@ -212,6 +212,7 @@ input[type="text"], textarea, select {
     padding: 0.9rem 1.1rem;
     box-shadow: 0 1px 3px rgba(0,0,0,0.04);
     transition: box-shadow 0.15s ease;
+    overflow: hidden;
 }
 
 .prompt-row:hover {
@@ -220,10 +221,12 @@ input[type="text"], textarea, select {
 
 .prompt-row-title {
     flex: 1;
+    min-width: 0;
     font-size: 1.05rem;
     font-weight: 600;
     color: #0f172a;
     line-height: 1.35;
+    word-break: break-word;
 }
 
 .prompt-row-badges {
@@ -241,6 +244,7 @@ input[type="text"], textarea, select {
     font-weight: 700;
     cursor: default;
     pointer-events: none;
+    white-space: nowrap;
 }
 
 .btn-type-sl { background: var(--badge-sl-bg); color: var(--badge-sl-text); }
@@ -257,6 +261,7 @@ input[type="text"], textarea, select {
     font-size: 0.85rem;
     cursor: pointer;
     flex-shrink: 0;
+    white-space: nowrap;
     transition: background 0.2s;
 }
 
