@@ -12,7 +12,6 @@
 
     <header>
         <div class="container header-container">
-            <!-- Navegació i Idiomes -->
             <div class="header-nav">
                 <div class="lang-selector">
                     <button class="lang-btn active" data-lang="ca">Català / Valencià</button>
@@ -32,12 +31,10 @@
 
     <main class="container">
 
-        <!-- Il·lustració Principal (URL UV) -->
         <div class="illustration-container">
             <img src="https://www.uv.es/senex/imatgeLlenguaAI.png" alt="Projecte LlenguAI" class="central-illustration">
         </div>
 
-        <!-- Situació sociolingüística -->
         <section class="section-card section-sl">
             <h3 class="section-title"><span class="badge-badge badge-sl">SL</span> <span data-i18n="socio_title">Situació sociolingüística</span></h3>
             <div class="form-group">
@@ -47,7 +44,6 @@
             </div>
         </section>
 
-        <!-- Didàctica de la llengua -->
         <section class="section-card section-dl">
             <h3 class="section-title"><span class="badge-badge badge-dl">DL</span> <span data-i18n="didactic_title">Didàctica de la llengua</span></h3>
             <div class="form-group">
@@ -57,7 +53,6 @@
             <button class="btn-secondary" data-i18n="btn_download_form">📥 Descarregueu el formulari</button>
         </section>
 
-        <!-- Normalització lingüística -->
         <section class="section-card section-nl">
             <h3 class="section-title"><span class="badge-badge badge-nl">NL</span> <span data-i18n="nl_title">Prompts de normalització lingüística</span></h3>
             <div class="form-group">
@@ -68,22 +63,18 @@
             <button class="btn-secondary" data-i18n="btn_download_form_nl">📥 Descarregueu el formulari</button>
         </section>
 
-        <!-- Cercador General -->
         <div class="search-container">
             <input type="text" id="search-input" data-i18n-placeholder="search_placeholder" placeholder="Cercar prompts per paraula clau, matèria, autor...">
         </div>
 
-        <!-- Relació de Prompts -->
         <section>
             <h2 class="list-title" data-i18n="list_prompts_title">Relació de prompts</h2>
             <div id="prompts-container" class="prompts-grid">
-                <!-- Carregat dinàmicament des de JS -->
             </div>
         </section>
 
     </main>
 
-    <!-- Modal Administració / Afegir Prompt -->
     <div id="admin-modal" class="modal">
         <div class="modal-content">
             <h2 data-i18n="admin_panel_title">Panell de Gestió de Prompts</h2>
@@ -119,7 +110,7 @@
             </form>
         </div>
     </div>
-<!-- Forcem la recàrrega del script actualitzant la versió  -->
-    <script src="script.js?v=6"></script>
+
+    <script src="script.js?v=7"></script>
 </body>
 </html>
