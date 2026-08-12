@@ -32,14 +32,14 @@ async function fetchPrompts() {
     renderPrompts(allPrompts);
 }
 
-// Renderitzar les targetes (SENSE el cos del prompt, només capçalera, àmbit i botons)
+// Renderitzar les targetes (NOMÉS títol, badge i botons)
 function renderPrompts(prompts) {
     const container = document.getElementById('prompts-container');
     if (!container) return;
     container.innerHTML = '';
 
     if (prompts.length === 0) {
-        container.innerHTML = '<p style="color: #64748b; grid-column: 1/-1; text-align: center;">No s\'han trobat prompts.</p>';
+        container.innerHTML = '<p style="color: #64748b; grid-column: 1/-1; text-align: center; font-size: 1.1rem;">No s\'han trobat prompts.</p>';
         return;
     }
 
@@ -61,21 +61,15 @@ function renderPrompts(prompts) {
             badgeLabel = 'NL';
         }
 
-        const categoryText = prompt.category ? `<div class="prompt-category"><strong>Àmbit:</strong> ${escapeHtml(prompt.category)}</div>` : '';
-
-        // ÚNICAMENT DIBUIXEM CAPÇALERA, ÀMBIT I BOTONS
+        // NOMÉS BADGE, TÍTOL I BOTONS
         card.innerHTML = `
-            <div class="prompt-content-top">
-                <div class="prompt-header">
-                    <span class="badge-badge ${badgeClass}">${badgeLabel}</span>
-                    <h3>${escapeHtml(prompt.title)}</h3>
-                    <div class="prompt-author">Per: ${escapeHtml(prompt.author || 'Anònim')}</div>
-                </div>
-                ${categoryText}
+            <div class="prompt-header">
+                <span class="badge-badge ${badgeClass}">${badgeLabel}</span>
+                <h3>${escapeHtml(prompt.title)}</h3>
             </div>
             <div class="prompt-actions">
-                <button class="btn-copy-card" onclick="copyText(\`${escapeJsString(prompt.body || '')}\`, this)">Copiar Prompt</button>
-                <button class="btn-view-card" onclick="openPromptModal(${index})">Veure complet</button>
+                <button class="btn-copy-card" onclick="copyText(\`${escapeJsString(prompt.body || '')}\`, this)">Copiar</button>
+                <button class="btn-view-card" onclick="openPromptModal(${index})">Ampliar</button>
             </div>
         `;
         container.appendChild(card);
