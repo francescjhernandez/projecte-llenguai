@@ -39,8 +39,13 @@
             <div class="form-group">
                 <label data-i18n="lbl_ambit_sl">Consulta la situació sociolingüística d'un poble, una comarca, un sector laboral, un col·lectiu, etc.:</label>
                 <p class="trial-notice">[Període de prova de la plataforma: només dades del País Valencià]</p>
-                <input type="text" id="socioling-search" data-i18n-placeholder="ph_ambit_sl" placeholder="Escriu un poble, comarca, sector laboral...">
+                <div class="sl-input-group">
+                    <input type="text" id="socioling-search" data-i18n-placeholder="ph_ambit_sl" placeholder="Escriu un poble, comarca, sector laboral...">
+                    <button id="btn-ask-sl" class="btn-primary">Consultar IA</button>
+                </div>
             </div>
+            <!-- Contenidor per a la resposta de l'Agent SL -->
+            <div id="sl-ai-response" class="ai-response-box" style="display: none;"></div>
         </section>
 
         <section class="section-card section-dl">
@@ -110,6 +115,6 @@
         </div>
     </div>
 
-    <script src="script.js?v=9"></script>
+    <script src="script.js?v=10"></script>
 </body>
 </html>
