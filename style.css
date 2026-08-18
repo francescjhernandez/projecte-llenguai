@@ -307,3 +307,39 @@ input[type="text"], textarea, select {
     font-weight: 600;
     cursor: pointer;
 }
+
+/* --- ESTILS PER A L'AGENT SL --- */
+.sl-input-group {
+    display: flex;
+    gap: 0.5rem;
+    margin-top: 0.5rem;
+}
+
+.ai-response-box {
+    margin-top: 1rem;
+    padding: 1rem;
+    border-radius: 6px;
+    font-size: 0.95rem;
+    line-height: 1.5;
+    white-space: pre-wrap;
+}
+
+.ai-response-box.loading {
+    background-color: #f1f5f9;
+    color: #475569;
+    border-left: 4px solid #94a3b8;
+}
+
+.ai-response-box.success {
+    background-color: #ffffff;
+    color: #0f172a;
+    border-left: 4px solid #d97706;
+    border: 1px solid #fcd34d;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+}
+
+.ai-response-box.error {
+    background-color: #fef2f2;
+    color: #991b1b;
+    border-left: 4px solid #ef4444;
+}
