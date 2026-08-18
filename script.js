@@ -1,6 +1,9 @@
-// --- CONFIGURACIÓ DE SUPABASE ---
+// --- CONFIGURACIÓ DE SUPABASE I WORKER ---
 const SUPABASE_URL = "https://paxrolsjynqivoeltoyk.supabase.co";
 const SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InBheHJvbHNqeW5xaXZvZWx0b3lrIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODU2ODA4MTUsImV4cCI6MjEwMTI1NjgxNX0.8sYrtc7D5-_2keQPf2Ra-0Ff_lNC3PJkH0P6H9gqbXA";
+
+// URL DEL WORKER DE CLOUDFLARE
+const SL_WORKER_URL = "https://llenguai-sl-agent.francesc-j-hernandez.workers.dev";
 
 const supabaseClient = window.supabase ? window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY) : null;
 
@@ -9,6 +12,7 @@ let allPrompts = [];
 document.addEventListener('DOMContentLoaded', () => {
     fetchPrompts();
     setupEventListeners();
+    setupSLAgent();
 });
 
 async function fetchPrompts() {
@@ -151,6 +155,57 @@ function setupEventListeners() {
             }
         });
     }
+}
+
+function setupSLAgent() {
+    const btnAskSL = document.getElementById('btn-ask-sl');
+    const inputSL = document.getElementById('socioling-search');
+    const responseBox = document.getElementById('sl-ai-response');
+
+    if (!btnAskSL || !inputSL || !responseBox) return;
+
+    const executarConsultaSL = async () => {
+        const pregunta = inputSL.value.trim();
+        if (!pregunta) {
+            alert("Si us plau, escriu un municipi o una consulta sociolingüística.");
+            return;
+        }
+
+        btnAskSL.disabled = true;
+        btnAskSL.textContent = "Consultant...";
+        responseBox.style.display = "block";
+        responseBox.className = "ai-response-box loading";
+        responseBox.textContent = "Analitzant dades sociolingüístiques en Supabase...";
+
+        try {
+            const res = await fetch(SL_WORKER_URL, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ pregunta })
+            });
+
+            const data = await res.json();
+
+            if (!res.ok) {
+                throw new Error(data.error || "Error en la consulta");
+            }
+
+            responseBox.className = "ai-response-box success";
+            responseBox.textContent = data.resposta;
+
+        } catch (err) {
+            responseBox.className = "ai-response-box error";
+            responseBox.textContent = "S'ha produït un error en obtindre la resposta: " + err.message;
+        } finally {
+            btnAskSL.disabled = false;
+            btnAskSL.textContent = "Consultar IA";
+        }
+    };
+
+    btnAskSL.addEventListener('click', executarConsultaSL);
+    inputSL.addEventListener('keypress', (e) => {
+        if (e.key === 'Enter') executarConsultaSL();
+    });
 }
 
 function filterPrompts(query, typeFilter = null) {
